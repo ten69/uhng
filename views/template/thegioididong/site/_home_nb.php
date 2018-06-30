@@ -21,7 +21,16 @@ $noibat_array = Tuyen::_dulieu('module', '10');
     <div id="owl-promo" class="owl-carousel homepromo">
 
         <?php 
+            // echo '<pre>';
+            // print_r($noibat);
+            // echo '</pre>';            
+
             foreach ($noibat['dm_listsp'] as $k_nb => $v_nb) {
+            // $a = $noibat['dm_listsp'];  
+            // for ($i = 0; $i < $noibat['dm_showmax'] ; $i++) {                              
+                // if(empty($a[$i])) break;
+                // $v_nb = $a[$i];
+
                 $sp = Tuyen::_dulieu('sanpham',$v_nb);  
                 $image = explode('-', $sp['sp_images']); 
                 $s_html = '';
@@ -38,7 +47,7 @@ $noibat_array = Tuyen::_dulieu('module', '10');
                             </div>
                             <div class="promo noimage">
                                 <p>
-                                    <?= $spnn['spnn_gioithieu'] ?>                                    
+                                    <?php // $spnn['spnn_gioithieu']; ?>                                    
                                 </p>
                             </div>
                             <!-- <label class="installment">Trả góp 1%</label> -->

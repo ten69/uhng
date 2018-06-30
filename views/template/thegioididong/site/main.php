@@ -31,7 +31,16 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 <head>
     <?php echo $this->render('/_include/head',['assetsPrefix' => $assetsPrefix]); ?>    
 </head>
-<body class="bg-index">    
+
+<?php 
+    echo $_SERVER['HTTP_USER_AGENT'];
+?>
+<body class="bg-index">   
+    <style type="text/css">
+        #aabc-debug-toolbar{
+            display: none !important;
+        }
+    </style>
 <?php $this->beginBody() ?>
     <?php echo $this->render('/_include/header'); ?> 
     <section>            
