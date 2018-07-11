@@ -43,7 +43,11 @@ $noibat_array = Tuyen::_dulieu('module', '10');
                             <img width="180" height="180" src="<?= $s_html?>">
                             <h3><?= $sp['sp_tensp'] ?></h3>
                             <div class="price">
-                                <strong><?= number_format($sp['sp_gia']) ?> ₫</strong>
+                                <?php if(is_numeric($sp['sp_gia'])){ ?>
+                                    <strong><?= number_format($sp['sp_gia']) ?> ₫</strong>
+                                <?php }else{ ?>
+                                    <strong><?= $sp['sp_gia'] ?></strong>
+                                <?php } ?>
                             </div>
                             <div class="promo noimage">
                                 <p>
