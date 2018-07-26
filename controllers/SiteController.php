@@ -101,7 +101,8 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
-        // $this->layout = 'main-goc';       
+        // $this->layout = 'chuyenmuc/main';        
+        // $this->layout = 'site/main';       
         return $this->render('index');
     }
 
