@@ -14,7 +14,7 @@
 <meta name="revisit-after" content="1 days"/>
 <meta name="GENERATOR" content="Công ty Cổ phần Thế Giới Di Động"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<link href="ico/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="<?= $assetsPrefix?>/ico/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link rel="publisher" href="https://plus.google.com/+Thegioididongdotcom/posts"/>
 <link rel="author" href="https://plus.google.com/+Thegioididongdotcom/posts"/>
 <meta property="og:site_name" content="Thegioididong.com"/>

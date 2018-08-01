@@ -8,6 +8,8 @@ use aabc\helpers\Html;
 use aabc\helpers\Url; /*Them*/
 use aabc\filters\VerbFilter;
 
+use common\components\Tuyen;
+use common\cont\D;
 
 
 class DanhmucController extends Controller
@@ -33,7 +35,8 @@ class DanhmucController extends Controller
    
      public function beforeAction($action)
     {
-        $this->layout = 'danhmuc/main';
+        // $this->layout = 'danhmuc/main';
+        $this->layout = 'laptop/main';
         if ($action->id == 'error') $this->layout = 'main-error';
 
         return parent::beforeAction($action);
@@ -52,11 +55,39 @@ class DanhmucController extends Controller
         ];
     }
 
-    public function actionIndex()
+    public function actionIndex($slug = '', $id = '')
     {
-        // $this->layout = 'chuyenmuc/main';        
-        // $this->layout = 'site/main';       
-        return $this->render('index');
+        $model = Tuyen::_dulieu('danhmuc', $id);
+        
+        // echo '<pre>';
+        // print_r($model);
+        // echo '</pre>';
+        // die;
+
+        if(!$model){
+            header('Location: /', true,302);
+            exit();
+        }
+        if($model['dm_status'] == 2 OR $model['dm_recycle'] == 1){
+            header('Location: /', true,302);
+            exit();
+        }
+
+        if($model['dm_type'] == 1) $slug = $slug . '-'.D::url_dm.$id.'.html';
+      
+
+        if($model){
+            if($slug != $model['dm_link']){
+                header('Location: /'.$model['dm_link'], true,302);
+                exit();
+            }
+        }
+               
+        $kq = $this->render('/laptop/index', [
+            'model' => $model,                
+        ]);            
+       
+        return $kq;
     }
 
    

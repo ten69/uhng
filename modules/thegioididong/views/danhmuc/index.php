@@ -2,136 +2,120 @@
 use aabc\widgets\Menu;
 use aabc\helpers\ArrayHelper;
 use common\components\Tuyen;
-
+use common\cont\D;
 use backend\models\Cauhinh;
-$cache = Aabc::$app->dulieu;
 
-$thetieude = json_decode($cache->get('cauhinh'.Cauhinh::thetieude),true);
-$themota = json_decode($cache->get('cauhinh'.Cauhinh::themota),true);
+$donvitiente = Tuyen::_dulieu('cauhinh', Cauhinh::tientetinhgia);
+$donvitiente = $donvitiente['child'][$donvitiente['default']];
 
-$this->title = $thetieude ;
-$this->params['description'] = $themota;
+// $this->title = $thetieude ;
+// $this->params['description'] = $themota;
+
+use frontend\assets\CustomAsset;
+$bundle = CustomAsset::register($this);
+$assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 ?>
 
-<style type="text/css">
-    .shopping-cart{
-        width: 50px;
-        height: 50px;
-        background: #0FF;
-        padding: 10px;
-        border-radius: 35px;
-    }
-    .shopping-cart path{
-        fill: #F00;
-    }
-</style>
-
-<?php
-    
-    for ($i = 0; $i < 20; $i++) {
-        echo Tuyen::_icon('shopping-cart');
-    }
-    
 
 
-    // echo '<div class="shopping-cart">'.file_get_contents("svg/shopping-cart748c.svg").'</div>';
-    
-
-    if ($this->beginCache('maincontent')) {
-?> 
-     <?php 
-        // if(isset($_GET['type'])){
-        //     $sp_id = '1';
-        //     if(isset($_GET['id'])) $sp_id = $_GET['id'];
-
-        //     $settings = Aabc::$app->settings;
-        
-        //     $_Sanpham = 'backend\models\Sanpham';
-        //     $model = $_Sanpham::find()->asArray()->all();
-        //     echo '<pre>';
-        //     // print_r($model);
-        //     for ($i=0; $i < 20; $i++) {   
-        //         foreach ($model as $v) {
-        //             $m = $_Sanpham::find()->andWhere(['sp_id' => $v['sp_id']])->asArray()->one();
-
-        //             $_Sanphamdanhmuc = 'backend\models\Sanphamdanhmuc';
-        //             $spdm = $_Sanphamdanhmuc::find()->andWhere(['spdm_id_sp' => $v['sp_id']])->asArray()->all();
-        //             if($spdm){
-        //                 $list_dm = ArrayHelper::getColumn($spdm, 'spdm_id_danhmuc');   
-        //                 // print_r($list_dm);
-        //                 // die;
-        //                 $arr = [
-        //                     'list_dm' => $list_dm,
-        //                 ];
-        //                 // print_r($arr);
-        //                 $m += $arr;
-        //             }
-
-        //             print_r(($m));
-        //         }
-        //     }
-            
-
-        //     echo '</pre>';
-        // }else{
-
-        //     echo 'TUYEN';
-
-        //     $t = Aabc::$app->settings;
-        //     $tuyen = $t->get('tuyen');
-            
-        //     // $sp_id = '1';
-        //     // if(isset($_GET['id'])) $sp_id = $_GET['id'];
-        //     // echo 's_130p_'.$sp_id;
-        //     // $sp = $t->get('s_130p_'.$sp_id);
-        //     // $sp = json_decode($sp);
-        //     // echo '<pre>';
-        //     // print_r($sp);
-        //     // echo '</pre>';
-
-        //     $sp_all = $t->get('sp_all');
-        //     $sp_all = json_decode($sp_all);
-        //     echo '<pre>';
-        //     for ($i=0; $i < 20; $i++) {                 
-        //         foreach ($sp_all as $v) {
-        //             $sp = $t->get('sp_'.$v);
-        //             $sp = json_decode($sp);
-        //            // print_r($sp);
-        //         }            
-        //     }
-        //     unset($sp_all);
-        //     echo '</pre>';
+<?php echo $this->render('2',[
+    'assetsPrefix' => $assetsPrefix,
+    'model' => $model,
+]); ?>   
 
 
-        //     $tuyen = json_decode($tuyen,true);
-        //     // echo '<pre>';
-        //     // print_r(($t->get('thongtin2')));
-        //     $jsonstring = $t->get('menu');
-        //     $op = [
-        //         'options' => [
-        //                 'class' => 'navbar-nav nav',
-        //                 'id'=>'navbar-id',
-        //                 // 'data-tag'=>'yii2-menu',
-        //             ],
-        //     ];
-        //     $submenu = [
-        //         'submenuTemplate' => "\n<ul class='dropdown-menu' role='menu'>\n{items}\n</ul>\n",
-        //     ];
+<ul class="homeproduct">
 
-        //     $jsonstring = json_decode($jsonstring,true);
-        //     // echo '<pre>';
-        //     // print_r($jsonstring);
-        //     // echo '</pre>';
-            
-        //     // echo Menu::widget($jsonstring);
-        //     echo Menu::widget($tuyen);
-        // }
-        // echo Menu::widget(json_decode($jsonstring,true)); 
+<?php 
+   // echo '<pre>';
+   // print_r($model['list_thongso']);
+   // echo '</pre>';
 
-         // Aabc::$app->settings->clearCache();
-    ?> 
-    cache main
-<?php
-    $this->endCache();
+   // echo '<pre>';
+   // print_r($listsp);
+   // echo '</pre>';
+    if(is_array($model['dm_listsp'])) foreach ($model['dm_listsp'] as $k => $idsp) {
+        $sanpham = Tuyen::_dulieu('sanpham', $idsp);
+        if($sanpham){ 
+            $img = Tuyen::_dulieu('image',$sanpham['sp_images'],'180x180');
+
+    ?>            
+            <li>
+                <a href="#123">
+                    <img width="180" height="180" src="<?= $img?>">
+                    <h3><?= $sanpham['sp_tensp']?></h3>
+                    <div class="price">
+                        <strong>
+                        <?php if(is_numeric($sanpham['sp_gia'])){ 
+                            echo number_format($sanpham['sp_gia']) .' '. $donvitiente;
+                        }else{
+                            echo $sanpham['sp_gia'];
+                        } ?>
+                        </strong>
+                    </div>
+                    <div class="ratingresult">
+                        <i class="icontgdd-ystar"></i>
+                        <i class="icontgdd-ystar"></i>
+                        <i class="icontgdd-ystar"></i>
+                        <i class="icontgdd-ystar"></i>
+                        <i class="icontgdd-ystar"></i>
+                        <span>33 đánh giá</span>
+                    </div>
+                    <div class="promo noimage">
+                        <p>
+                            Giảm 3 triệu thanh to &#225;n online bằng thẻ Mastercard và <b>2 K.mãi</b>
+                            khác
+                        </p>
+                    </div>
+                    <label class="discount">GIẢM 2.000.000₫</label>
+                </a>
+            </li>
+
+<?php        }
     }
 ?>
+
+</ul>
+<!--  <li class="feature">
+    <a href="https://www.thegioididong.com/dtdd/iphone-x-256gb">
+        <img width="600" height="275" src="<?php // $assetsPrefix?>/jpg/iphone-x-256gb-14.jpg">
+        <h3>iPhone X 256GB Gray</h3>
+        <div class="price">
+            <strong>34.790.000₫</strong>
+        </div>
+        <div class="ratingresult">
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <span>33 đánh giá</span>
+        </div>
+        <label class="discount">GIẢM 3.000.000₫</label>
+    </a>
+</li>
+
+<li>
+    <a href="https://www.thegioididong.com/dtdd/iphone-x-256gb-silver">
+        <img width="180" height="180" src="<?php // $assetsPrefix?>/jpg/iphone-x-256gb-silver-400x400.jpg">
+        <h3>iPhone X 256GB Silver</h3>
+        <div class="price">
+            <strong>34.790.000₫</strong>
+        </div>
+        <div class="ratingresult">
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <i class="icontgdd-ystar"></i>
+            <span>33 đánh giá</span>
+        </div>
+        <div class="promo noimage">
+            <p>
+                Giảm 3 triệu thanh to &#225;n online bằng thẻ Mastercard và <b>2 K.mãi</b>
+                khác
+            </p>
+        </div>
+        <label class="discount">GIẢM 2.000.000₫</label>
+    </a>
+</li> -->
