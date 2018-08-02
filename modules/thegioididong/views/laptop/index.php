@@ -18,11 +18,6 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 
 
 
-<?php echo $this->render('2',[
-    'assetsPrefix' => $assetsPrefix,
-    'model' => $model,
-]); ?>   
-
 
 <ul class="homeproduct">
 

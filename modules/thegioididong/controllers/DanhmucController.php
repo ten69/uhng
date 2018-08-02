@@ -82,11 +82,17 @@ class DanhmucController extends Controller
                 exit();
             }
         }
-               
-        $kq = $this->render('/laptop/index', [
+        if(isset($_GET['search'])){
+            $this->layout = 'laptop/main-search';
+            $kq = $this->render('/laptop/index-search', [
+                'model' => $model,                
+            ]);            
+        }else{
+            $kq = $this->render('/laptop/index', [
             'model' => $model,                
         ]);            
-       
+        }
+        
         return $kq;
     }
 

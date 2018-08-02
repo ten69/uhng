@@ -29,44 +29,15 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 <!DOCTYPE html>
 <html lang="<?= Aabc::$app->language ?>">
 <head>    
-    <?php echo $this->render('head',['assetsPrefix' => $assetsPrefix]); ?>        
+    <?php echo $this->render('head-search',['assetsPrefix' => $assetsPrefix]); ?>        
 </head>
 
     <body>          
        
         <section class="laptopcate ">
 
-            <div class="laptoptop">
-               
-                <?php echo $this->render('2',['assetsPrefix' => $assetsPrefix]); ?>
-
-                <?php echo $this->render('3',['assetsPrefix' => $assetsPrefix]); ?>
-
-                <div class="clr"></div>
-            </div>
-
-
-            <div class="clr"></div>
-
-            <?php echo $this->render('4',['assetsPrefix' => $assetsPrefix]); ?>
-            
-            <!-- <div class="laptopprice">
-                <h1>Laptop nổi bật nhất</h1>
-                <div>
-                    Mức giá:
-                    <a href="https://www.thegioididong.com/laptop?p=tren-25-trieu">Tr &#234;n 25 triệu
-                    </a>
-                    <a href="https://www.thegioididong.com/laptop?p=15-25-trieu">15 - 25 triệu
-                    </a>
-                    <a href="https://www.thegioididong.com/laptop?p=10-15-trieu">10 - 15 triệu
-                    </a>
-                    <a href="https://www.thegioididong.com/laptop?p=duoi-10-trieu">Dưới 10 triệu
-                    </a>
-                </div>
-            </div> -->
-
-        
-             <?php echo $content ?> 
+                   
+            <?php echo $content ?> 
 
             
             <?php echo $this->render('5',['assetsPrefix' => $assetsPrefix]); ?>   

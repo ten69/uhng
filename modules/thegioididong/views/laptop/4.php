@@ -8,7 +8,7 @@ $model = Tuyen::_dulieu('module', '34');
 
 <div class="laptopmanu">
     	<?php foreach ($model as $k => $v) {    		
-    		$img = Tuyen::_dulieu('image',$v['background'],'390x80');
+    		$img = Tuyen::_dulieu('image',$v['background'],'');
     	?>
     		<a href='#456'>
     		<?php if(!empty($img)){ ?>	        

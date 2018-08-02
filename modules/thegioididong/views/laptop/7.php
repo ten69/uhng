@@ -1,7 +1,7 @@
 <?php
 use aabc\helpers\ArrayHelper;
 use common\components\Tuyen;
-$model = Tuyen::_dulieu('module', '33');
+$model = Tuyen::_dulieu('module', '37');
 
 ?>
 

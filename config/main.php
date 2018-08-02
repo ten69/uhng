@@ -10,9 +10,10 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
-$config_router = array_merge(
+$config_main = array_merge(
     require(ROOT_PATH . '/frontend/modules/'.temp.'/config/main.php')
 );
+
 
 
 return [
@@ -120,7 +121,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             // 'suffix' => '.html',
-            'rules' => $config_router,
+            'rules' => $config_main['router'],
             // 'rules' => [         
                 
                 // [
