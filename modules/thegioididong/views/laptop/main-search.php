@@ -136,35 +136,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
         </p>
 
 
-        <script type="text/javascript">
-            var query = {
-                Category: 42,
-                Manufacture: 0,
-                PriceRange: 0,
-                Feature: 0,
-                Property: 0,
-                OrderBy: 0,
-                PageSize: 30,
-                PageIndex: 0,
-                Others: '',
-                ClearCache: 0
-            };
-            var advanceQuery = {
-                Category: 42,
-                Manufacture: '',
-                PriceRange: 0,
-                Feature: '',
-                Property: '',
-                OrderBy: 0,
-                PageSize: 28,
-                PageIndex: 0,
-                Count: 0,
-                Others: '',
-                ClearCache: 0
-            };
-            var GL_CATEGORYID = 42;
-            var GL_MANUFACTUREID = 0;
-        </script>
+        
         <script defer="defer" async="async" src="<?= $assetsPrefix?>/js/category.min.v201805221030.js"></script>
         
        

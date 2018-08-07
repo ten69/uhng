@@ -105,20 +105,21 @@ function empty(n) {
         return !0
     }
     return !1
+    // 0945252388
 }
 function getScriptChatTgdd() {
-    setTimeout(function() {
-        var n, t;
-        gl_fLoadChat || (gl_fLoadChat = !0,
-        n = getCookie("chat.username"),
-        (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.v" + g_version + ".js",
-        $.getScript(t).done(function() {
-            console.log("GET SCRIPT CHAT: DONE")
-        })) : (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.js",
-        $.getScript(t).done(function() {
-            console.log("GET SCRIPT CHAT: DONE")
-        }))))
-    }, 1e4)
+    // setTimeout(function() {
+    //     var n, t;
+    //     gl_fLoadChat || (gl_fLoadChat = !0,
+    //     n = getCookie("chat.username"),
+    //     (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.v" + g_version + ".js",
+    //     $.getScript(t).done(function() {
+    //         console.log("GET SCRIPT CHAT: DONE")
+    //     })) : (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.js",
+    //     $.getScript(t).done(function() {
+    //         console.log("GET SCRIPT CHAT: DONE")
+    //     }))))
+    // }, 1e4)
 }
 function CreateCookie(n, t, i) {
     var r = new Date, u;
@@ -170,11 +171,11 @@ function getUrlParameter(n) {
             return t[1] === undefined ? !0 : t[1]
 }
 function getJsRateShip() {
-    setTimeout(function() {
-        $.getScript("/Scripts/mobile/V4/ratingship.min.js").done(function() {
-            console.log("getJsRateShip_js")
-        })
-    }, 11e3)
+    // setTimeout(function() {
+    //     $.getScript("/Scripts/mobile/V4/ratingship.min.js").done(function() {
+    //         console.log("getJsRateShip_js")
+    //     })
+    // }, 11e3)
 }
 function InitEvent() {
     $(".barpage.prevent label").click(function() {
@@ -241,7 +242,8 @@ function CountAdvance(n) {
     (CollectParam(),
     advanceQuery.Count = 1,
     FL_LoadMore) && (FL_LoadMore = !1,
-    POSTAjax("/aj/CategoryV5/Advance", advanceQuery, function() {
+    console.log('#CountAdvance'),
+    POSTAjax("/api?p=1000100", advanceQuery, function() {
         $(n).find(".cslder").show();
         $(n).find(".doit").html("")
     }, function(t) {
@@ -255,21 +257,32 @@ function ShowResult(n) {
     (n === undefined && (n = !0),
     advanceQuery.Count = 0,
     FL_LoadMore) && (FL_LoadMore = !1,
-    POSTAjax("/aj/CategoryV5/Advance", advanceQuery, function() {
+    console.log('#ShowResult'),
+    POSTAjax("/api?p=101100", advanceQuery, function() {
         $(".loadingcover").fadeIn()
     }, function(t) {
+
         var i, r;
         $("#dlding").fadeOut();
         FL_LoadMore = !0;
         ReloadAdvanceFilter();
         (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
         location.reload());
-        i = "<div>" + t + "<\/div>";
-        $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct"));
-        $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
+        
+        // i = "<div>" + t + "<\/div>";
+        // $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct"));
+
+        $("ul.homeproduct").html(t.html);
+        if(t.more === ''){
+            $(".viewmore").empty().hide()
+        }else{
+            $(".viewmore").html(t.more).show()
+        }
+        // $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
+
         $(".filter li > div").slideUp();
         $("body,html").animate({
-            scrollTop: $(".barpage").position().top
+            //scrollTop: $(".barpage").position().top
         }, 600);
         LazyLoad();
         n && (r = ToHash(advanceQuery),
@@ -289,14 +302,25 @@ function ScrollResult() {
     t = jQuery.extend(!0, {}, advanceQuery),
     n = 0; n <= advanceQuery.PageIndex; n++)
         t.PageIndex = n,
-        POSTAjax("/aj/CategoryV5/Advance", t, BeforeSendAjax, function(t) {
+        console.log('#ScrollResult'),
+        POSTAjax("/api?p=101100", t, BeforeSendAjax, function(t) {
             $("#dlding").fadeOut();
             FL_LoadMore = !0;
             (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
             location.reload());
-            var i = "<div>" + t + "<\/div>";
-            n == 0 ? $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct")) : $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
-            $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
+
+            // var i = "<div>" + t + "<\/div>";
+            // n == 0 ? $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct")) : $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
+            // $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
+
+            n == 0 ? $("ul.homeproduct").html(t.html) : $("ul.homeproduct").append(t.html) ;
+
+            if(t.more === ''){
+                $(".viewmore").empty().hide()
+            }else{
+                $(".viewmore").html(t.more).show()
+            }
+
             LazyLoad()
         }, ErrorAjax, !1);
     ReloadAdvanceFilter();
@@ -421,7 +445,7 @@ function FromHash(n) {
 }
 function ReloadAdvanceFilter() {
     FL_LoadMore && (FL_LoadMore = !1,
-    POSTAjax("/aj/CategoryV5/AdvanceFilter", advanceQuery, BeforeSendAjax, function(n) {
+    POSTAjax("/api?p=110001", advanceQuery, BeforeSendAjax, function(n) {
         $("#dlding").fadeOut();
         FL_LoadMore = !0;
         (n == null || n == "") && (alert("Opps, something went wrong! Try it later..."),
@@ -453,7 +477,8 @@ function More(n) {
     n ? advanceQuery.PageIndex = parseInt(advanceQuery.PageIndex) + 1 : query.PageIndex = parseInt(query.PageIndex) + 1,
     $("a.viewmore").addClass("loading").html('<p class="cslder"><span class="cswrap"><span class="csdot"><\/span><span class="csdot"><\/span><span class="csdot"><\/span><\/span><\/p>'),
     $("a.viewmore .cslder").show(),
-    POSTAjax(n ? "/aj/CategoryV5/Advance" : "/aj/CategoryV5/Product", n ? advanceQuery : query, function() {}, function(t) {
+    console.log('#More'),
+    POSTAjax(n ? "/api?p=101100" : "/api?p=101100", n ? advanceQuery : query, function() {}, function(t) {
         var i, r;
         if ($("#dlding").fadeOut(),
         FL_LoadMore = !0,
@@ -461,9 +486,17 @@ function More(n) {
             $("a.viewmore").remove();
             return
         }
-        i = "<div>" + t + "<\/div>";
-        $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
-        $(i).find("a.viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(".viewmore").remove();
+        // i = "<div>" + t + "<\/div>";
+        // $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
+        // $(i).find("a.viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(".viewmore").remove();
+
+        $("ul.homeproduct").append(t.html);
+        if(t.more === ''){
+            $(".viewmore").empty().hide()
+        }else{
+            $(".viewmore").html(t.more).show()
+        }
+
         LazyLoad();
         n ? (r = ToHash(advanceQuery),
         document.location.hash = r) : document.location.hash = "i:" + query.PageIndex
@@ -6109,7 +6142,7 @@ $(window).load(function() {
         $(".criteria").not(this).next().hide();
         $(this).next().slideToggle(200);
         $("body,html").animate({
-            scrollTop: $(".barpage").position().top
+            //scrollTop: $(".barpage").position().top
         }, 600)
     });
     $(".closefilter").click(function() {

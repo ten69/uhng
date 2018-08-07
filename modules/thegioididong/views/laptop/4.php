@@ -10,7 +10,14 @@ $model = Tuyen::_dulieu('module', '34');
     	<?php foreach ($model as $k => $v) {    		
     		$img = Tuyen::_dulieu('image',$v['background'],'');
     	?>
-    		<a href='#456'>
+
+    	<?php
+			$url = json_decode($v['url'],true);
+			$url = $url['c'];
+		?>
+
+    		<a href='<?= $url?>'>
+
     		<?php if(!empty($img)){ ?>	        
 	            <img src='<?= $img?>' alt='<?= $v['label']?>' />
 	        <?php }else{

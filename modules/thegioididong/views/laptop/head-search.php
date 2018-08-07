@@ -1214,6 +1214,18 @@
             width: 100%
         }
 
+        .filter li:last-child {
+        float: right;
+        margin-right: 10px;
+    }
+
+    .filter li .sortprice {
+        text-align: left;
+        right: -10px;
+        left: auto;
+        width: 145px;
+    }
+
         .filter li {
             display: inline-block;
             height: 40px;
@@ -1339,7 +1351,7 @@
 
         .filter li label {
             display: block;
-            padding: 5px 0 6px;
+            padding: 5px 0 6px 5px;
             cursor: pointer
         }
 
@@ -1388,7 +1400,8 @@
 
         .filter li .check .icontgdd-checklist {
             display: inline-block;
-            margin-left: -20px
+            margin: 2px 0 0 -20px;
+            position: absolute;
         }
 
         .filter li .feature {

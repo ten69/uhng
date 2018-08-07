@@ -8,6 +8,14 @@ return [
 		    // 'suffix' => '.html',
 		],
 
+
+		[
+		    'pattern' => 'api', //san-pham.html
+		    'route' => temp.'/site/api',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '',
+		],
+
 		[
 		    'pattern' => 'san-pham', //san-pham.html
 		    'route' => temp.'/sanpham',
@@ -24,11 +32,20 @@ return [
 		// ],
 
 		[
-		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-1<id:\d+>',
+		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-11<id:\d+>',
 		    'route' => temp.'/danhmuc',
 		    'defaults' => [/*'type' => 1*/],
 		    'suffix' => '.html',
 		],
+
+
+		[
+		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-12<id:\d+>',
+		    'route' => temp.'/danhmuc/thongso',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
 	],
 	'size-image' => [		
 		['80','80'],

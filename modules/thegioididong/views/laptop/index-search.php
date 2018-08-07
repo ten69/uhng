@@ -17,19 +17,75 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 ?>
 
 <div class="choosedfilter">
-    <a href="/laptop?g=duoi-500-gb">
-        <h2>HP-Compaq</h2>
-        <i class="icontgdd-clearfil"></i></a>
-    <a href="/laptop-hp-compaq">
-        <h2>Dưới 500 GB</h2>
-        <i class="icontgdd-clearfil"></i></a>
-    <a class="reset" href="/laptop">Xóa tất cả<i class="icontgdd-clearfil"></i></a>
-    <div class="watching">
-        <h1>Laptop HP-Compaq Ổ cứng Dưới 500 GB</h1>
-    </div>
+    
 </div>
 
+<?php if(isset($dmsp)){ ?>
 
+<script type="text/javascript">
+    var query = {
+        Category: 42,
+        Manufacture: 0,
+        PriceRange: 0,
+        Feature: 0,
+        Property: 0,
+        OrderBy: 0,
+        PageSize: 2,
+        PageIndex: 0,
+        Others: '',
+        ClearCache: 0
+    };
+    var advanceQuery = {
+        Category: 42,
+        Manufacture: '',
+        PriceRange: 0,
+        Feature: '',
+        Property: <?= $model['dm_id']?>,
+        OrderBy: 0,
+        PageSize: 3,
+        PageIndex: 0,
+        Count: 0,
+        Others: '',
+        ClearCache: 0
+    };
+    var GL_CATEGORYID = 42;
+    var GL_MANUFACTUREID = 0;    
+    window.onload = function() {
+       ShowResult();
+    };
+</script>
+<?php }else{ ?>
+<script type="text/javascript">
+    var query = {
+        Category: 42,
+        Manufacture: 0,
+        PriceRange: 0,
+        Feature: 0,
+        Property: 0,
+        OrderBy: 0,
+        PageSize: 2,
+        PageIndex: 0,
+        Others: '',
+        ClearCache: 0
+    };
+    var advanceQuery = {
+        Category: 42,
+        Manufacture: '',
+        PriceRange: 0,
+        Feature: '',
+        Property: '',
+        OrderBy: 0,
+        PageSize: 3,
+        PageIndex: 0,
+        Count: 0,
+        Others: '',
+        ClearCache: 0
+    };
+    var GL_CATEGORYID = 42;
+    var GL_MANUFACTUREID = 0;
+</script>
+
+<?php } ?>
 
     <ul class="filter">
         <!--#region Tính năng 2-->
@@ -173,8 +229,11 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                 </p>
             </div>
         </li> -->
+            <?php
+                if(!isset($dmsp)) $dmsp = $model['list_thongso'];
+            ?>
 
-            <?php if(is_array($model['list_thongso'])) foreach ($model['list_thongso'] as $k => $v) {
+            <?php if(is_array($dmsp)) foreach ($dmsp as $k => $v) {
                     $thongso = Tuyen::_dulieu('danhmuc', $v); ?>
             <li>
                 <span class="criteria"><?= $thongso['dm_ten']?>
@@ -211,7 +270,16 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
             </li>
             <?php } ?>
 
-
+            <li>
+                <span class="criteria">Sắp xếp
+                </span>
+                <div class="sortprice">
+                    <button type="button" class="closefilter"><i class="icontgdd-closefilter"></i></button>
+                    <label class="check" data-id="1"><i class="icontgdd-checklist"></i>Giá thấp đến cao</label>
+                    <label data-id="2"><i class="icontgdd-checklist"></i>Giá cao đến thấp</label>                    
+                    <p class="doit"></p>
+                </div>
+            </li>
         <!--#endregion-->
     <!-- <li class="barpage prevent">
         <label data-id="moi-ra-mat"><a href="?s=moi-ra-mat"><i class="icontgdd-checkbox"></i>Mới</a></label>
@@ -229,40 +297,10 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
    // echo '<pre>';
    // print_r($listsp);
    // echo '</pre>';
-    if(is_array($model['dm_listsp'])) foreach ($model['dm_listsp'] as $k => $idsp) {
-        $sanpham = Tuyen::_dulieu('sanpham', $idsp);
-        if($sanpham){ 
-            $img = Tuyen::_dulieu('image',$sanpham['sp_images'],'180x180');
-
-    ?>            
-    <li>
-        <a href="#123">
-            <img width="180" height="180" src="<?= $img?>" /> 
-             <div class="props">
-                <span class="dotted">RAM 4GB</span>
-                <span class="dotted">Ổ cứng 1TB</span>
-            </div>
-            <h3><?= $sanpham['sp_tensp']?></h3>
-            <div class="price">
-                <strong>
-                <?php if(is_numeric($sanpham['sp_gia'])){ 
-                    echo number_format($sanpham['sp_gia']) .' '. $donvitiente;
-                }else{
-                    echo $sanpham['sp_gia'];
-                } ?>
-                </strong>
-            </div>                    
-            <div class="promo noimage">
-                <p>
-                    Giảm 3 triệu thanh to &#225;n online bằng thẻ Mastercard và <b>2 K.mãi</b>
-                    khác
-                </p>
-            </div>
-        </a>
-    </li>
-
-
-<?php        }
+    if(is_array($model['dm_listsp'])) foreach ($model['dm_listsp'] as $k => $idsp) {        
+        echo $this->render('_item',[
+            'idsp' => $idsp,
+        ]);
     }
 ?>
 
@@ -320,4 +358,4 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     </li>
      -->
 <!-- </ul> -->
-<a href="javascript:More()" class="viewmore">Xem thêm 70 laptop</a>
+<a href="javascript:More(1)" class="viewmore"></a>

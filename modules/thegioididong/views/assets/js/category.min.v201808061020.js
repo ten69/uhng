@@ -107,18 +107,18 @@ function empty(n) {
     return !1
 }
 function getScriptChatTgdd() {
-    // setTimeout(function() {
-    //     var n, t;
-    //     gl_fLoadChat || (gl_fLoadChat = !0,
-    //     n = getCookie("chat.username"),
-    //     (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.v" + g_version + ".js",
-    //     $.getScript(t).done(function() {
-    //         console.log("GET SCRIPT CHAT: DONE")
-    //     })) : (t = "js/chatclienttgddmobile.js",
-    //     $.getScript(t).done(function() {
-    //         console.log("GET SCRIPT CHAT: DONE")
-    //     }))))
-    // }, 1e4)
+    setTimeout(function() {
+        var n, t;
+        gl_fLoadChat || (gl_fLoadChat = !0,
+        n = getCookie("chat.username"),
+        (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.v" + g_version + ".js",
+        $.getScript(t).done(function() {
+            console.log("GET SCRIPT CHAT: DONE")
+        })) : (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.js",
+        $.getScript(t).done(function() {
+            console.log("GET SCRIPT CHAT: DONE")
+        }))))
+    }, 1e4)
 }
 function CreateCookie(n, t, i) {
     var r = new Date, u;
@@ -171,66 +171,672 @@ function getUrlParameter(n) {
 }
 function getJsRateShip() {
     setTimeout(function() {
-        $.getScript("js/ratingship.min.js").done(function() {
+        $.getScript("/Scripts/mobile/V4/ratingship.min.js").done(function() {
             console.log("getJsRateShip_js")
         })
     }, 11e3)
 }
-function LoadTimeCountDown() {
-    $(".promo .t").length > 0 && $(".promo .t").each(function() {
-        initializeClock($(this).attr("id"))
+function InitEvent() {
+    $(".barpage.prevent label").click(function() {
+        $(this).toggleClass("check");
+        CollectParam();
+        ShowResult()
+    });
+    $(".fmanu > a.prevent").click(function(n) {
+        n.preventDefault();
+        $(".fmanu label.all").removeClass("check");
+        $(".fmanu div").find("label[data-id=" + $(this).data("id") + "]").addClass("check");
+        CollectParam();
+        ShowResult()
+    });
+    $(".frange > a.prevent").click(function(n) {
+        n.preventDefault();
+        $(".frange div").find("label.check").removeClass("check");
+        $(".frange div").find("label[data-id=" + $(this).data("id") + "]").addClass("check");
+        CollectParam();
+        ShowResult()
     })
 }
-function initializeClock(n) {
-    var t = document.getElementById(n)
-      , i = setInterval(function() {
-        var n = getTimeRemaining($(t).attr("data-time"));
-        t.innerHTML = n.days * 24 + n.hours + " : " + n.minutes + " : " + n.seconds;
-        n.total <= 0 && (clearInterval(i),
-        $(t).parent(".time").html(""))
-    }, 1e3)
+function LazyLoad() {
+    $(".lazy").lazyload({
+        load: function() {
+            this.style.opacity = 1;
+            $(this).addClass("lazydone")
+        },
+        threshold: 100
+    })
 }
-function getTimeRemaining(n) {
-    var t = Date.parse(new Date(n)) - Date.parse(new Date)
-      , i = Math.floor(t / 1e3 % 60)
-      , r = Math.floor(t / 6e4 % 60)
-      , u = Math.floor(t / 36e5 % 24)
-      , f = Math.floor(t / 864e5);
-    return {
-        total: t,
-        days: f,
-        hours: u,
-        minutes: r,
-        seconds: i
-    }
+function CollectParam() {
+    var t, i, r, n, u, f;
+    advanceQuery.Manufacture = query.Manufacture;
+    t = $(".feature .property label.check");
+    t.length > 0 ? (n = [],
+    $(t).each(function() {
+        n.push($(this).data("id"))
+    }),
+    advanceQuery.Property = n.join()) : advanceQuery.Property = "";
+    i = $(".feature .yesno label.check");
+    i.length > 0 ? (n = [],
+    $(i).each(function() {
+        n.push($(this).data("id"))
+    }),
+    advanceQuery.Feature = n.join()) : advanceQuery.Feature = "";
+    r = $(".barpage label.check");
+    r.length > 0 ? (n = [],
+    $(r).each(function() {
+        n.push($(this).data("id"))
+    }),
+    advanceQuery.Others = n.join()) : advanceQuery.Others = "";
+    u = $(".filter li .listprice label.check").data("id");
+    f = $(".filter li .sortprice label.check").data("id");
+    advanceQuery.PriceRange = u;
+    advanceQuery.OrderBy = f;
+    advanceQuery.PageIndex = 0
 }
-function LoadCategoryStatistic() {
+function CountAdvance(n) {
+    (CollectParam(),
+    advanceQuery.Count = 1,
+    FL_LoadMore) && (FL_LoadMore = !1,
+    POSTAjax("/aj/CategoryV5/Advance", advanceQuery, function() {
+        $(n).find(".cslder").show();
+        $(n).find(".doit").html("")
+    }, function(t) {
+        $(n).find(".cslder").hide();
+        FL_LoadMore = !0;
+        $(n).find(".doit").replaceWith(t);
+        n == ".feature" && ($(n).find("label.check").length > 0 ? $(n).find(".doit").append('<button type="reset" class="clearcriteria" onclick="RemoveAllFilter(this)">Bỏ tất cả lựa chọn<\/button>') : $(n).find(".doit .clearcriteria").remove())
+    }, ErrorAjax, !0))
+}
+function ShowResult(n) {
+    (n === undefined && (n = !0),
+    advanceQuery.Count = 0,
+    FL_LoadMore) && (FL_LoadMore = !1,
+    POSTAjax("/aj/CategoryV5/Advance", advanceQuery, function() {
+        $(".loadingcover").fadeIn()
+    }, function(t) {
+        var i, r;
+        $("#dlding").fadeOut();
+        FL_LoadMore = !0;
+        ReloadAdvanceFilter();
+        (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
+        location.reload());
+        i = "<div>" + t + "<\/div>";
+        $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct"));
+        $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
+        $(".filter li > div").slideUp();
+        $("body,html").animate({
+            scrollTop: $(".barpage").position().top
+        }, 600);
+        LazyLoad();
+        n && (r = ToHash(advanceQuery),
+        document.location.hash = r);
+        $(".barpage").addClass("prevent");
+        $(".fmanu > a").addClass("prevent");
+        $(".frange > a").addClass("prevent");
+        $(".filter li div a").addClass("prevent");
+        InitEvent();
+        $(".loadingcover").fadeOut();
+        $("#manufacturefilterbanner").remove()
+    }, ErrorAjax, !0))
+}
+function ScrollResult() {
+    var t, n;
+    for ($(".loadingcover").fadeIn(),
+    t = jQuery.extend(!0, {}, advanceQuery),
+    n = 0; n <= advanceQuery.PageIndex; n++)
+        t.PageIndex = n,
+        POSTAjax("/aj/CategoryV5/Advance", t, BeforeSendAjax, function(t) {
+            $("#dlding").fadeOut();
+            FL_LoadMore = !0;
+            (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
+            location.reload());
+            var i = "<div>" + t + "<\/div>";
+            n == 0 ? $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct")) : $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
+            $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
+            LazyLoad()
+        }, ErrorAjax, !1);
+    ReloadAdvanceFilter();
+    sessionStorage && $("body,html").animate({
+        scrollTop: sessionStorage.getItem("lastScrollTop")
+    }, function() {
+        waitDefaultScroll = !1
+    });
+    $(".loadingcover").fadeOut()
+}
+function ScrollResultNormal() {
+    var t, n;
+    for ($(".loadingcover").fadeIn(),
+    t = jQuery.extend(!0, {}, query),
+    n = 0; n <= query.PageIndex; n++)
+        t.PageIndex = n,
+        POSTAjax("/aj/CategoryV5/Product", t, BeforeSendAjax, function(t) {
+            $("#dlding").fadeOut();
+            FL_LoadMore = !0;
+            (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
+            location.reload());
+            var i = "<div>" + t + "<\/div>";
+            n == 0 ? $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct")) : $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
+            $(".viewmore").length > 0 && $(".viewmore").replaceWith($(i).find(".viewmore"));
+            LazyLoad()
+        }, ErrorAjax, !1);
+    sessionStorage && $("body,html").animate({
+        scrollTop: sessionStorage.getItem("lastScrollTop")
+    }, function() {
+        waitDefaultScroll = !1
+    });
+    $(".loadingcover").fadeOut()
+}
+function ToHash(n) {
+    if (n === undefined)
+        return "";
+    var t = "";
+    return n.Manufacture !== undefined && n.Manufacture != "" && (t += "m:" + n.Manufacture + "&"),
+    n.PriceRange !== undefined && n.PriceRange > 0 && (t += "p:" + n.PriceRange + "&"),
+    n.Feature !== undefined && n.Feature != "" && (t += "f:" + n.Feature + "&"),
+    n.Property !== undefined && n.Property != "" && (t += "g:" + n.Property + "&"),
+    n.Others !== undefined && n.Others != "" && (t += "r:" + n.Others + "&"),
+    n.OrderBy !== undefined && n.OrderBy > 0 && (t += "o:" + n.OrderBy + "&"),
+    n.PageIndex !== undefined && n.PageIndex > 0 && (t += "i:" + n.PageIndex + "&"),
+    t[t.length - 1] == "&" && (t = t.substring(0, t.length - 1)),
+    t
+}
+function MapQueryToFilter(n) {
+    var t;
+    n !== undefined && (n.Manufacture !== undefined && n.Manufacture != "" && (t = n.Manufacture.split(","),
+    $(".manufacture label").each(function() {
+        t.indexOf($(this).data("id") + "") > -1 ? $(this).addClass("check") : $(this).removeClass("check")
+    })),
+    n.PriceRange !== undefined && n.PriceRange > 0 && $(".listprice label").each(function() {
+        $(this).data("id") == n.PriceRange && ($(this).addClass("check"),
+        $(".listprice label.all").removeClass("check"))
+    }),
+    n.Feature !== undefined && n.Feature != "" && (t = n.Feature.split(","),
+    $(".feature .yesno label").each(function() {
+        t.indexOf($(this).data("id") + "") > -1 ? $(this).addClass("check") : $(this).removeClass("check")
+    })),
+    n.Property !== undefined && n.Property != "" && (t = n.Property.split(","),
+    $(".feature .property label").each(function() {
+        t.indexOf($(this).data("id") + "") > -1 ? $(this).addClass("check") : $(this).removeClass("check")
+    })),
+    n.Others !== undefined && n.Others != "" && (t = n.Feature.split(","),
+    $(".barpage label").each(function() {
+        t.indexOf($(this).data("id") + "") > -1 ? $(this).addClass("check") : $(this).removeClass("check")
+    })),
+    n.OrderBy !== undefined && n.OrderBy > 0 && $(".filter li .sortprice label").each(function() {
+        $(this).data("id") == n.OrderBy && ($(".filter li .sortprice label.check").removeClass("check"),
+        $(this).addClass("check"))
+    }))
+}
+function FromHash(n) {
+    var u, i, r, f, e, t;
+    if (n == "" || (u = n.split("&"),
+    u.length == 0))
+        return null;
+    i = advanceQuery;
+    r = !1;
+    for (f in u)
+        (e = u[f],
+        t = e.split(":"),
+        t.length == 2) && (t[0] == "m" ? (i.Manufacture = t[1],
+        r = !0) : t[0] == "p" ? (i.PriceRange = t[1],
+        r = !0) : t[0] == "f" ? (i.Feature = t[1],
+        r = !0) : t[0] == "g" ? (i.Property = t[1],
+        r = !0) : t[0] == "r" ? (i.Others = t[1],
+        r = !0) : t[0] == "o" ? (i.OrderBy = t[1],
+        r = !0) : t[0] == "i" && (i.PageIndex = t[1],
+        r = !0));
+    return r ? i : null
+}
+function FromHash(n) {
+    var f, e, o, t;
+    if (n == "" || (f = n.split("&"),
+    f.length == 0))
+        return null;
+    var i = advanceQuery
+      , r = !1
+      , u = !1;
+    for (e in f)
+        (o = f[e],
+        t = o.split(":"),
+        t.length == 2) && (t[0] == "m" ? (i.Manufacture = t[1],
+        r = !0,
+        u = !0) : t[0] == "p" ? (i.PriceRange = t[1],
+        r = !0,
+        u = !0) : t[0] == "f" ? (i.Feature = t[1],
+        r = !0,
+        u = !0) : t[0] == "g" ? (i.Property = t[1],
+        r = !0,
+        u = !0) : t[0] == "r" ? (i.Others = t[1],
+        r = !0,
+        u = !0) : t[0] == "o" ? (i.OrderBy = t[1],
+        r = !0,
+        u = !0) : t[0] == "i" && (i.PageIndex = t[1],
+        r = !0),
+        i.IsAdvanced = u);
+    return r ? i : null
+}
+function ReloadAdvanceFilter() {
+    FL_LoadMore && (FL_LoadMore = !1,
+    POSTAjax("/aj/CategoryV5/AdvanceFilter", advanceQuery, BeforeSendAjax, function(n) {
+        $("#dlding").fadeOut();
+        FL_LoadMore = !0;
+        (n == null || n == "") && (alert("Opps, something went wrong! Try it later..."),
+        location.reload());
+        $(".choosedfilter").length > 0 ? $(".choosedfilter").replaceWith(n) : $(n).insertAfter($("ul.filter"))
+    }, ErrorAjax, !0))
+}
+function RemoveFilter(n, t, i) {
+    $(n).remove();
+    t == 1 ? $(".manufacture label.check").each(function() {
+        $(this).data("id") == i && $(this).removeClass("check")
+    }) : t == 2 ? ($(".listprice label.check").removeClass("check"),
+    $(".listprice label.all").removeClass("check")) : t == 3 ? $(".feature .property label.check").each(function() {
+        $(this).data("id") == i && $(this).removeClass("check")
+    }) : t == 4 && $(".feature .yesno label.check").each(function() {
+        $(this).data("id") == i && $(this).removeClass("check")
+    });
+    CollectParam();
+    ShowResult()
+}
+function RemoveAllFilter(n) {
+    var t = $(n).parents("div");
+    t.hasClass("manufacture") ? t.find("label.all").click() : t.hasClass("feature") && (t.find(".check").removeClass("check"),
+    CountAdvance(".feature"))
+}
+function More(n) {
+    (n === undefined && (n = !1),
+    FL_LoadMore) && (FL_LoadMore = !1,
+    n ? advanceQuery.PageIndex = parseInt(advanceQuery.PageIndex) + 1 : query.PageIndex = parseInt(query.PageIndex) + 1,
+    $("a.viewmore").addClass("loading").html('<p class="cslder"><span class="cswrap"><span class="csdot"><\/span><span class="csdot"><\/span><span class="csdot"><\/span><\/span><\/p>'),
+    $("a.viewmore .cslder").show(),
+    POSTAjax(n ? "/aj/CategoryV5/Advance" : "/aj/CategoryV5/Product", n ? advanceQuery : query, function() {}, function(t) {
+        var i, r;
+        if ($("#dlding").fadeOut(),
+        FL_LoadMore = !0,
+        t == null || t == "") {
+            $("a.viewmore").remove();
+            return
+        }
+        i = "<div>" + t + "<\/div>";
+        $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
+        $(i).find("a.viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(".viewmore").remove();
+        LazyLoad();
+        n ? (r = ToHash(advanceQuery),
+        document.location.hash = r) : document.location.hash = "i:" + query.PageIndex
+    }, ErrorAjax, !0))
+}
+function qcp_init(n) {
+    qcp_createHtml(n);
+    $(".stickcompare").hide();
+    setTimeout(function() {
+        qcp_checkCookie(n)
+    }, 500)
+}
+function qcp_createHtml(n) {
+    var t, r, i;
+    $("body .quickCpr").length == 0 && (t = "",
+    r = "sản phẩm",
+    n == 42 ? r = "điện thoại" : n == 44 ? r = "laptop" : n == 522 && (r = "máy tính bảng"),
+    t += '<div class="stickcompare">',
+    t += '<div class="small">',
+    t += "<ul>",
+    t += '<li id="btnMinimize" onclick=qcp_changeMinimize();><i><\/i> Thu nhỏ<\/li>',
+    t += "<li><span>|<\/span><\/li>",
+    t += "<li onclick='qcp_off();'>Tắt so sánh<\/li>",
+    t += "<\/ul>",
+    t += "<\/div>",
+    t += '<ul class="comlist">',
+    t += '<li id="qPr1">',
+    t += "<\/li>",
+    t += '<li id="qPr2">',
+    t += "<\/li>",
+    t += '<li id="qPr3">',
+    t += "<\/li>",
+    t += "<li>",
+    t += '<a href="javascript:void(0);" class="viewdisable viewfullcomp">So sánh chi tiết<\/a>',
+    t += '<span class="textmin">Tối thiểu 2 sản phẩm<\/span>',
+    t += "<\/li>",
+    t += "<\/ul>",
+    t += "<\/div>",
+    $("body").append(t),
+    i = "",
+    i += '<form action="javascript:void(0)">',
+    i += '<input type="search" name="" placeholder="So sánh với ' + r + ' gì..." onkeyup="qcp_SuggestCompare(this,event)" >',
+    i += '<button type="submit"><i class="icontgdd-scomp"><\/i><\/button>',
+    i += "<\/form>",
+    $("#qPr1").html(i),
+    $("#qPr2").html(i),
+    $("#qPr3").html(i))
+}
+function qcp_checkAdd(n, t) {
+    var i = !0;
+    return $(".comlist li").each(function() {
+        n == $(this).attr("data-id") && (i = !1,
+        alert('Bạn đã thêm sản phẩm "' + t + '" vào so sánh'))
+    }),
+    i
+}
+function qcp_addProdQcp(n, t, i, r) {
+    if (r != !0 && (r = !1),
+    !(parseInt(n) > 0))
+        return !1;
+    if (g_qcp_prod1 != "" && g_qcp_prod2 != "" && g_qcp_prod3 != "")
+        return alert("Bạn đã chọn 3 sản phẩm để so sánh"),
+        $(".stickcompare").show(),
+        qcp_maximize(),
+        !1;
+    if (!qcp_checkAdd(n, i))
+        return $(".stickcompare").show(),
+        qcp_maximize(),
+        !1;
+    g_qcp_cate != 0 && t != g_qcp_cate && r == !1 && qcp_clearAll();
     $.ajax({
-        url: "/aj/HomeV4/CategoryStatistic",
-        type: "POST",
-        dataType: "json",
-        data: {},
+        url: "/aj/Common/AddQuickCompare",
+        type: "GET",
+        data: {
+            iProductId: n,
+            iCateID: t
+        },
         cache: !0,
-        success: function(n) {
-            n != null && n != "" && ($(".viewallcat .mobile").html("Xem tất cả <b>" + n.phone + "<\/b> điện thoại"),
-            $(".viewallcat .tablet").html("Xem tất cả <b>" + n.tablet + "<\/b> tablet"),
-            $(".viewallcat .laptop").html("Xem tất cả <b>" + n.laptop + "<\/b> laptop"),
-            $(".viewallcat .accessory").html("Xem tất cả <b>" + n.accessory + "<\/b> phụ kiện"))
+        success: function(i) {
+            if (i != "") {
+                if (r == !1 ? (qcp_saveCookie(n, t),
+                qcp_maximize()) : qcp_minimize(),
+                $(".stickcompare").show(),
+                $(".stickcompare .comlist input").each(function() {
+                    $(this).val("")
+                }),
+                g_qcp_cate = parseInt(t),
+                g_qcp_prod1 == "") {
+                    g_qcp_prod1 = n;
+                    $("#qPr1").attr("data-id", n);
+                    $("#qPr1").attr("data-cate", t);
+                    $("#qPr1").html(i);
+                    $(".comlist li").last().find("a").attr("href", qcp_getLink());
+                    qcp_showDescript();
+                    return
+                }
+                if (g_qcp_prod2 == "") {
+                    g_qcp_prod2 = n;
+                    $("#qPr2").attr("data-id", n);
+                    $("#qPr2").attr("data-cate", t);
+                    $("#qPr2").html(i);
+                    $(".comlist li").last().find("a").attr("href", qcp_getLink());
+                    qcp_showDescript();
+                    return
+                }
+                if (g_qcp_prod3 == "") {
+                    g_qcp_prod3 = n;
+                    $("#qPr3").attr("data-id", n);
+                    $("#qPr3").attr("data-cate", t);
+                    $("#qPr3").html(i);
+                    $(".comlist li").last().find("a").attr("href", qcp_getLink());
+                    qcp_showDescript();
+                    return
+                }
+            }
         }
     })
 }
-function lazy(n, t, i) {
-    $(n).each(function(n, r) {
-        $(r).lazyload({
-            skip_invisible: t || !0,
-            container: i || window,
-            load: function() {
-                this.style.opacity = 1
-            }
-        })
-    })
+function qcp_clearProdQcp(n) {
+    var h = $(n).parent().attr("id"), s = $(n).parent().attr("data-id"), c = $(n).parent().attr("data-cate"), l, r, u, t;
+    if (c = parseInt(c),
+    l = "sản phẩm",
+    c == 42 ? l = "điện thoại" : c == 44 ? l = "laptop" : c == 522 && (l = "máy tính bảng"),
+    r = "",
+    r += '<form action="javascript:void(0)" >',
+    r += '<input type="search" name="" placeholder="So sánh với ' + l + ' gì..." onkeyup="qcp_SuggestCompare(this,event)" >',
+    r += '<button type="submit"><i class="icontgdd-scomp"><\/i><\/button>',
+    r += "<\/form>",
+    h != "" && ($("#" + h).html(""),
+    h == "qPr1" ? (g_qcp_prod1 = "",
+    $("#qPr1").attr("data-id", ""),
+    $("#qPr1").attr("data-cate", ""),
+    $("#qPr1").html(r)) : h == "qPr2" ? (g_qcp_prod2 = "",
+    $("#qPr2").attr("data-id", ""),
+    $("#qPr2").attr("data-cate", ""),
+    $("#qPr2").html(r)) : h == "qPr3" && (g_qcp_prod3 = "",
+    $("#qPr3").attr("data-id", ""),
+    $("#qPr3").attr("data-cate", ""),
+    $("#qPr3").html(r))),
+    $(".comlist .Cpr").length == 0 && $(".stickcompare").hide(),
+    qcp_showDescript(),
+    $(".comlist li").last().find("a").attr("href", qcp_getLink()),
+    u = getCookie("ck_qcp"),
+    u != null && u != "" && typeof u != "undefined") {
+        u = decodeURIComponent(u);
+        var a = u.split("l")
+          , f = a[0].split("-")
+          , e = a[1].split("-")
+          , o = a[2].split("-")
+          , i = "";
+        for (t = 0; t < f.length - 1; t++)
+            f[t] == s && (f[t] = ""),
+            i += f[t] + "-";
+        for (f[2] == s && (f[2] = ""),
+        i += f[2] + "l",
+        t = 0; t < e.length - 1; t++)
+            e[t] == s && (e[t] = ""),
+            i += e[t] + "-";
+        for (e[2] == s && (e[2] = ""),
+        i += e[2] + "l",
+        t = 0; t < o.length - 1; t++)
+            o[t] == s && (o[t] = ""),
+            i += o[t] + "-";
+        o[2] == s && (o[2] = "");
+        i += o[2];
+        i = encodeURIComponent(i);
+        CreateCookie("ck_qcp", i, 1)
+    }
 }
-var lastSuggest, timmer, gl_fLoadChat;
+function qcp_clearAll() {
+    var n, t;
+    g_qcp_cate = 0;
+    g_qcp_prod1 = "";
+    g_qcp_prod2 = "";
+    g_qcp_prod3 = "";
+    n = "";
+    n += '<form action="javascript:void(0)">';
+    n += '<input type="search" name="" placeholder="So sánh với sản phẩm gì..." onkeyup="qcp_SuggestCompare(this,event)" >';
+    n += '<button type="submit"><i class="icontgdd-scomp"><\/i><\/button>';
+    n += "<\/form>";
+    $("#qPr1").attr("data-id", "");
+    $("#qPr1").attr("data-cate", "");
+    $("#qPr1").html(n);
+    $("#qPr2").attr("data-id", "");
+    $("#qPr2").attr("data-cate", "");
+    $("#qPr2").html(n);
+    $("#qPr3").attr("data-id", "");
+    $("#qPr3").attr("data-cate", "");
+    $("#qPr3").html(n);
+    t = "--l--l--";
+    CreateCookie("ck_qcp", t, 1)
+}
+function qcp_saveCookie(n, t) {
+    var u, r, i;
+    if (n = parseInt(n),
+    t = parseInt(t),
+    isNaN(n) || isNaN(t))
+        return !1;
+    u = getCookie("ck_qcp");
+    u = u == null || u == "" || typeof u == "undefined" ? "--l--l--" : decodeURIComponent(u);
+    var s = u.split("l")
+      , f = s[0].split("-")
+      , e = s[1].split("-")
+      , o = s[2].split("-");
+    if (t == 42)
+        for (i = 0; i < f.length; i++)
+            if (f[i] == "") {
+                f[i] = n;
+                break
+            }
+    if (t == 44)
+        for (i = 0; i < e.length; i++)
+            if (e[i] == "") {
+                e[i] = n;
+                break
+            }
+    if (t == 522)
+        for (i = 0; i < o.length; i++)
+            if (o[i] == "") {
+                o[i] = n;
+                break
+            }
+    for (r = "",
+    i = 0; i < f.length - 1; i++)
+        r += f[i] + "-";
+    for (r += f[2] + "l",
+    i = 0; i < e.length - 1; i++)
+        r += e[i] + "-";
+    for (r += e[2] + "l",
+    i = 0; i < o.length - 1; i++)
+        r += o[i] + "-";
+    r += o[2];
+    CreateCookie("ck_qcp", r, 1)
+}
+function qcp_checkCookie(n) {
+    var i = getCookie("ck_qcp"), t, u, f;
+    if (i == null || i == "" || typeof i == "undefined")
+        i = "--l--l--",
+        CreateCookie("ck_qcp", i, 1);
+    else {
+        qcp_minimize();
+        var r = i.split("l")
+          , e = r[0].split("-")
+          , o = r[1].split("-")
+          , s = r[2].split("-");
+        if (n == 0 && (n = qcp_checkCate(r)),
+        t = null,
+        g_qcp_cate = n,
+        n == 0 || (n == 42 ? t = e : n == 44 ? t = o : n == 522 && (t = s)),
+        t != null)
+            for (u = 0; u < t.length; u++)
+                f = parseInt(t[u]),
+                f > 0 && qcp_addProdQcp(f, g_qcp_cate, "", !0)
+    }
+}
+function qcp_checkCate(n) {
+    for (var i = n[0].split("-"), r = n[1].split("-"), u = n[2].split("-"), t = 0; t < i.length; t++)
+        if (parseInt(i[t]) > 0)
+            return 42;
+    for (t = 0; t < r.length; t++)
+        if (parseInt(r[t]) > 0)
+            return 44;
+    for (t = 0; t < u.length; t++)
+        if (parseInt(u[t]) > 0)
+            return 522;
+    return 0
+}
+function qcp_checkQcp() {
+    return g_qcp_prod1 == "" && g_qcp_prod2 == "" && g_qcp_prod3 == ""
+}
+function qcp_SuggestCompare(n, t) {
+    var u = g_qcp_cate, i, r;
+    qcp_currID = $(n).parent().parent().attr("id");
+    u == "" && (u = 42);
+    var e = u
+      , o = $(n).val().replace(/:|;|!|@@|#|\$|%|\^|&|\*|'|"|>|<|,|\.|\?|\/|`|~|\+|=|_|\(|\)|{|}|\[|\]|\\|\|/gi, "")
+      , f = o.trim().toLowerCase();
+    if (f.length < 2) {
+        $(".wrapper-compare .search-suggestion-list").hide();
+        $(".popAddProd").css("height", "250px");
+        return
+    }
+    if (i = ".search-suggestion-list li",
+    t.which == 13 ? $(i + ".selected").find("a").click() : t.which != 40 && t.which != 38 && $.ajax({
+        url: "/aj/Common/QuickSuggestCompare",
+        type: "GET",
+        data: {
+            iCategory: e,
+            sKeyword: f
+        },
+        cache: !0,
+        success: function(n) {
+            var t, i;
+            n != null && n != "" && n != "[object XMLDocument]" && (t = "",
+            t = '<div class="search-suggestion-wrapper clearfix"><ul class="search-suggestion-list nolist clearfix">',
+            t += n,
+            t += "<\/ul><\/div>",
+            $("#" + qcp_currID + " form").find(".search-suggestion-wrapper").remove(),
+            $("#" + qcp_currID + " form").append(t),
+            i = $("#" + qcp_currID + " form").find("input").width() + 15,
+            $(".search-suggestion-list").css("width", i + "px"),
+            t != "" && $(".popAddProd").css("height", "525px"),
+            $(document).click(function(n) {
+                var t = $(n.target);
+                t.is(".search-suggestion-list") || t.is(".search-input-wrapper") || t.is(".search-input-wrapper input") || t.is(".search-suggestion-list li") || t.is(".search-suggestion-list li a") || t.is(".search-suggestion-list li a strong") || $(".search-suggestion-list").hide()
+            }))
+        }
+    }),
+    t.which == 40) {
+        $(i + ".selected").length == 0 ? ($(i + ":first").addClass("selected"),
+        $(".sp #inputproduct").val($(i + ":first").text())) : $(i + ".selected").text() == $(i + ":last").text() ? ($(i + ".selected").removeClass("selected"),
+        $(i + ":first").addClass("selected"),
+        $(".sp #inputproduct").val($(i + ":first").text())) : (r = $(i + ".selected").next(),
+        $(i + ".selected").removeClass("selected"),
+        r.addClass("selected"),
+        $(".sp #inputproduct").val(r.text()));
+        return
+    }
+    if (t.which == 38) {
+        $(i + ".selected").length == 0 ? ($(i + ":last").addClass("selected"),
+        $(".sp #inputproduct").val($(i + ":last").text())) : $(i + ".selected").text() == $(i + ":first").text() ? ($(i + ".selected").removeClass("selected"),
+        $(i + ":last").addClass("selected"),
+        $(".sp #inputproduct").val($(i + ":last").text())) : (r = $(i + ".selected").prev(),
+        $(i + ".selected").removeClass("selected"),
+        r.addClass("selected"),
+        $(".sp #inputproduct").val(r.text()));
+        return
+    }
+}
+function qcp_getLink() {
+    var i = "", n = "", r, t, u;
+    if (g_qcp_cate == 42 ? n = "/dtdd/" : g_qcp_cate == 522 ? n = "/may-tinh-bang/" : g_qcp_cate == 44 && (n = "/laptop/"),
+    n != "")
+        return r = $(".comlist .Cpr").length,
+        r == 1 ? (t = $(".comlist .Cpr").first(),
+        i += n + "so-sanh-" + $(t).attr("data-lnk")) : r == 2 ? (t = $(".comlist .Cpr").first(),
+        u = $(".comlist .Cpr:eq(1)"),
+        i += n + $(t).attr("data-lnk") + "-vs-" + $(u).attr("data-lnk")) : r == 3 && (t = $(".comlist .Cpr").first(),
+        u = $(".comlist .Cpr:eq(1)"),
+        i += n + $(t).attr("data-lnk") + "-vs-" + $(u).attr("data-lnk") + "?Prod=" + $("#qPr3").attr("data-id")),
+        i
+}
+function qcp_off() {
+    $(".stickcompare").hide();
+    qcp_clearAll()
+}
+function qcp_changeMinimize() {
+    if (!g_qcp_mini) {
+        g_qcp_mini = !0;
+        $(".stickcompare .comlist").hide();
+        $("#btnMinimize").html("<i class='v2'><\/i> Mở rộng");
+        $(".stickcompare").css("height", "0");
+        return
+    }
+    g_qcp_mini = !1;
+    $(".stickcompare .comlist").show();
+    $("#btnMinimize").html("<i><\/i> Thu nhỏ");
+    $(".stickcompare").css("height", "")
+}
+function qcp_minimize() {
+    g_qcp_mini = !0;
+    $(".stickcompare .comlist").hide();
+    $("#btnMinimize").html("<i class='v2'><\/i> Mở rộng");
+    $(".stickcompare").css("height", "0")
+}
+function qcp_maximize() {
+    g_qcp_mini = !1;
+    $(".stickcompare .comlist").show();
+    $("#btnMinimize").html("<i><\/i> Thu nhỏ");
+    $(".stickcompare").css("height", "")
+}
+function qcp_showDescript() {
+    $(".stickcompare .comlist input").length == 2 ? ($(".stickcompare .comlist li p").hide(),
+    $(".stickcompare").css("max-height", "126px")) : ($(".stickcompare .comlist li p").show(),
+    $(".stickcompare").css("max-height", "180px"))
+}
+var lastSuggest, timmer, gl_fLoadChat, waitDefaultScroll, FL_LoadMore, qcp_currID;
 (function(n, t) {
     function gt(n) {
         var t = n.length
@@ -5456,96 +6062,107 @@ $("#back-top a").click(function() {
 });
 gl_fLoadChat = !1;
 $(window).load(function() {
-    function i() {
-        var n = this.currentItem;
-        $("#sync2").find(".owl-item").removeClass("synced").eq(n).addClass("synced");
-        $("#sync2").data("owlCarousel") !== undefined && r(n)
+    var t, i, n;
+    switch (query.Category) {
+    case 42:
+        $("nav a.mobile").addClass("actmenu");
+        break;
+    case 44:
+        $("nav a.laptop").addClass("actmenu");
+        t = !0;
+        $(".laptopnews").length > 0 && $(window).scroll(function() {
+            t && $(this).scrollTop() + $(window).height() > $(".laptopnews").position().top - 50 && ($(".laptopnews iframe").attr("src", $(".laptopnews iframe").data("src")),
+            t = !1)
+        });
+        break;
+    case 522:
+        $("nav a.tablet").addClass("actmenu")
     }
-    function r(t) {
-        var i = n.data("owlCarousel").owl.visibleItems
-          , r = t
-          , u = !1;
-        for (var f in i)
-            r === i[f] && (u = !0);
-        u === !1 ? r > i[i.length - 1] ? n.trigger("owl.goTo", r - i.length + 2) : (r - 1 == -1 && (r = 0),
-        n.trigger("owl.goTo", r)) : r === i[i.length - 1] ? n.trigger("owl.goTo", i[1]) : r === i[0] && n.trigger("owl.goTo", r - 1)
-    }
-    var t = $("#sync1")
-      , n = $("#sync2");
-    t.owlCarousel({
-        autoPlay: 5e3,
-        singleItem: !0,
-        slideSpeed: 500,
-        navigation: !0,
-        pagination: !1,
-        afterAction: i,
-        responsiveRefreshRate: 200,
+    LazyLoad();
+    $("#owl-cate").owlCarousel({
+        items: 2,
         lazyLoad: !0,
+        navigation: !1,
+        pagination: !0,
+        itemsDesktop: 2,
+        itemsDesktopSmall: 2,
+        itemsTablet: 2,
+        autoPlay: 5e3,
         stopOnHover: !0
     });
-    n.owlCarousel({
-        items: 5,
-        itemsDesktop: [1199, 5],
-        itemsDesktopSmall: [979, 5],
-        itemsTablet: [768, 5],
-        pagination: !1,
-        responsiveRefreshRate: 100,
-        afterInit: function(n) {
-            n.find(".owl-item").eq(0).addClass("synced")
-        }
-    });
-    $("#sync2").on("click", ".owl-item", function(n) {
-        n.preventDefault();
-        var i = $(this).data("owlItem");
-        t.trigger("owl.goTo", i)
-    });
-    $("#owl-promo .lazy").lazyload({
-        load: function() {
-            this.style.opacity = 1;
-            $(this).addClass("lazydone")
-        },
-        threshold: 100
-    });
-    $(".homeproduct .lazy").lazyload({
-        load: function() {
-            this.style.opacity = 1;
-            $(this).addClass("lazydone")
-        },
-        threshold: 100
-    });
-    $(".otherpromotebanner .lazy").lazyload({
-        load: function() {
-            this.style.opacity = 1;
-            $(this).addClass("lazydone")
-        },
-        threshold: 100
-    });
-    $(".homepromo").owlCarousel({
-        navigation: !0,
-        pagination: !1,
-        items: 5,
-        itemsDesktop: [1199, 5],
-        itemsDesktopSmall: [979, 5],
-        scrollPerPage: !0,
-        afterMove: function() {
-            $(".homepromo .lazy").each(function() {
-                $(this).attr("src", $(this).data("original"));
-                this.style.opacity = 1
-            })
-        }
-    });
-    $("#cross-owl").owlCarousel({
+    $("#owl-laptop").owlCarousel({
+        items: 1,
+        lazyLoad: !0,
         navigation: !0,
         pagination: !0,
-        items: 3,
-        itemsDesktop: [1199, 3],
-        itemsDesktopSmall: [979, 3],
-        scrollPerPage: !0,
-        lazyLoad: !0
+        itemsDesktop: 1,
+        itemsDesktopSmall: 1,
+        itemsTablet: 1,
+        autoPlay: 5e3,
+        stopOnHover: !0
     });
-    LoadCategoryStatistic();
-    LoadTimeCountDown()
+    $(".criteria").click(function() {
+        $(".criteria").not(this).next().hide();
+        $(this).next().slideToggle(200);
+        $("body,html").animate({
+            scrollTop: $(".barpage").position().top
+        }, 600)
+    });
+    $(".closefilter").click(function() {
+        $(".filter li div").fadeOut()
+    });
+    $(".manufacture label").click(function() {
+        $(this).hasClass("all") ? ($(".manufacture label").removeClass("check"),
+        $(this).addClass("check")) : ($(this).toggleClass("check"),
+        $(".manufacture label.all").removeClass("check"));
+        $(".manufacture label.check").length == 0 && $(".manufacture label.all").click();
+        CountAdvance(".manufacture")
+    });
+    $(".feature .rowfeature label").click(function() {
+        $(this).toggleClass("check");
+        CountAdvance(".feature")
+    });
+    $(".listprice label").click(function() {
+        $(this).hasClass("check") || ($(".listprice label.check").removeClass("check"),
+        $(this).addClass("check"),
+        CountAdvance(".listprice"))
+    });
+    $(".sortprice label").click(function() {
+        if (!$(this).hasClass("check")) {
+            $(".sortprice label.check").removeClass("check");
+            $(this).addClass("check");
+            var n = $(".filter li .sortprice label.check").data("id");
+            advanceQuery.OrderBy = n;
+            advanceQuery.PageIndex = 0;
+            ShowResult()
+        }
+    });
+    InitEvent();
+    location.hash != "" ? (i = location.hash.replace("#", ""),
+    i != "" ? (n = FromHash(i),
+    n != null ? n.IsAdvanced ? (Object.assign(advanceQuery, n),
+    console.log(JSON.stringify(n)),
+    console.log(JSON.stringify(advanceQuery)),
+    advanceQuery.PageIndex > 0 ? ScrollResult() : (ShowResult(!1),
+    waitDefaultScroll = !1,
+    $(".loadingcover").fadeOut()),
+    MapQueryToFilter(advanceQuery)) : (query.PageIndex = n.PageIndex,
+    ScrollResultNormal()) : (waitDefaultScroll = !1,
+    $(".loadingcover").fadeOut())) : (waitDefaultScroll = !1,
+    $(".loadingcover").fadeOut())) : (waitDefaultScroll = !1,
+    $(".loadingcover").fadeOut())
 });
+waitDefaultScroll = !0;
+$(document).scroll(function() {
+    sessionStorage && !waitDefaultScroll && sessionStorage.setItem("lastScrollTop", $(document).scrollTop())
+});
+FL_LoadMore = !0;
+var g_qcp_prod1 = ""
+  , g_qcp_prod2 = ""
+  , g_qcp_prod3 = ""
+  , g_qcp_cate = 0
+  , g_qcp_mini = !1;
+qcp_currID = null;
 /*
-//# sourceMappingURL=home.min.js.map
+//# sourceMappingURL=category.min.js.map
 */

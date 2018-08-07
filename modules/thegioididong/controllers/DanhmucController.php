@@ -82,7 +82,7 @@ class DanhmucController extends Controller
                 exit();
             }
         }
-        if(isset($_GET['search'])){
+        if(isset($_GET['s'])){
             $this->layout = 'laptop/main-search';
             $kq = $this->render('/laptop/index-search', [
                 'model' => $model,                
@@ -92,9 +92,44 @@ class DanhmucController extends Controller
             'model' => $model,                
         ]);            
         }
+
+
         
         return $kq;
     }
 
+
+    public function actionThongso($slug = '', $id = '')
+    {
+        $model = Tuyen::_dulieu('danhmuc', $id);
+       
+        if(!$model){
+            header('Location: /', true,302);
+            exit();
+        }
+        if($model['dm_status'] == 2 OR $model['dm_recycle'] == 1){
+            header('Location: /', true,302);
+            exit();
+        }
+
+        // if($model['dm_type'] == 1) $slug = $slug . '-'.D::url_dm.$id.'.html';
+      
+        // if($model){
+        //     if($slug != $model['dm_link']){
+        //         header('Location: /'.$model['dm_link'], true,302);
+        //         exit();
+        //     }
+        // }
+
+        $dmsp = Tuyen::_dulieu('danhmuc', $model['dm_dmsp']);
+                
+        $this->layout = 'laptop/main-search';
+        $kq = $this->render('/laptop/index-search', [
+            'model' => $model,    
+            'dmsp' => $dmsp['list_thongso'],
+        ]);            
+               
+        return $kq;
+    }
    
 }
