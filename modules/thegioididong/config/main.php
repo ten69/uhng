@@ -32,7 +32,7 @@ return [
 		// ],
 
 		[
-		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-11<id:\d+>',
+		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-1<id:\d+>',
 		    'route' => temp.'/danhmuc',
 		    'defaults' => [/*'type' => 1*/],
 		    'suffix' => '.html',
@@ -40,7 +40,7 @@ return [
 
 
 		[
-		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-12<id:\d+>',
+		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-t1<id:\d+>',
 		    'route' => temp.'/danhmuc/thongso',
 		    'defaults' => [/*'type' => 1*/],
 		    'suffix' => '.html',

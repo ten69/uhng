@@ -273,6 +273,7 @@ function ShowResult(n) {
         // $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct"));
 
         $("ul.homeproduct").html(t.html);
+
         if(t.more === ''){
             $(".viewmore").empty().hide()
         }else{
@@ -463,6 +464,7 @@ function RemoveFilter(n, t, i) {
     }) : t == 4 && $(".feature .yesno label.check").each(function() {
         $(this).data("id") == i && $(this).removeClass("check")
     });
+    $(".doit").empty();
     CollectParam();
     ShowResult()
 }

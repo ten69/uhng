@@ -7,7 +7,11 @@ $dem = 1;
 
  <div id="owl-laptop">
 	<?php foreach ($model as $k => $v) { ?>
-	    <a href='#123'>	
+	    <?php
+    		$url = Tuyen::_show_link($v['url']);
+		?>
+    		<a href='<?= $url?>'>
+    			
 	    	<?php if($dem > 2){ ?>
 				<img  class='lazyOwl owl-lazy' data-src='<?= Tuyen::_dulieu('image',$v['background'],'768x163')?>' alt='<?= $v['label']?>' />
 	    	<?php }else{ ?>

@@ -244,7 +244,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         <aside class="property">
                             <strong><?= $thongso['dm_ten']?></strong>
                             <?php if(is_array($thongso['list_thongso_con'])) foreach ($thongso['list_thongso_con'] as $k_gt => $id_gt) { ?>
-                                 <label data-id="<?= $id_gt?>">
+                                 <label data-id="<?= $id_gt?>"  class="<?= ($model['dm_id'] == $id_gt)?'check':''?>" >
                                     <a href="#12">
                                         <i class="icontgdd-checkbox"></i>                                    
                                         <?php 

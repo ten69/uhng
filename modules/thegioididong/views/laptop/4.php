@@ -12,8 +12,7 @@ $model = Tuyen::_dulieu('module', '34');
     	?>
 
     	<?php
-			$url = json_decode($v['url'],true);
-			$url = $url['c'];
+    		$url = Tuyen::_show_link($v['url']);
 		?>
 
     		<a href='<?= $url?>'>

@@ -12,7 +12,13 @@ $dem = 1;
     		if($dem <3){
     			$img = Tuyen::_dulieu('image',$v['background'],'390x80');
     	?>
-    		<a href='#456'>
+    	
+    	<?php
+    		$url = Tuyen::_show_link($v['url']);
+		?>
+
+    		<a href='<?= $url?>'>
+
     		<?php if(!empty($img)){ ?>	        
 	            <img src='<?= $img?>' alt='<?= $v['label']?>' />
 	        <?php }else{
