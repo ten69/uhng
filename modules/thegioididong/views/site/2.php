@@ -11,10 +11,11 @@ $noibat_array = Tuyen::_dulieu('module', '12');
     ?>
 
     <div class="navigat ">
-        <h2><?= $v['label']?></h2>
+       
+        <h2><?= Tuyen::_show_title($v) ?></h2>
         <div class="viewallcat">
         <?php if(!empty($v['child'])) foreach ($v['child'] as $k_child => $child) {?>            
-            <a ><?= $child['label']?></a>                 
+            <a><?= Tuyen::_show_title($child)?></a>
         <?php } ?>
         </div>
     </div> 

@@ -51,7 +51,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     var GL_CATEGORYID = 42;
     var GL_MANUFACTUREID = 0;    
     window.onload = function() {
-       ShowResult();
+       ShowResult_2();
     };
 </script>
 <?php }else{ ?>

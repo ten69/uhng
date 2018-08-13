@@ -12,10 +12,12 @@ $sanpham = Tuyen::_dulieu('sanpham', $idsp);
 
 if($sanpham){
 $img = Tuyen::_dulieu('image',$sanpham['sp_images'],'180x180');
+
 ?>
 
  <li>
-    <a href="#123">
+    <a href="<?= $sanpham['sp_linkseo']?>">
+        
         <img width="180" height="180" src="<?= $img?>" /> 
          <div class="props">
             <span class="dotted">RAM 4GB</span>

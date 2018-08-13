@@ -1,5 +1,11 @@
 <?php
 return [
+	'link' => [
+		'sanpham' => 's1',
+		'danhmuc' => '1',
+		'thongso' => 't1',
+	],
+
 	'router' => [
 	    [
 		    'pattern' => '',
@@ -23,13 +29,12 @@ return [
 		    'suffix' => '.html',
 		],
 
-
-		// [
-		//     'pattern' => 'danh-muc', //san-pham.html
-		//     'route' => temp.'/danhmuc',
-		//     'defaults' => [/*'type' => 1*/],
-		//     'suffix' => '.html',
-		// ],
+		[
+		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-s1<id:\d+>',
+		    'route' => temp.'/sanpham',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
 
 		[
 		    'pattern' => '<slug:[A-Za-z0-9 -_.]+>-1<id:\d+>',
@@ -61,6 +66,8 @@ return [
 		['595','100'],
 		['800','170'],
 		['768','163'],
+		['450','300'], //Cove chi tiet san pham
+		['320','320'], //Cove chi tiet san pham
 	]
 ];
 

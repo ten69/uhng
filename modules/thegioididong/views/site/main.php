@@ -29,7 +29,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 <!DOCTYPE html>
 <html lang="<?= Aabc::$app->language ?>">
 <head>
-    <?php echo $this->render('/_include/head',['assetsPrefix' => $assetsPrefix]); ?>    
+    <?php echo $this->render('head',['assetsPrefix' => $assetsPrefix]); ?>    
 </head>
 
 <?php 

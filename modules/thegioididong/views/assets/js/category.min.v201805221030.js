@@ -297,6 +297,52 @@ function ShowResult(n) {
         $("#manufacturefilterbanner").remove()
     }, ErrorAjax, !0))
 }
+
+function ShowResult_2(n) {//Load hàm này sau khi vào link trực tiếp của danh mục thông số.
+    (n === undefined && (n = !0),
+    advanceQuery.Count = 0,
+    FL_LoadMore) && (FL_LoadMore = !1,
+    console.log('#ShowResult_2'),
+    POSTAjax("/api?p=101100", advanceQuery, function() {
+        $(".loadingcover").fadeIn()
+    }, function(t) {
+
+        var i, r;
+        $("#dlding").fadeOut();
+        FL_LoadMore = !0;
+        ReloadAdvanceFilter();
+        (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
+        location.reload());
+        
+        // i = "<div>" + t + "<\/div>";
+        // $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct"));
+
+        $("ul.homeproduct").html(t.html);
+
+        if(t.more === ''){
+            $(".viewmore").empty().hide()
+        }else{
+            $(".viewmore").html(t.more).show()
+        }
+        // $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
+
+        $(".filter li > div").slideUp();
+        $("body,html").animate({
+            //scrollTop: $(".barpage").position().top
+        }, 600);
+        LazyLoad();
+        // n && (r = ToHash(advanceQuery),
+        // document.location.hash = r);
+        $(".barpage").addClass("prevent");
+        $(".fmanu > a").addClass("prevent");
+        $(".frange > a").addClass("prevent");
+        $(".filter li div a").addClass("prevent");
+        InitEvent();
+        $(".loadingcover").fadeOut();
+        $("#manufacturefilterbanner").remove()
+    }, ErrorAjax, !0))
+}
+
 function ScrollResult() {
     var t, n;
     for ($(".loadingcover").fadeIn(),
@@ -6102,21 +6148,21 @@ $("#back-top a").click(function() {
 gl_fLoadChat = !1;
 $(window).load(function() {
     var t, i, n;
-    switch (query.Category) {
-    case 42:
-        $("nav a.mobile").addClass("actmenu");
-        break;
-    case 44:
-        $("nav a.laptop").addClass("actmenu");
-        t = !0;
-        $(".laptopnews").length > 0 && $(window).scroll(function() {
-            t && $(this).scrollTop() + $(window).height() > $(".laptopnews").position().top - 50 && ($(".laptopnews iframe").attr("src", $(".laptopnews iframe").data("src")),
-            t = !1)
-        });
-        break;
-    case 522:
-        $("nav a.tablet").addClass("actmenu")
-    }
+    // switch (query.Category) {
+    // case 42:
+    //     $("nav a.mobile").addClass("actmenu");
+    //     break;
+    // case 44:
+    //     $("nav a.laptop").addClass("actmenu");
+    //     t = !0;
+    //     $(".laptopnews").length > 0 && $(window).scroll(function() {
+    //         t && $(this).scrollTop() + $(window).height() > $(".laptopnews").position().top - 50 && ($(".laptopnews iframe").attr("src", $(".laptopnews iframe").data("src")),
+    //         t = !1)
+    //     });
+    //     break;
+    // case 522:
+    //     $("nav a.tablet").addClass("actmenu")
+    // }
     LazyLoad();
     $("#owl-cate").owlCarousel({
         items: 2,

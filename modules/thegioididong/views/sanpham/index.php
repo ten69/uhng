@@ -9,12 +9,16 @@ $cache = Aabc::$app->dulieu;
 $thetieude = json_decode($cache->get('cauhinh'.Cauhinh::thetieude),true);
 $themota = json_decode($cache->get('cauhinh'.Cauhinh::themota),true);
 
-$this->title = $thetieude ;
+$this->title = $thetieude;
 $this->params['description'] = $themota;
 
 use frontend\assets\CustomAsset;
 $bundle = CustomAsset::register($this);
 $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
+
+// echo '<pre>';
+// print_r($model);
+// echo '</pre>';
 
 ?>
 
@@ -32,19 +36,40 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 
 
         <div class="rowtop">
-            <h1>Laptop Apple Macbook Air MQD42SA/A i5 1.8GHz/8GB/256GB (2017)</h1>
-            <div class="likeshare">
+            <h1><?= $model['sp_tensp']?></h1>
+
+            <!-- <div class="likeshare">
                 <div id="fb-root"></div>
                 <div class="fb-like" data-href="/laptop/apple-macbook-air-mqd42sa-a-i5-5350u" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-            </div>
+            </div> -->
         </div>
         <div class="clr"></div>
         <div class="rowdetail" id="normalproduct">
             <aside class="picture">
-                <img src="<?= $assetsPrefix?>/jpg/apple-macbook-air-mqd42sa-a-i5-5350u-8gb-256gb-bac-450x300-450x300.jpg" alt="Laptop Apple Macbook Air MQD42SA/A i5 1.8GHz/8GB/256GB (2017)" onclick="gotoGallery(-1,0);">
+                <?php $imgcove = Tuyen::_dulieu('image',$model['sp_images'],'320x320'); ?>
+                <img src="<?= $imgcove ?>"/>
+                <!-- <img src="<?= $assetsPrefix?>/jpg/apple-macbook-air-mqd42sa-a-i5-5350u-8gb-256gb-bac-450x300-450x300.jpg" alt="Laptop Apple Macbook Air MQD42SA/A i5 1.8GHz/8GB/256GB (2017)" onclick="gotoGallery(-1,0);"> -->
                 <div class="colorandpic">
                     <ul class="owl-carousel owl-theme tabscolor">
-                        <li onclick="gotoGallery(1,5)" class="item">
+
+                        <?php 
+
+                        $albums = json_decode($model['sp_album'],true);
+
+                        if(is_array($albums)) foreach ($albums as $k => $album) { ?>
+                            <?php 
+                            $img = Tuyen::_dulieu('image',$album['list'][0],'75x75');
+                            ?>
+                            <li onclick="gotoGallery(<?= $model['sp_id']?>, <?= $k?>)" class="item">
+                                <div>
+                                    <img src="<?= $img?>">
+                                </div>
+                                <?= $album['title']?>
+                            </li>
+
+                        <?php }
+                        ?>
+                        <!-- <li onclick="gotoGallery(1,5)" class="item">
                             <div>
                                 <img src="<?= $assetsPrefix?>/png/apple-macbook-air-mqd42sa-a-i5-5350u-180x125.png">
                             </div>
@@ -70,7 +95,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                                 <i class="icontgdd-box"></i>
                             </div>
                             Mở hộp,<br/>k.mãi
-                        </li>
+                        </li> -->
                        
                     </ul>
                     <div class="prev hide" onclick="slideFltNext(0)">
@@ -80,7 +105,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         <i class="icontgdd-nextthumd"></i>
                     </div>
                 </div>
-                <div class="wrap_rtglr hide">
+               <!--  <div class="wrap_rtglr hide">
                     <div class="pop">
                         <div class="hdpop">
                             Phản hồi không hài lòng bộ ảnh
@@ -112,12 +137,12 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="slide_FT"></div>
             </aside>
             <aside class="price_sale">
                 <div class="area_price">
-                    <strong>28.990.000₫</strong>
+                    <strong><?= $model['sp_gia']?></strong>
                     <label class="installment">Trả góp 0%</label>
                     <span></span>
                 </div>
@@ -2010,6 +2035,11 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
         </div>
         <div class="clr"></div>
     </section>
+
+
+
+
+
     <script type="application/ld+json">
         {
             "@context": "http://schema.org",
