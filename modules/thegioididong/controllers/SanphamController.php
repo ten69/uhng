@@ -68,10 +68,10 @@ class SanphamController extends Controller
                 exit();
             }
 
-            $slug = Tuyen::_get_link($slug,$id,'sanpham');
+            $link = Tuyen::_get_link($slug,$id,'sanpham');
 
-            if($slug != $model['sp_linkseo']){
-                header('Location: /'.$model['sp_link'], true,302);
+            if($link != $model['sp_linkseo']){
+                header('Location: /'.$model['sp_linkseo'], true,302);
                 exit();
             }
 

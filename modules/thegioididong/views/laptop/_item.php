@@ -5,9 +5,6 @@ use common\components\Tuyen;
 use common\cont\D;
 use backend\models\Cauhinh;
 
-$donvitiente = Tuyen::_dulieu('cauhinh', Cauhinh::tientetinhgia);
-$donvitiente = $donvitiente['child'][$donvitiente['default']];
-
 $sanpham = Tuyen::_dulieu('sanpham', $idsp);
 
 if($sanpham){
@@ -27,7 +24,7 @@ $img = Tuyen::_dulieu('image',$sanpham['sp_images'],'180x180');
         <div class="price">
             <strong>
             <?php if(is_numeric($sanpham['sp_gia'])){ 
-                echo number_format($sanpham['sp_gia']) .' '. $donvitiente;
+                echo number_format($sanpham['sp_gia']) .' '. Tuyen::_show_donvitiente();
             }else{
                 echo $sanpham['sp_gia'];
             } ?>

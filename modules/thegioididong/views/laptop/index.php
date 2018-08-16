@@ -5,9 +5,6 @@ use common\components\Tuyen;
 use common\cont\D;
 use backend\models\Cauhinh;
 
-$donvitiente = Tuyen::_dulieu('cauhinh', Cauhinh::tientetinhgia);
-$donvitiente = $donvitiente['child'][$donvitiente['default']];
-
 // $this->title = $thetieude ;
 // $this->params['description'] = $themota;
 
