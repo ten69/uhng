@@ -1052,12 +1052,20 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         <?php 
                             if(is_array($model->sp_list_thongso)) foreach ($model->sp_list_thongso as $k => $v) {
                                 $thongso = Tuyen::_dulieu('danhmuc', $k);
-                                $giatri = Tuyen::_dulieu('danhmuc', $v);
+                                $giatri = '';
+                                $dem = 1;
+                                if(is_array($v)) foreach ($v as $v_ts) { 
+                                    // Tìm sản phẩm danh mục theo idsp, iddm để lấy spdm_info;
+                                    $ab = Tuyen::_dulieu('spdm',$model->sp_id.'-'.$v_ts);
+                                    $gt = Tuyen::_dulieu('danhmuc', $v_ts);                                
+                                    $giatri .= ($dem > 1?', ':'')."<a href='#34234'>".$gt['dm_ten']."</a> ".$ab['spdm_info'];
+                                    $dem += 1;
+                                }                                
                         ?>
                             <li class="g92_94_93">
                                 <span><?= $thongso['dm_ten']?></span>
                                 <div>
-                                    <a href='#34234'><?= $giatri['dm_ten']?></a>
+                                    <?= $giatri?>
                                 </div>
                             </li>
                         <?php
