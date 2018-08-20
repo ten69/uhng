@@ -18,6 +18,9 @@ use frontend\assets\CustomAsset;
 $bundle = CustomAsset::register($this);
 $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 
+$a = Tuyen::_dulieu('cs','all');
+
+// $csdm = Tuyen::_dulieu('cs','all');
 
 // echo '<pre>';
 // print_r($model);
@@ -245,15 +248,35 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                     }
                 </script>
                 
-                <div class="tsh">
+                <!-- <div class="tsh">
                     <span>
                         <a href="https://www.thegioididong.com/giao-trong-1-gio">Nhận hàng trong 90 phút</a>
                     </span>
+                </div> -->
+    
+                <div class="area_promotion zero">
+                    <strong data-count="2">Các phiên bản</strong>
+                <?php 
+                    if(is_array($model['sp_phienban'])) foreach ($model['sp_phienban'] as $k_pb => $pb) {
+                        echo '<div style="padding: 5px 20px;">';
+                        echo '<h4 style="margin: 0 0 5px 0">'.$pb['title'].'</h4>';
+
+                        if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
+                            echo '<label style="padding: 0 10px 0 0;">';
+                            echo '<input type="radio" name="pb-'.$k_pb.'" value="'.$op['change'].'"/>';
+                            echo '<span>'.$op['name'].'</span>';
+                            echo '</label>';
+                        }
+                        echo '</div>';
+                    }
+                ?>
                 </div>
 
+
+
                 <div class="area_promotion zero">
-                    <strong data-count="2">Khuyến mãi</strong>
-                    <div class="pro-img">
+                    <strong data-count="2">Chương trình khuyến mãi</strong>
+                    <!-- <div class="pro-img">
                         <ul class="t2">
                             <li class="notapply" data-date="8/31/2018 11:00:00 PM" data-g="Tặng" data-return="1000000">
                                 <label>
@@ -267,14 +290,37 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                                 </label>
                             </li>
                         </ul>
-                    </div>
-                    <div class="infopr">
-                        <span class="pro385621 " data-g="WebNote" data-date="8/31/2018 11:00:00 PM" data-return="">
-                            Cơ hội trúng 38 xe Wave Alpha khi trả góp Home Credit <a href=https://www.thegioididong.com/tin-tuc/mua-tra-gop-home-credit-co-hoi-trung-38-xe-wave-alpha-1104361>Xem chi tiết</a>
-                        </span>
-                    </div>
+                    </div> -->
+                    <style type="text/css">
+                        .cskm{
+                            padding: 5px 15px;
+                        }
+                        .cskm .km_icon{
+                            width: 18px; position: absolute;
+                        }
+                        .cskm span{
+                            padding: 0 0 0 25px;
+                        }
+                    </style>
+                    <?php 
+                        if($model->sp_khuyenmai) foreach ($model->sp_khuyenmai as $k_km => $v_km) {
+                            $km = Tuyen::_dulieu('cs', $v_km);
+                    ?>
+                        <!-- <div class="infopr"> -->                        
+                        <div class="cskm">
+                            <div class="km_icon">
+                                <?php echo Tuyen::_icon($km['cs_icon']); ?>
+                            </div>
+                            <span class="pro385621 " data-g="WebNote" data-date="8/31/2018 11:00:00 PM" data-return="">
+                                <?=  $km['cs_ten']?>
+                            </span>
+                        </div>
+                    <?php    
+                        }
+                    ?>
+
                     <div class="clr"></div>
-                    <div class="not-repay">* Không áp dụng khi mua trả góp 0%</div>
+                    <!-- <div class="not-repay">* Không áp dụng khi mua trả góp 0%</div> -->
                 </div>
                 <script>
                     function ChoosePromtion(groupid, index, t) {
@@ -310,19 +356,20 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                     }
                 </script>
                 <div class="notechoose"></div>
+
                 <div class="area_order">
                     <a href="https://www.thegioididong.com/them-vao-gio-hang?ProductId=106880" class="buy_now" data-value="106880">
                         <b>Mua ngay </b>
-                        <span>Giao trong 90 ph &#250;t hoặc nhận tại siêu thị</span>
+                        <span>Giao trong 90 phút hoặc nhận tại cửa hàng</span>
                     </a>
-                    <a class="buy_repay " href="https://www.thegioididong.com/tra-gop/laptop/apple-macbook-air-mqd42sa-a-i5-5350u">
+                    <!-- <a class="buy_repay " href="https://www.thegioididong.com/tra-gop/laptop/apple-macbook-air-mqd42sa-a-i5-5350u">
                         <b>Mua trả góp 0%</b>
                         <span>Thủ tục đơn giản</span>
                     </a>
                     <a class="buy_repay s " href="https://www.thegioididong.com/tra-gop/laptop/apple-macbook-air-mqd42sa-a-i5-5350u?m=credit">
                         <b>Trả góp 0% qua thẻ</b>
                         <span>Visa, Master, JCB</span>
-                    </a>
+                    </a> -->
                 </div>
                 <div class="callorder">
                     <div class="ct">
@@ -496,20 +543,48 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                     <div class="clr"></div>
                 </div>
                 <ul class="policy ">
-                    <li class="inpr">
+                    <!-- <li class="inpr">
                         <span>
                             Trong hộp có:
                             <a class="stdImg" href="javascript:void(0)" onclick="showGalleryPS(100,0);">
                                 D &#226;y nguồn, S &#225;ch hướng dẫn, Th &#249;ng m &#225;y, Adapter sạc(+ c &#243;c sạc) <i class='icondetail-camera standkit' href='<?= $assetsPrefix?>/jpg/apple-macbook-air-mqd42sa-a-i5-5350u-bo-ban-hang-org-1-org.jpg'></i>
                             </a>
                         </span>
-                    </li>
-                    <li class="wrpr">
+                    </li> -->
+                    <style type="text/css">
+                        .cs{
+                            padding: 5px !important;
+                        }
+                        .cs .km_icon{
+                            width: 18px; position: absolute;
+                        }
+                        .cs span{
+                            padding: 0 0 0 25px;
+                        }
+                    </style>
+
+                    <?php 
+                        if($model->sp_chinhsach) foreach ($model->sp_chinhsach as $k_cs => $v_cs) {
+                            $cs = Tuyen::_dulieu('cs', $v_cs);
+                    ?>
+                        <!-- <li class="wrpr"> -->
+                        <li class="cs">
+                            <div class="km_icon">
+                                <?php echo Tuyen::_icon($cs['cs_icon']); ?>
+                            </div>
+                            <span><?= $cs['cs_ten'] ?></span>
+                        </li>
+                    <?php    
+                        }
+                    ?>
+
+
+                    <!-- <li class="wrpr">
                         <span>
                             Bảo hành chính hãng 12 tháng. <a href="javascript:openPopWrt();">Xem chi tiết</a>
                         </span>
-                    </li>
-                    <li class="timeship">
+                    </li> -->
+                   <!--  <li class="timeship">
                         Giao hàng tận nơi miễn phí trong <strong>60 phút</strong>
                         . <a href="https://www.thegioididong.com/giao-hang" target="blank">Tìm hiểu</a>
                     </li>
@@ -517,7 +592,9 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         <i class='icon-poltick'></i>
                         <strong>1 đổi 1 trong 1 tháng</strong>
                         nếu lỗi, đổi sản phẩm tại nhà trong 1 ngày.
-                    </li>
+                    </li> -->
+
+
                 </ul>
                 <div class='promote'>
                     <b>ƯU ĐÃI THÊM</b>
@@ -1050,7 +1127,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                     <h2>Thông số kỹ thuật</h2>
                     <ul class="parameter">
                         <?php 
-                            if(is_array($model->sp_list_thongso)) foreach ($model->sp_list_thongso as $k => $v) {
+                            if(is_array($model->sp_thongso)) foreach ($model->sp_thongso as $k => $v) {
                                 $thongso = Tuyen::_dulieu('danhmuc', $k);
                                 $giatri = '';
                                 $dem = 1;

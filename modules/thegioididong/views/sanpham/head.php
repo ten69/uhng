@@ -9304,3 +9304,164 @@
             }
         }
     </style>
+
+
+
+
+
+<style type="text/css">
+/* Màu icon */
+
+
+#m-1{background: #FFF;}
+
+
+#m-2{background: #b5b5b5;}
+
+
+#m-3{background: #5f5d5d;}
+
+
+#m-4{background: #212121;}
+
+
+#m-5{background: #ff8d8d;}
+
+
+#m-6{background: #F00;}
+
+
+#m-7{background: #a50d0d;}
+
+
+#m-8{background: #FF0;}
+
+
+#m-9{background: #ffd431;}
+
+
+#m-10{background: #f59e17;}
+
+
+#m-11{background: #56ff13;}
+
+
+#m-12{
+    background: #3fc00b;
+}
+#m-13{
+    background: #2a8007;
+}
+#m-14{
+    background: #40e1a3;
+}
+#m-15{
+    background: #07ebf3;
+}
+#m-16{
+    background: #079ef3;
+}
+#m-17{
+    background: #1479b1;
+}
+#m-18{
+    background: #0a28b3;
+}
+#m-19{
+    background: #916af5;
+}
+#m-20{
+    background: #f523e7;
+}
+
+#m-21{
+    background: #b90fae;
+}
+#m-22{
+    background: #84007b;
+}
+#m-23{
+    background: #f92292;
+}
+#m-24{
+    background: #b50a63;
+}
+#m-25{
+    background: #e50d41;
+}
+#m-26{
+    background: #b37c25;
+}
+#m-27{
+    background: #7e5411;
+}
+
+
+.m-1 path{fill: #FFF!important;}
+.m-2 path{fill: #b5b5b5!important;}
+.m-3 path{fill: #5f5d5d!important;}
+.m-4 path{fill: #212121!important;}
+.m-5 path{fill: #ff8d8d!important;}
+.m-6 path{fill: #F00 !important;}
+.m-7 path{fill: #a50d0d!important;}
+.m-8 path{fill: #FF0!important;}
+.m-9 path{fill: #ffd431!important;}
+.m-10 path{fill: #f59e17!important;}
+.m-11 path{fill: #56ff13!important;}
+
+.m-12 path{
+    fill:  #3fc00b!important;
+}
+.m-13 path{
+    fill:  #2a8007!important;
+}
+.m-14 path{
+    fill:  #40e1a3!important;
+}
+.m-15 path{
+    fill:  #07ebf3!important;
+}
+.m-16 path{
+    fill:  #079ef3!important;
+}
+.m-17 path{
+    fill:  #1479b1!important;
+}
+.m-18 path{
+    fill:  #0a28b3!important;
+}
+.m-19 path{
+    fill:  #916af5!important;
+}
+.m-20 path{
+    fill:  #f523e7!important;
+}
+
+.m-21 path{
+    fill:  #b90fae!important;
+}
+.m-22 path{
+    fill:  #84007b!important;
+}
+.m-23 path{
+    fill:  #f92292!important;
+}
+.m-24 path{
+    fill:  #b50a63!important;
+}
+.m-25 path{
+    fill:  #e50d41!important;
+}
+.m-26 path{
+    fill:  #b37c25!important;
+}
+.m-27 path{
+    fill:  #7e5411!important;
+}
+
+
+
+
+
+    
+</style>
