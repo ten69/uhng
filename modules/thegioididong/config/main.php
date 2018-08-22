@@ -68,6 +68,9 @@ return [
 		['768','163'],
 		['450','300'], //Cove chi tiet san pham
 		['320','320'], //Cove chi tiet san pham
+
+		['780','430'], //slide cove san pham noi bat
+		['100','60'], //trang san pham: anh bai viet
 	]
 ];
 

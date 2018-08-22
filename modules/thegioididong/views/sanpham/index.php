@@ -21,9 +21,13 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 $a = Tuyen::_dulieu('cs','all');
 
 // $csdm = Tuyen::_dulieu('cs','all');
+// $dm = Tuyen::_dulieu('danhmuc', 109);
+// echo '<pre>';
+// print_r($dm);
+// echo '</pre>';
 
 // echo '<pre>';
-// print_r($model);
+// print_r($model['sp_danhmuc']);
 // echo '</pre>';
 // die;
 ?>
@@ -62,17 +66,20 @@ $a = Tuyen::_dulieu('cs','all');
                     <ul class="owl-carousel owl-theme tabscolor">
 
                         <?php 
-                        if(is_array($model->sp_album)) foreach ($model->sp_album as $k => $album) { ?>
-                            <?php 
-                            $img = Tuyen::_dulieu('image',$album['list'][0],'75x75');
+                        $sp_album = $model->sp_album;
+                        $album_star = empty($sp_album['star'])?'':$sp_album['star'];
+                        if(is_array($sp_album)) foreach ($sp_album as $k => $album) { ?>
+                            <?php                             
+                            if($k != 'star' && $k != $album_star){
+                                $img = Tuyen::_dulieu('image',$album['list'][0],'75x75');
                             ?>
-                            <li onclick="gotoGallery(<?= $model['sp_id']?>, <?= $k?>)" class="item">
-                                <div>
-                                    <img src="<?= $img?>">
-                                </div>
-                                <?= $album['title']?>
-                            </li>
-
+                                <li onclick="gotoGallery(<?= $model['sp_id']?>, <?= $k?>)" class="item">
+                                    <div>
+                                        <img src="<?= $img?>">
+                                    </div>
+                                    <?= $album['title']?>
+                                </li>
+                            <?php } ?>
                         <?php }
                         ?>
                         <!-- <li onclick="gotoGallery(1,5)" class="item">
@@ -253,25 +260,8 @@ $a = Tuyen::_dulieu('cs','all');
                         <a href="https://www.thegioididong.com/giao-trong-1-gio">Nhận hàng trong 90 phút</a>
                     </span>
                 </div> -->
-    
-                <div class="area_promotion zero">
-                    <strong data-count="2">Các phiên bản</strong>
-                <?php 
-                    if(is_array($model['sp_phienban'])) foreach ($model['sp_phienban'] as $k_pb => $pb) {
-                        echo '<div style="padding: 5px 20px;">';
-                        echo '<h4 style="margin: 0 0 5px 0">'.$pb['title'].'</h4>';
 
-                        if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
-                            echo '<label style="padding: 0 10px 0 0;">';
-                            echo '<input type="radio" name="pb-'.$k_pb.'" value="'.$op['change'].'"/>';
-                            echo '<span>'.$op['name'].'</span>';
-                            echo '</label>';
-                        }
-                        echo '</div>';
-                    }
-                ?>
-                </div>
-
+                
 
 
                 <div class="area_promotion zero">
@@ -355,6 +345,59 @@ $a = Tuyen::_dulieu('cs','all');
 
                     }
                 </script>
+
+
+
+
+
+
+
+
+                <style type="text/css">
+                    select{
+                            padding: 5px 8px;
+                        font-size: 14px;
+                        border: 1px solid #ccc;
+                        outline: none !important;
+                    }
+
+                    select:focus {
+                        background: #eee;
+                    }
+
+                    select option {
+                        font-size: 12px;
+                        background: #FFF;
+                    }
+                </style>
+    
+                <?php if(is_array($model['sp_phienban'])){ ?>
+                    <div class="area_promotion zero">
+                        <strong data-count="2">Tùy chọn thông số, phiên bản</strong>
+                    <?php 
+                        foreach ($model['sp_phienban'] as $k_pb => $pb) {
+                            echo '<div style="padding: 5px 20px;">';
+                            echo '<h4 style="margin: 0 0 5px 0">'.$pb['title'].'</h4>';
+                            echo '<select name="pb-'.$k_pb.'">';
+                            if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
+                                echo '<option value="'.$op['change'].'">'.$op['name'].'</option>';
+                                // echo '<label style="padding: 0 10px 0 0;">';
+                                // echo '<input type="radio" name="pb-'.$k_pb.'" value="'.$op['change'].'"/>';
+                                // echo '<span>'.$op['name'].'</span>';
+                                // echo '</label>';
+                            }
+                            echo '</select>';
+                            echo '</div>';
+                        }
+                    ?>
+                    </div>
+                <?php } ?>
+
+
+
+
+
+
                 <div class="notechoose"></div>
 
                 <div class="area_order">
@@ -371,14 +414,25 @@ $a = Tuyen::_dulieu('cs','all');
                         <span>Visa, Master, JCB</span>
                     </a> -->
                 </div>
-                <div class="callorder">
+
+                 <div class="callorder">
+                    <div class="ct">
+                        <!-- <span>
+                            Gọi đặt mua: <a href="tel:18001060">1800.1060</a>
+                            (miễn phí - 7:30-22:00)
+                        </span> -->                    
+                    <div class="call-content">Gọi mua hàng: <b>0912.345.678</b> - <b>1900.0000</b><span>(từ 8h15 đến 17h15 hàng ngày)</span></div>
+                    </div>
+                </div>
+
+                <!-- <div class="callorder">
                     <div class="ct">
                         <span>
                             Gọi đặt mua: <a href="tel:18001060">1800.1060</a>
                             (miễn phí - 7:30-22:00)
                         </span>
                     </div>
-                </div>
+                </div> -->
             </aside>
             <div class="rightInfo">
                 <div class="checkexist">
@@ -690,37 +744,38 @@ $a = Tuyen::_dulieu('cs','all');
         <div class="box_content">
             <aside class="left_content">
                 <div class="characteristics">
-                    <h2>Đặc điểm nổi bật của Apple Macbook Air MQD42SA/A i5 1.8GHz/8GB/256GB (2017)</h2>
+                    <h2>Đặc điểm nổi bật của <?= $model['sp_tensp']?></h2>
                     <!-- slider -->
+
                     <div id="owl-detail" class="owl-carousel owl-detail">
-                        <div class="item">
-                            <img class="lazyOwl" data-src="<?= $assetsPrefix?>/jpg/-apple-macbook-air-mqd42sa-a-i5-5350u-tk.jpg" />
-                        </div>
-                        <div class="item">
-                            <img class="lazyOwl" data-src="<?= $assetsPrefix?>/jpg/-apple-macbook-air-mqd42sa-a-i5-5350u-ch.jpg" />
-                            <a class="slLnk" target="_blank" href="https://www.thegioididong.com/tin-tuc/tim-hieu-vi-xu-ly-may-tinh-cpu-intel-596066#broadwell">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="item">
-                            <img class="lazyOwl" data-src="<?= $assetsPrefix?>/jpg/-apple-macbook-air-mqd42sa-a-i5-5350u-o-cung.jpg" />
-                            <a class="slLnk" target="_blank" href="https://www.thegioididong.com/hoi-dap/o-cung-ssd-la-gi-923073">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="item">
-                            <img class="lazyOwl" data-src="<?= $assetsPrefix?>/jpg/-apple-macbook-air-mqd42sa-a-i5-5350u-fix.jpg" />
-                            <a class="slLnk" target="_blank" href="https://www.thegioididong.com/tin-tuc/cac-cong-nghe-hien-thi-tren-man-hinh-laptop-597377#ledbacklit">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="item">
-                            <img class="lazyOwl" data-src="<?= $assetsPrefix?>/jpg/vi-vn-apple-macbook-air-mqd42sa-a-i5-5350u-kn.jpg" />
-                            <a class="slLnk" target="_blank" href="https://www.thegioididong.com/hoi-dap/magsafe-2-tren-macbook-la-gi-959220">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="item">
-                            <img class="lazyOwl" data-src="<?= $assetsPrefix?>/jpg/vi-vn-apple-macbook-air-mqd42sa-a-i5-5350u-pin.jpg" />
-                        </div>
-                        <div class="item">
+
+                    <?php 
+                        $sp_album = $model->sp_album;
+                        $album_star = empty($sp_album['star'])?'':$sp_album['star'];
+                        if(is_array($sp_album)) foreach ($sp_album as $k => $album) { ?>
+                            <?php                             
+                            if($k != 'star' && $k == $album_star){
+                                if(is_array($album['list'])) foreach ($album['list'] as $img) {
+                                    $img_src = Tuyen::_dulieu('image',$img,'780x430');
+                    ?>
+                                <div class="item">
+                                    <img class="lazyOwl" data-src="<?= $img_src ?>" />
+                                </div>
+
+                    <?php
+                                }                               
+                           } 
+                       }
+                    ?>
+
+                   
+                       <!--  <div class="item">
                             <img alt="Bộ sản phẩm chuẩn" data-src="//cdn.tgdd.vn/Products/Images/44/106880/Kit/apple-macbook-air-mqd42sa-a-i5-5350u-bo-ban-hang-org-1-org.jpg" class="lazyOwl" />
                             <div class="des">
                                 <p>Bộ sản phẩm chuẩn: D &#226;y nguồn, S &#225;ch hướng dẫn, Th &#249;ng m &#225;y, Adapter sạc(+ c &#243;c sạc)</p>
                             </div>
-                        </div>
+                        </div> -->
+
                     </div>
                 </div>
                 <div class="boxArticle">
@@ -1165,107 +1220,29 @@ $a = Tuyen::_dulieu('cs','all');
                 <div class="newslist">
                     <h4>Tin tức về laptop</h4>
                     <ul>
-                        <li>
+                        <?php foreach ($model->sp_baiviet as $id_bv) {
+                            $baiviet = Tuyen::_dulieu('baiviet',$id_bv);
+                            if($baiviet){
+                        ?>
+                            <li>
+                                <a href="#23423">
+                                    <img data-original="<?= $baiviet->sp_images_cover('100x60')?>" class="lazy">
+                                    <h3><?= $baiviet['sp_tensp']?></h3>
+                                </a>
+                            </li> 
+                        <?php
+                            }
+                        } ?>
+
+                        <!--<li>
                             <a href="https://www.thegioididong.com/tin-tuc/macbook-air-chinh-thuc-giam-den-4-trieu-van-co-khu-1092551">
                                 <img data-original="https://cdn.tgdd.vn/Files/2018/06/02/1092551/3_801x450-300x200.jpg" class="lazy">
                                 <h3>Macbook Air ch &#237;nh thức giảm đến 4 triệu, vẫn c &#243;khuyến m &#227;i hấp dẫn</h3>
                             </a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/tin-tuc/zenbook-ux370u-sieu-mong-thiet-ke-2-trong-1-len-ke-1107444">
-                                <img data-original="https://cdn.tgdd.vn/Files/2018/08/07/1107444/asus-zenbook-flip-s-01_800x450-300x200.jpg" class="lazy">
-                                <h3>Zenbook UX370U si &#234;u mỏng, thiết kế 2 trong 1, cấu h &#236;nh mạnh mẽ l &#234;n kệ</h3>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/tin-tuc/danh-gia-asus-vivobook-15-x540ub-laptop-moi-nhan-n-1105465">
-                                <img data-original="https://cdn.tgdd.vn/Files/2018/07/31/1105465/anhbiachamdiem_800x450-300x200.jpg" class="lazy">
-                                <h3>Đ&#225;nh gi &#225;ASUS X540UB i3 6006U: Laptop c &#243;card đồ họa rời, gi &#225;tốt</h3>
-                            </a>
-                        </li>
+                        </li>-->                    
                     </ul>
                 </div>
-                <div class="newslist">
-                    <h4>Hướng dẫn về Apple Macbook Air MQD42SA/A i5 1.8GHz/8GB/256GB (2017)</h4>
-                    <ul>
-                        <li>
-                            <a href="https://www.thegioididong.com/hoi-dap/top-5-tinh-nang-duoc-yeu-thich-nhat-cua-mac-os-moj-1099407" target="_blank">
-                                <img data-original="https://cdn.tgdd.vn/hoi-dap/1099407/Thumbnail/top-5-tinh-nang-duoc-yeu-thich-tren-mac-mojave-1.jpg" class="lazy">
-                                <h3>Top 5 t &#237;nh năng được y &#234;u th &#237;ch nhất của Mac OS Mojave tr &#234;n Macbook</h3>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/hoi-dap/cach-doi-ten-cho-may-macbook-1098868" target="_blank">
-                                <img data-original="https://cdn.tgdd.vn/hoi-dap/1098868/Thumbnail/doi-ten-macbook-nhanh-chong-1.jpg" class="lazy">
-                                <h3>C &#225;ch đổi t &#234;n cho m &#225;y Macbook</h3>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/hoi-dap/cach-xoa-mang-wifi-tren-macbook-1095540" target="_blank">
-                                <img data-original="https://cdn.tgdd.vn/hoi-dap/1095540/Thumbnail/cach-xoa-mang-wifi-macbook-1.jpg" class="lazy">
-                                <h3>C &#225;ch xo &#225;mạng Wifi tr &#234;n Macbook</h3>
-                                <span>
-                                    <i class="icontgdd-com"></i>
-                                    2 Bình luận
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <a href="https://www.thegioididong.com/hoi-dap/san-pham/apple-macbook-air-mqd42sa-a-i5-5350u?f=huong-dan" class="viewall" target="_blank">Xem thêm hướng dẫn</a>
-                </div>
-                <div class="accessories">
-                    <div>
-                        <h3>Phụ kiện Apple Macbook Air MQD42SA/A i5 1.8GHz (2017)</h3>
-                    </div>
-                    <ul>
-                        <li>
-                            <a href="https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-awei-a920bs">
-                                <img data-original="https://cdn.tgdd.vn/Products/Images/54/146881/tai-nghe-bluetooth-awei-a920bs-ava-600x600.jpg" class="lazy" />
-                                <h3>Tai nghe Bluetooth Awei A920BS</h3>
-                                <strong class="gs">315.000₫</strong>
-                                <strong class="gg">450.000₫</strong>
-                                <label class="per">Giảm 30%</label>
-                            </a>
-                            <a href="https://www.thegioididong.com/them-vao-gio-hang?ProductId=146881" class="buyacc">Mua</a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/usb/usb-sandisk-sdcz43-16gb-30">
-                                <img data-original="https://cdn.tgdd.vn/Products/Images/75/71754/usb-sandisk-sdcz43-16gb-30-ava-1-600x600.jpg" class="lazy" />
-                                <h3>USB 3.0 16 GB Sandisk SDCZ43</h3>
-                                <strong class="gs">200.000₫</strong>
-                                <strong class="gg">250.000₫</strong>
-                                <label class="per">Giảm 20%</label>
-                            </a>
-                            <a href="https://www.thegioididong.com/them-vao-gio-hang?ProductId=71754" class="buyacc">Mua</a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/phan-mem/eset-nod32-antivirus-cho-windows-1-pc">
-                                <img data-original="https://cdn.tgdd.vn/Products/Images/85/109490/eset-nod32-antivirus-cho-windows-1-pc-1-2-600x600.jpg" class="lazy" />
-                                <h3>ESET NOD32 Antivirus cho Windows - 1 PC</h3>
-                                <strong>150.000₫</strong>
-                            </a>
-                            <a href="https://www.thegioididong.com/them-vao-gio-hang?ProductId=109490" class="buyacc">Mua</a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/chuot-may-tinh/chuot-co-day-apple-mb112-trang">
-                                <img data-original="https://cdn.tgdd.vn/Products/Images/86/88049/chuot-co-day-apple-mb112-trang-1-8-600x600.jpg" class="lazy" />
-                                <h3>Chuột c &#243;d &#226;y Apple MB112 Trắng</h3>
-                                <strong>1.390.000₫</strong>
-                            </a>
-                            <a href="https://www.thegioididong.com/them-vao-gio-hang?ProductId=88049" class="buyacc">Mua</a>
-                        </li>
-                        <li>
-                            <a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-awei-y200">
-                                <img data-original="https://cdn.tgdd.vn/Products/Images/382/82652/loa-bluetooth-awei-y200-avatar-1-600x600.jpg" class="lazy" />
-                                <h3>Loa Bluetooth Awei Y200</h3>
-                                <strong class="gs">388.000₫</strong>
-                                <strong class="gg">600.000₫</strong>
-                            </a>
-                            <a href="https://www.thegioididong.com/them-vao-gio-hang?ProductId=82652" class="buyacc">Mua</a>
-                        </li>
-                    </ul>
-                    <a class="viewall" href="https://www.thegioididong.com/phu-kien/laptop/apple-macbook-air-mqd42sa-a-i5-5350u">Xem tất cả phụ kiện Apple Macbook Air MQD42SA/A i5 1.8GHz (2017)</a>
-                </div>
+                
             </aside>
         </div>
         <div class="clr"></div>

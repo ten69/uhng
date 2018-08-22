@@ -6787,14 +6787,29 @@
             padding-bottom: 10px
         }
 
-        .area_promotion strong {
+       /* .area_promotion strong {
             display: block;
             overflow: hidden;
             font-size: 15px;
             color: #333;
             padding: 15px 15px 10px 15px;
             text-transform: uppercase
+        }*/
+
+        .area_promotion strong {
+            display: block;
+            overflow: hidden;
+            font-size: 14px;
+            color: #666;
+            font-weight: normal;
+            padding: 10px 12px 10px 15px;
+            text-transform: uppercase;
+            background: #eee;
+            border-bottom: 1px solid #DDD;
+            font-family: 'Segoe UI',Tahoma,'Helvetica Neue',Helvetica,Arial,'sans-serif';
         }
+
+
 
         .area_promotion.onlyonlinepromo {
             border: none;
