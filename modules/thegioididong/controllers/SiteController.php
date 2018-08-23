@@ -65,11 +65,22 @@ class SiteController extends Controller
 
     public function actionApi($p = '')
     {        
-        $dt = $_POST['Property'];
-        $page_size = $_POST['PageSize'];
-        $page_index = $_POST['PageIndex'];
-        $sort = $_POST['OrderBy'];
-        $data = explode(',', $dt);
+        $data = [];
+        if(isset($_POST['Property'])){
+            $dt = $_POST['Property'];
+            $data = explode(',', $dt);
+        }
+        if(isset($_POST['PageSize']))
+            $page_size = $_POST['PageSize'];
+
+        if(isset($_POST['PageIndex']))
+            $page_index = $_POST['PageIndex'];
+
+        $sort = '';
+        if(isset($_POST['OrderBy']))
+            $sort = $_POST['OrderBy'];
+
+        
 
         // $orderby = ['sp_gia_sort' => SORT_ASC];
         // if($sort == 1) $orderby = ['sp_gia_sort' => SORT_ASC];
@@ -83,7 +94,7 @@ class SiteController extends Controller
 
 
         $list_ts = [];
-        foreach ($data as $ts) {
+        if(is_array($data)) foreach ($data as $ts) {
             $thongso = Tuyen::_dulieu('danhmuc',$ts);
             if($thongso)
                 $list_ts[$thongso['dm_idcha']][] = $ts;
@@ -216,5 +227,36 @@ class SiteController extends Controller
             return $return;
         }
 
+
+        elseif($p == '10011'){ //Load thông số sản phẩm
+            $product_id = $_POST['productID'];
+            $sanpham = Tuyen::_dulieu('sanpham', $product_id);
+            $return = [];
+            $return['imgKit'] = $sanpham->sp_images_cover_ts('590x500');
+            
+            $html = '';
+            foreach ($sanpham->sp_thongso_full as $id_nts => $arr_ts) {
+                $nts = Tuyen::_dulieu('danhmuc', $id_nts);
+                if($nts){
+                    $html.= '<li><label>'.$nts['dm_ten'].'</label></li>';
+                    foreach ($arr_ts as $id_ts => $arr_gt) {
+                        $ts = Tuyen::_dulieu('danhmuc', $id_ts);
+                            if($ts){
+                                $html.= '<li><span>'.$ts['dm_ten'].'</span>';
+                                    foreach($arr_gt as $id_gt) {
+                                        $gt = Tuyen::_dulieu('danhmuc', $id_gt);
+                                            if($gt){
+                                                $html.= '<div>'.$gt['dm_ten'].'</div>';
+                                    }       }
+                                $html.= '</li>';
+                            }
+                    }
+                }
+            }
+            $return['spec'] = $html;
+          
+            Aabc::$app->response->format = \aabc\web\Response::FORMAT_JSON;
+            return $return;
+        }
     }
 }

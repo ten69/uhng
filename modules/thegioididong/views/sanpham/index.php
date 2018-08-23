@@ -1204,15 +1204,19 @@ $a = Tuyen::_dulieu('cs','all');
                             }
                         ?>
                     </ul>
-                    <button type="button" class="viewparameterfull" onclick="getFullSpec(106880)">Xem cấu hình chi tiết</button>
+                    <button type="button" class="viewparameterfull" onclick="getFullSpec(<?= $model->sp_id?>)">Xem cấu hình chi tiết</button>
                     <div class="closebtn none">
                         <i class="icondetail-closepara"></i>
                     </div>
-                    <div class="fullparameter">
+                    <div class="fullparameter" style="width: calc(100% - 300px)">
                         <div class="scroll">
-                            <h3>Thông số kỹ thuật chi tiết Apple Macbook Air MQD42SA/A i5 1.8GHz/8GB/256GB (2017)</h3>
-                            <img id="imgKit" width="500" height="430" alt="Thông số kỹ thuật 106880">
-                            <ul class="parameterfull"></ul>
+                            <div style="width: 50%;float: left;padding: 10px 0;">
+                                <h3 style="padding-bottom: 20px;text-align: center;">Thông số kỹ thuật chi tiết <?= $model->sp_tensp?></h3>
+                                <img id="imgKit" width="500" height="430" alt="Thông số kỹ thuật">
+                            </div>
+                            <div style="width: 50%;float: right;padding: 20px 0;">
+                                <ul class="parameterfull"></ul>
+                            </div>
                         </div>
                     </div>
                 </div>

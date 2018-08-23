@@ -14,6 +14,7 @@ class SanphamFront extends Model
     public $sp_conhang_label;
 
     public $sp_images;
+    public $sp_images_ts;
 
     public $sp_gia;
     public $sp_gia_label;
@@ -30,6 +31,7 @@ class SanphamFront extends Model
     public $sp_khuyenmai;
     public $sp_chinhsach;
     public $sp_thongso;
+    public $sp_thongso_full;
     public $sp_baiviet;
 
     public $sp_gioithieu;
@@ -40,13 +42,17 @@ class SanphamFront extends Model
     public function rules()
     {
         return [            
-            [['sp_id','sp_tensp','sp_conhang','sp_images','sp_gia','sp_gia_label','sp_status','sp_recycle','sp_linkseo','sp_album','sp_listdm','sp_phienban','sp_thongso','sp_khuyenmai','sp_danhmuc','sp_chinhsach','sp_baiviet'],'safe'],   
+            [['sp_id','sp_tensp','sp_conhang','sp_images','sp_images_ts','sp_gia','sp_gia_label','sp_status','sp_recycle','sp_linkseo','sp_album','sp_listdm','sp_phienban','sp_thongso','sp_khuyenmai','sp_danhmuc','sp_chinhsach','sp_baiviet','sp_thongso_full'],'safe'],   
 
         ];
     }
     
     public function sp_images_cover($size){
         return Tuyen::_dulieu('image',$this->sp_images,$size); 
+    }
+
+    public function sp_images_cover_ts($size){ //Thông số kỹ thuật
+        return Tuyen::_dulieu('image',$this->sp_images_ts,$size); 
     }
 
     public function update(){
@@ -58,6 +64,12 @@ class SanphamFront extends Model
         $this->sp_thongso = $this->sp_listdm[5];
         $this->sp_danhmuc = $this->sp_listdm[1];
 
+        $ts_full = [];
+        foreach ($this->sp_thongso as $idts => $arr) {
+            $ts = Tuyen::_dulieu('danhmuc', $idts);
+            $ts_full[$ts['dm_idcha']][$idts] = $arr;            
+        }
+        $this->sp_thongso_full =  $ts_full;
 
 
         //Start khuyenmai, chinhsach
@@ -92,10 +104,12 @@ class SanphamFront extends Model
         
 
         $spnn = Tuyen::_dulieu('spnn', $this->sp_id);
-        $this->sp_noidung = $spnn['spnn_noidung'];
-        $this->sp_gioithieu = $spnn['spnn_gioithieu'];
-        $this->sp_tieudeseo = $spnn['spnn_tieudeseo'];
-        $this->sp_motaseo = $spnn['spnn_motaseo'];
+        if($spnn){
+            $this->sp_noidung = $spnn['spnn_noidung'];
+            $this->sp_gioithieu = $spnn['spnn_gioithieu'];
+            $this->sp_tieudeseo = $spnn['spnn_tieudeseo'];
+            $this->sp_motaseo = $spnn['spnn_motaseo'];
+        }
 
     }
 }

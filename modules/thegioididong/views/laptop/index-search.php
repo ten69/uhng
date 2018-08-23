@@ -49,7 +49,10 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     var GL_CATEGORYID = 42;
     var GL_MANUFACTUREID = 0;    
     window.onload = function() {
-       ShowResult_2();
+        if(location.hash == ""){ //Nếu ko có tham số
+            ShowResult_2();
+        }       
+       
     };
 </script>
 <?php }else{ ?>
