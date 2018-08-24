@@ -31,28 +31,21 @@ $noibat_array = Tuyen::_dulieu('module', '12');
             // for ($i = 0; $i < $noibat['dm_showmax'] ; $i++) {                              
                 // if(empty($a[$i])) break;
                 // $v_nb = $a[$i];
-
-                $sp = Tuyen::_dulieu('sanpham',$v_nb);  
-                $image = explode('-', $sp['sp_images']); 
-                $s_html = '';
-                if(!empty($image['0'])) $s_html = Tuyen::_dulieu('image',$image['0'],'180x180');
+                $sp = Tuyen::_dulieu('sanpham',$v_nb);
                 if(!empty($sp)){
-                $spnn = Tuyen::_dulieu('spnn',$sp['sp_id']);
+                    $img_cove = $sp->sp_images_cover('180x180');
+                    
         ?>
                     <div class="item">            
-                        <a>
-                            <img width="180" height="180" src="<?= $s_html?>">
+                        <a href="<?= $sp->sp_linkseo ?>">
+                            <img width="180" height="180" src="<?= $img_cove?>">
                             <h3><?= $sp['sp_tensp'] ?></h3>
                             <div class="price">
-                                <?php if(is_numeric($sp['sp_gia'])){ ?>
-                                    <strong><?= number_format($sp['sp_gia']) ?> ₫</strong>
-                                <?php }else{ ?>
-                                    <strong><?= $sp['sp_gia'] ?></strong>
-                                <?php } ?>
+                                <strong><?= $sp->sp_gia_label; ?></strong>
                             </div>
                             <div class="promo noimage">
                                 <p>
-                                    <?php // $spnn['spnn_gioithieu']; ?>                                    
+                                    <?= $sp->sp_gioithieu ?>
                                 </p>
                             </div>
                             <!-- <label class="installment">Trả góp 1%</label> -->

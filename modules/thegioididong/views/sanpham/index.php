@@ -18,7 +18,8 @@ use frontend\assets\CustomAsset;
 $bundle = CustomAsset::register($this);
 $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 
-$a = Tuyen::_dulieu('cs','all');
+
+// $a = Tuyen::_dulieu('cs','all');
 
 // $csdm = Tuyen::_dulieu('cs','all');
 // $dm = Tuyen::_dulieu('danhmuc', 109);
@@ -30,6 +31,13 @@ $a = Tuyen::_dulieu('cs','all');
 // print_r($model['sp_danhmuc']);
 // echo '</pre>';
 // die;
+
+$dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
+
+// echo '<pre>';
+// print_r($dm);
+// echo '</pre>';
+// die;
 ?>
 
 
@@ -38,11 +46,11 @@ $a = Tuyen::_dulieu('cs','all');
  <section class="type0">
         <ul class="breadcrumb">
             <li>
-                <a href="#" title="Trang chủ">Trang chủ</a>
+                <a href="/" title="Trang chủ">Trang chủ</a>
                 <span>›</span>
             </li>
             <li>
-                <a href="#laptop">Laptop</a>
+                <a href="<?= $dm['dm_link']?>">Laptop</a>
                 <span>›</span>
             </li>            
         </ul>
@@ -71,45 +79,35 @@ $a = Tuyen::_dulieu('cs','all');
                         if(is_array($sp_album)) foreach ($sp_album as $k => $album) { ?>
                             <?php                             
                             if($k != 'star' && $k != $album_star){
-                                $img = Tuyen::_dulieu('image',$album['list'][0],'75x75');
+                                $img_cove = Tuyen::_dulieu('image',$album['list'][0],'75x75');
                             ?>
-                                <li onclick="gotoGallery(<?= $model['sp_id']?>, <?= $k?>)" class="item">
+                                <li onclick="gotoGallery(this)" class="item">
                                     <div>
-                                        <img src="<?= $img?>">
+                                        <img src="<?= $img_cove?>">
                                     </div>
+                                    
+                                    <div class="album-content hide">
+                                        <div class="fotorama" data-auto="false" data-allowfullscreen="true" data-nav="thumbs" data-fit="scaledown" data-thumbwidth="100" data-arrows="true" data-click="false" data-swipe="true">
+                                        
+                                        <?php foreach ($album['list'] as $k_img => $id_img) {
+                                            $img_thumb = Tuyen::_dulieu('image',$id_img,'100x64');
+                                            $img_full = Tuyen::_dulieu('image',$id_img);
+                                        ?>    
+                                            <div class="caption_ps" data-thumb="<?= $img_thumb?>" data-img="<?= $img_full?>" data-picid="784572">                                                
+                                            </div>
+
+                                        <?php } ?>
+                                            
+                                            
+                                        </div>
+                                    </div>
+
                                     <?= $album['title']?>
                                 </li>
                             <?php } ?>
                         <?php }
                         ?>
-                        <!-- <li onclick="gotoGallery(1,5)" class="item">
-                            <div>
-                                <img src="<?= $assetsPrefix?>/png/apple-macbook-air-mqd42sa-a-i5-5350u-180x125.png">
-                            </div>
-                            Bạc
-                        </li>
-
-                        <li onclick="gotoGallery(1,5)" class="item">
-                            <div>
-                                <img src="<?= $assetsPrefix?>/png/apple-macbook-air-mqd42sa-a-i5-5350u-180x125.png">
-                            </div>
-                            Vàng đồng
-                        </li>
-
-                        <li onclick="gotoGallery(1,5)" class="item">
-                            <div>
-                                <img src="<?= $assetsPrefix?>/png/apple-macbook-air-mqd42sa-a-i5-5350u-180x125.png">
-                            </div>
-                            Xanh
-                        </li>
-
-                        <li onclick="gotoGallery(7,0)" class="item">
-                            <div>
-                                <i class="icontgdd-box"></i>
-                            </div>
-                            Mở hộp,<br/>k.mãi
-                        </li> -->
-                       
+                                               
                     </ul>
                     <div class="prev hide" onclick="slideFltNext(0)">
                         <i class="icontgdd-prevthumd"></i>

@@ -11,9 +11,41 @@ use backend\models\Cauhinh;
 use frontend\assets\CustomAsset;
 $bundle = CustomAsset::register($this);
 $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
+
+
+$page_size = 2;
 ?>
 
 
+<script type="text/javascript">
+    var query = {
+        Category: <?= $model['dm_id']?>,
+        Manufacture: 0,
+        PriceRange: 0,
+        Feature: 0,
+        Property: 0,
+        OrderBy: 0,
+        PageSize: <?= $page_size?>,
+        PageIndex: 0,
+        Others: '',
+        ClearCache: 0
+    };
+    var advanceQuery = {
+        Category: <?= $model['dm_id']?>,
+        Manufacture: '',
+        PriceRange: 0,
+        Feature: '',
+        Property: '',
+        OrderBy: 0,
+        PageSize: <?= $page_size?>,
+        PageIndex: 0,
+        Count: 0,
+        Others: '',
+        ClearCache: 0
+    };
+    var GL_CATEGORYID = 42;
+    var GL_MANUFACTUREID = 0;
+</script>
 
 
 <ul class="homeproduct">
@@ -26,10 +58,17 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
    // echo '<pre>';
    // print_r($listsp);
    // echo '</pre>';
+
+    $dem = 1;
+    $size_max = sizeof($model['dm_listsp']);
+    $more = $size_max - $page_size;
     if(is_array($model['dm_listsp'])) foreach ($model['dm_listsp'] as $k => $idsp) {    
-        echo $this->render('_item',[
-            'idsp' => $idsp,
-        ]);     
+        if($dem <= $page_size){
+            echo $this->render('_item',[
+                'idsp' => $idsp,
+            ]);
+        }
+        $dem += 1;
     }
 ?>
 
@@ -87,4 +126,6 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     </li>
      -->
 <!-- </ul> -->
-<a href="javascript:More()" class="viewmore">Xem thêm 70 laptop</a>
+<?php if(!empty($more)){ ?>
+    <a href="javascript:More()" class="viewmore">Xem thêm <?= $more?> laptop</a>
+<?php } ?>

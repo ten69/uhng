@@ -355,19 +355,15 @@ function ScrollResult() {
             FL_LoadMore = !0;
             (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
             location.reload());
-
             // var i = "<div>" + t + "<\/div>";
             // n == 0 ? $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct")) : $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
             // $(".viewmore").length > 0 ? $(".viewmore").replaceWith($(i).find(".viewmore")) : $(i).find(".viewmore").insertAfter($("ul.homeproduct"));
-
             n == 0 ? $("ul.homeproduct").html(t.html) : $("ul.homeproduct").append(t.html) ;
-
             if(t.more === ''){
                 $(".viewmore").empty().hide()
             }else{
                 $(".viewmore").html(t.more).show()
             }
-
             LazyLoad()
         }, ErrorAjax, !1);
     ReloadAdvanceFilter();
@@ -384,14 +380,20 @@ function ScrollResultNormal() {
     t = jQuery.extend(!0, {}, query),
     n = 0; n <= query.PageIndex; n++)
         t.PageIndex = n,
-        POSTAjax("/aj/CategoryV5/Product", t, BeforeSendAjax, function(t) {
+        POSTAjax("/api?p=101100", t, BeforeSendAjax, function(t) {
             $("#dlding").fadeOut();
             FL_LoadMore = !0;
             (t == null || t == "") && (alert("Opps, something went wrong! Try it later..."),
             location.reload());
-            var i = "<div>" + t + "<\/div>";
-            n == 0 ? $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct")) : $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
-            $(".viewmore").length > 0 && $(".viewmore").replaceWith($(i).find(".viewmore"));
+            // var i = "<div>" + t + "<\/div>";
+            // n == 0 ? $("ul.homeproduct").replaceWith($(i).find("ul.homeproduct")) : $("ul.homeproduct").append($(i).find("ul.homeproduct li"));
+            // $(".viewmore").length > 0 && $(".viewmore").replaceWith($(i).find(".viewmore"));
+             n == 0 ? $("ul.homeproduct").html(t.html) : $("ul.homeproduct").append(t.html) ;
+            if(t.more === ''){
+                $(".viewmore").empty().hide()
+            }else{
+                $(".viewmore").html(t.more).show()
+            }
             LazyLoad()
         }, ErrorAjax, !1);
     sessionStorage && $("body,html").animate({

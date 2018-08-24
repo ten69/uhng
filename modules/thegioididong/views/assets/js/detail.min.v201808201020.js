@@ -111,10 +111,10 @@ function getScriptChatTgdd() {
         var n, t;
         gl_fLoadChat || (gl_fLoadChat = !0,
         n = getCookie("chat.username"),
-        (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.v" + g_version + ".js",
+        (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (
         $.getScript(t).done(function() {
             console.log("GET SCRIPT CHAT: DONE")
-        })) : (t = "../js/chatclienttgddmobile.js",
+        })) : (
         $.getScript(t).done(function() {
             console.log("GET SCRIPT CHAT: DONE")
         }))))
@@ -171,7 +171,7 @@ function getUrlParameter(n) {
 }
 function getJsRateShip() {
     setTimeout(function() {
-        $.getScript("../js/ratingship.min.js").done(function() {
+        $.getScript("/Scripts/mobile/V4/ratingship.min.js").done(function() {
             console.log("getJsRateShip_js")
         })
     }, 11e3)
@@ -301,7 +301,7 @@ function submitRatingComment() {
         }
         var n = $(".boxRatingCmt .input")
           , t = n.serialize();
-        POSTAjax("https://www.thegioididong.com/aj/ProductV4/SubmitRatingComment/", t, function() {}, function(n) {
+        POSTAjax("/aj/ProductV4/SubmitRatingComment/", t, function() {}, function(n) {
             if (n != null || n != "")
                 try {
                     initRating();
@@ -346,7 +346,7 @@ function ratingRelply(n) {
         content: $(".rr-" + n).find("input").val(),
         name: t
     };
-    u = "https://www.thegioididong.com/aj/ProductV2/SubmitRatingReply/";
+    u = "/aj/ProductV2/SubmitRatingReply/";
     POSTAjax(u, r, function() {}, function(n) {
         if (n != null || n != "")
             try {
@@ -411,7 +411,7 @@ function ratingCmtList(n, t) {
         page: n,
         score: i
     };
-    u = "https://www.thegioididong.com/aj/ProductV4/RatingCommentList/";
+    u = "/aj/ProductV4/RatingCommentList/";
     POSTAjax(u, r, function() {}, function(n) {
         if (n != null || n != "")
             try {
@@ -426,7 +426,7 @@ function likeRating(n) {
     var t = {
         id: n
     };
-    POSTAjax("https://www.thegioididong.com/aj/ProductV4/LikeRating/", t, function() {}, function(t) {
+    POSTAjax("/aj/ProductV4/LikeRating/", t, function() {}, function(t) {
         var i, r;
         if (t != null || t != "")
             try {
@@ -441,7 +441,7 @@ function likeRating(n) {
 }
 function unlikeRating() {}
 function getFileUpload() {
-    gl_isFeedbackLoad || $.getScript("../js/jquery.html5uploader.min.js").done(function() {
+    gl_isFeedbackLoad || $.getScript("/Scripts/desktop/jquery.html5uploader.min.js").done(function() {
         gl_isFeedbackLoad = !0;
         initUploadRating()
     })
@@ -496,7 +496,7 @@ function PopupGalleryRatingCmt(n, t) {
             imageType: 8,
             colorID: 0
         };
-        POSTAjax("https://www.thegioididong.com/aj/ProductV4/GallerySlideFT/", i, function() {}, function(n) {
+        POSTAjax("/aj/ProductV4/GallerySlideFT/", i, function() {}, function(n) {
             if (n != null || n != "")
                 try {
                     if (n != null && n != "") {
@@ -539,12 +539,10 @@ function PopupGalleryRatingCmt(n, t) {
                 $(".slide_FT").html("")
         }, function() {}, !0)
     } else
-        // $.getScript("../js/fotorama.min.js").done(function() {
-        {
+        $.getScript(assetsPrefix+"/js/fotorama.min.js").done(function() {
             gl_lFT = !0;
             PopupGalleryRatingCmt(n, t)
-        }
-        // })
+        })
 }
 function openFeedback() {
     $(".wrap_fdback").removeClass("hide");
@@ -574,7 +572,7 @@ function sendFeedback() {
         link: r,
         productid: productID
     };
-    POSTAjax("https://www.thegioididong.com/aj/ProductV4/SendFeedback/", u, function() {}, function(n) {
+    POSTAjax("/aj/ProductV4/SendFeedback/", u, function() {}, function(n) {
         if (n != null || n != "") {
             try {
                 isSendFback = !1;
@@ -642,7 +640,7 @@ function sendRatingArticle() {
             productID: productID,
             lnk: f
         };
-        POSTAjax("https://www.thegioididong.com/aj/ProductV4/SubmitRatingArticle/", e, function() {}, function(n) {
+        POSTAjax("/aj/ProductV4/SubmitRatingArticle/", e, function() {}, function(n) {
             var t, i, r;
             (n != null || n != "") && (n.mes != null && n.mes != "" ? ($(".bRtAtc .alert").html(n.mes),
             $(".bRtAtc .alert").removeClass("hide")) : (t = "bạn ",
@@ -725,7 +723,7 @@ function sendRatingGallery() {
             productID: productID,
             lnk: f
         };
-        POSTAjax("https://www.thegioididong.com/aj/ProductV4/SubmitRatingArticle/", e, function() {}, function(n) {
+        POSTAjax("/aj/ProductV4/SubmitRatingArticle/", e, function() {}, function(n) {
             var t, i, r;
             (n != null || n != "") && (n.mes != null && n.mes != "" ? ($(".bRtGlr .alert").html(n.mes),
             $(".bRtGlr .alert").removeClass("hide")) : (t = "bạn ",
@@ -821,6 +819,11 @@ function loadRtArtSlide() {
     })
 }
 function loadSpec() {
+
+    $.getScript(assetsPrefix+"/js/fotorama.min.js").done(function() {
+        gl_lFT = !0;
+    })
+
     $(".viewparameterfull").click(function() {
         $(".fullparameter").css("display") == "block" ? ($(".closebtn").hide(),
         $(".fullparameter").hide(),
@@ -859,6 +862,10 @@ function loadSpec() {
         ArticleDetail())
     });
     checkPinDevice();
+
+
+
+
     var n = $(".g60_6339 div i").html();
     n != null && n != "" && n.indexOf("hỗ trợ 4G") > -1 ? $(".liveevent").removeClass("hide") : (n = $(".g6339 div i").html(),
     n != null && n != "" && n.indexOf("hỗ trợ 4G") > -1 && $(".liveevent").removeClass("hide"))
@@ -915,8 +922,8 @@ function checkAritcleCompareImg() {
         setTimeout(function() {
             $("#" + n).twentytwenty({})
         }, 1e3)
-    }) : $.getScript("../js/jquery.twentytwenty.min.js").done(function() {
-        $.getScript("../js/jquery.event.move.min.js").done(function() {
+    }) : $.getScript("/Scripts/mobile/jquery.twentytwenty.min.js").done(function() {
+        $.getScript("/Scripts/mobile/jquery.event.move.min.js").done(function() {
             gl_cprImg = !0;
             checkAritcleCompareImg()
         })
@@ -1034,70 +1041,149 @@ function loadGallery() {
         }, 300)
     })
 }
-function gotoGallery(n, t) {
-    n == -1 ? (
-    $(".tabscolor li").first().click()) : n == 1 ? (
-    PopupGalleryFT(1)) : PopupGalleryFT(n,t)
+function gotoGallery(this_) {
+    var this_ = $(this_),n = this_.find('>.album-content').html();
+    if (n != null && n != "")
+    try {        
+        $(".slide_FT").html(n);
+        gl_CurrColor = 0;
+        $("#ajxgallery").remove();
+        $("body").toggleClass("fixbody");
+        $("body").removeClass("fixbody");
+        var t = 0
+          , i = !1;
+        $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
+            var f, u;
+            $(".caption_ps").hide();
+            i || (r.show(0),
+            r.requestFullScreen(),
+            i = !0);
+            (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
+            (t == 1 || f > 0) && (t = 1,
+            u = $(r.activeFrame.html).find(".fb-like"),
+            u != undefined && setTimeout(function() {
+                var n = u.data("url");
+                u.replaceWith('<iframe><\/iframe>');
+                $(".caption_ps").show()
+            }, 1e3)));
+            n.type == "fotorama:load" && setTimeout(function() {
+                $("div.caption_ps").each(function() {
+                    var n = $(this).parent().parent().find("img").width() + 2;
+                    $(this).width(n).fadeIn(300)
+                })
+            }, 100);
+            n.type == "fotorama:fullscreenexit" && ($("body").click(),
+            $("body").css("background-color", "#fff"),
+            $("body").removeAttr("background-color"),
+            r.destroy(),
+            $(".slide_FT").html(""))
+        }).fotorama()        
+    } catch (err) {}
+
 }
-function PopupGalleryFT(n,t) {
-    console.log('PopupGalleryFT '+n);
-    if (gl_lFT) {
-        var t = {
-            productID: n,
-            imageType: t,
-            colorID: t,
-        };
-        console.log(t);
-        POSTAjax("/api?p=21001", t, function() {}, function(n) {
-            // console.log(n)
-            if (n != null || n != "")
-                try {
-                    if (n != null && n != "") {
-                        $(".slide_FT").html(n);
-                        gl_CurrColor = 0;
-                        $("#ajxgallery").remove();
-                        $("body").toggleClass("fixbody");
-                        $("body").removeClass("fixbody");
-                        var t = 0
-                          , i = !1;
-                        $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
-                            var f, u;
-                            $(".caption_ps").hide();
-                            i || (r.show(0),
-                            r.requestFullScreen(),
-                            i = !0);
-                            (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
-                            (t == 1 || f > 0) && (t = 1,
-                            u = $(r.activeFrame.html).find(".fb-like"),
-                            u != undefined && setTimeout(function() {
-                                var n = u.data("url");
-                                u.replaceWith('<iframe class="like" src="//www.facebook.com/plugins/like.php?href=' + n + '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=20&amp;appId=459645584142044" scrolling="no" frameborder="0" style="border:none;overflow:hidden; width:100%;height:20px;" allowTransparency="true"><\/iframe>');
-                                $(".caption_ps").show()
-                            }, 1e3)));
-                            n.type == "fotorama:load" && setTimeout(function() {
-                                $("div.caption_ps").each(function() {
-                                    var n = $(this).parent().parent().find("img").width() + 2;
-                                    $(this).width(n).fadeIn(300)
-                                })
-                            }, 100);
-                            n.type == "fotorama:fullscreenexit" && ($("body").click(),
-                            $("body").css("background-color", "#fff"),
-                            $("body").removeAttr("background-color"),
-                            r.destroy(),
-                            $(".slide_FT").html(""))
-                        }).fotorama()
-                    }
-                } catch (r) {}
-            else
-                $(".slide_FT").html("")
-        }, function() {}, !0)
-    } else
-        // $.getScript("/Scripts/desktop/fotorama.min.js").done(function() 
-        {
-            gl_lFT = !0;
-            PopupGalleryFT(n, t)
-        }
+function PopupGalleryFT(n,t, html) {
+    // console.log('PopupGalleryFT '+n);
+    // if (gl_lFT) {
+    //     var t = {
+    //         productID: n,
+    //         imageType: t,
+    //         colorID: t,
+    //     };
+    //     console.log(t);
+
+    //     n = html;
+
+    //     if (n != null || n != "")
+    //             try {
+    //                 if (n != null && n != "") {
+    //                     $(".slide_FT").html(n);
+    //                     gl_CurrColor = 0;
+    //                     $("#ajxgallery").remove();
+    //                     $("body").toggleClass("fixbody");
+    //                     $("body").removeClass("fixbody");
+    //                     var t = 0
+    //                       , i = !1;
+    //                     $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
+    //                         var f, u;
+    //                         $(".caption_ps").hide();
+    //                         i || (r.show(0),
+    //                         r.requestFullScreen(),
+    //                         i = !0);
+    //                         (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
+    //                         (t == 1 || f > 0) && (t = 1,
+    //                         u = $(r.activeFrame.html).find(".fb-like"),
+    //                         u != undefined && setTimeout(function() {
+    //                             var n = u.data("url");
+    //                             u.replaceWith('<iframe class="like" src="//www.facebook.com/plugins/like.php?href=' + n + '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=20&amp;appId=459645584142044" scrolling="no" frameborder="0" style="border:none;overflow:hidden; width:100%;height:20px;" allowTransparency="true"><\/iframe>');
+    //                             $(".caption_ps").show()
+    //                         }, 1e3)));
+    //                         n.type == "fotorama:load" && setTimeout(function() {
+    //                             $("div.caption_ps").each(function() {
+    //                                 var n = $(this).parent().parent().find("img").width() + 2;
+    //                                 $(this).width(n).fadeIn(300)
+    //                             })
+    //                         }, 100);
+    //                         n.type == "fotorama:fullscreenexit" && ($("body").click(),
+    //                         $("body").css("background-color", "#fff"),
+    //                         $("body").removeAttr("background-color"),
+    //                         r.destroy(),
+    //                         $(".slide_FT").html(""))
+    //                     }).fotorama()
+    //                 }
+    //             } catch (r) {}
+
+
+    //     // POSTAjax("/api?p=21001", t, function() {}, function(n) {
+    //     //     // console.log(n)
+    //     //     if (n != null || n != "")
+    //     //         try {
+    //     //             if (n != null && n != "") {
+    //     //                 $(".slide_FT").html(n);
+    //     //                 gl_CurrColor = 0;
+    //     //                 $("#ajxgallery").remove();
+    //     //                 $("body").toggleClass("fixbody");
+    //     //                 $("body").removeClass("fixbody");
+    //     //                 var t = 0
+    //     //                   , i = !1;
+    //     //                 $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
+    //     //                     var f, u;
+    //     //                     $(".caption_ps").hide();
+    //     //                     i || (r.show(0),
+    //     //                     r.requestFullScreen(),
+    //     //                     i = !0);
+    //     //                     (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
+    //     //                     (t == 1 || f > 0) && (t = 1,
+    //     //                     u = $(r.activeFrame.html).find(".fb-like"),
+    //     //                     u != undefined && setTimeout(function() {
+    //     //                         var n = u.data("url");
+    //     //                         u.replaceWith('<iframe class="like" src="//www.facebook.com/plugins/like.php?href=' + n + '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=20&amp;appId=459645584142044" scrolling="no" frameborder="0" style="border:none;overflow:hidden; width:100%;height:20px;" allowTransparency="true"><\/iframe>');
+    //     //                         $(".caption_ps").show()
+    //     //                     }, 1e3)));
+    //     //                     n.type == "fotorama:load" && setTimeout(function() {
+    //     //                         $("div.caption_ps").each(function() {
+    //     //                             var n = $(this).parent().parent().find("img").width() + 2;
+    //     //                             $(this).width(n).fadeIn(300)
+    //     //                         })
+    //     //                     }, 100);
+    //     //                     n.type == "fotorama:fullscreenexit" && ($("body").click(),
+    //     //                     $("body").css("background-color", "#fff"),
+    //     //                     $("body").removeAttr("background-color"),
+    //     //                     r.destroy(),
+    //     //                     $(".slide_FT").html(""))
+    //     //                 }).fotorama()
+    //     //             }
+    //     //         } catch (r) {}
+    //     //     else
+    //     //         $(".slide_FT").html("")
+    //     // }, function() {}, !0)
+    // } else
+    //     $.getScript(assetsPrefix+"/js/fotorama.min.js").done(function() 
+    //     {
+    //         gl_lFT = !0;
+    //         PopupGalleryFT(n, t)
+    //     })
 }
+
 function PopupGallery() {
     var n = {
         productID: productID
@@ -5629,7 +5715,7 @@ function(n) {
     }()
       , w = function(n, t) {
         var i = tt();
-        i && (i.open("https://www.thegioididong.com/laptop/GET", n, !0),
+        i && (i.open("GET", n, !0),
         i.onreadystatechange = function() {
             4 !== i.readyState || 200 !== i.status && 304 !== i.status || t(i.responseText)
         }
@@ -6919,6 +7005,13 @@ $(document).ready(function() {
             return window.location.href = $(".buy_ins").attr("href"),
             !1
         }))
+    })
+});
+$(document).ready(function() {
+    $(".option-shiper").click(function(n) {
+        n.preventDefault();
+        $(this).hasClass("active") ? $(this).removeClass("active") : $(this).addClass("active");
+        BuyChoose()
     })
 });
 /*

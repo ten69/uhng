@@ -66,10 +66,18 @@ class SiteController extends Controller
     public function actionApi($p = '')
     {        
         $data = [];
+        $Property = '';
         if(isset($_POST['Property'])){
             $dt = $_POST['Property'];
+            $Property = $_POST['Property'];
             $data = explode(',', $dt);
         }
+
+
+        $Category = '';
+        if(isset($_POST['Category']))
+            $Category = $_POST['Category'];
+
         if(isset($_POST['PageSize']))
             $page_size = $_POST['PageSize'];
 
@@ -141,61 +149,70 @@ class SiteController extends Controller
         }
 
 
-        elseif($p == '101100') { //List sản phâm
+        elseif($p == '101100') { //List sản phâm, MORE
             Aabc::$app->response->format = \aabc\web\Response::FORMAT_JSON; 
             $return = '';
-            $a = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$orderby,$connection,$where) {
-                // return SanphamDanhmuc::find()
-                //                     ->select(['spdm_id_sp'])
-                //                     ->where(['spdm_id_danhmuc' => $data])
-                //                     ->groupBy('spdm_id_sp')
-                //                     ->offset($page_size *  $page_index)
-                //                     ->limit($page_size)
-                //                     ->joinWith('thongtinSanpham')
-                //                     ->orderby($orderby)
-                //                     ->column(); 
-                $command = $connection->createCommand("
-                    SELECT `spdm_id_sp`
-                    FROM `db_sanpham_danhmuc`
-                    LEFT JOIN `db_sanpham` ON `db_sanpham_danhmuc`.`spdm_id_sp` = `db_sanpham`.`sp_id`
-                    WHERE 
-                    ".$where."
-                    GROUP BY `spdm_id_sp`
-                    ORDER BY ".$orderby."
-                    LIMIT ".$page_size."
-                    OFFSET ".$page_size *  $page_index."            
-                    ", []);
-                return $command->queryColumn();           
-            });
-            
-            if($a) foreach ($a as $k => $idsp) {
-                $return .= $this->renderPartial('/laptop/_item',[
-                    'idsp' => $idsp,
-                ]);                
+            if(empty($Property)){ //Danh mục
+                $danhmuc = Tuyen::_dulieu('danhmuc',$Category);
+                $dem = 1; 
+                $min = $page_size * $page_index + 1;
+                $max = $page_size * ($page_index + 1);                
+                $size_max = sizeof($danhmuc['dm_listsp']);
+
+                if(is_array($danhmuc['dm_listsp'])) foreach ($danhmuc['dm_listsp'] as $k => $idsp) {    
+                    if($dem >= $min && $dem <= $max){
+                        $return .= $this->renderPartial('/laptop/_item',[
+                            'idsp' => $idsp,
+                        ]); 
+                    }
+                    $dem += 1;
+                }
+                $more = $size_max - $max;
+                return [
+                    'html' => $return,
+                    'more' => ($more > 0?'Xem thêm '.$more.' laptop':''),
+                ];
+
             }
-            $more = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$connection,$where) {
-                // return SanphamDanhmuc::find()
-                //                     ->select(['spdm_id_sp'])
-                //                     ->where(['spdm_id_danhmuc' => $data])
-                //                     ->groupBy('spdm_id_sp')
-                //                     ->offset($page_size *  ($page_index + 1))
-                //                     ->count();
-                $command = $connection->createCommand("
-                    SELECT COUNT(*) FROM (
+            else{ //Thông số  
+                $a = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$orderby,$connection,$where) {
+                    $command = $connection->createCommand("
                         SELECT `spdm_id_sp`
                         FROM `db_sanpham_danhmuc`
+                        LEFT JOIN `db_sanpham` ON `db_sanpham_danhmuc`.`spdm_id_sp` = `db_sanpham`.`sp_id`
                         WHERE 
                         ".$where."
                         GROUP BY `spdm_id_sp`
-                    ) tuyen
-                    ", []);
-                return $command->queryScalar();
-            });
-            $more = $more - ($page_size * ($page_index+1));
-            return [
-                'html' => $return,
-                'more' => ($more > 0?'Xem thêm '.$more.' laptop':''),
-            ];            
+                        ORDER BY ".$orderby."
+                        LIMIT ".$page_size."
+                        OFFSET ".$page_size *  $page_index."            
+                        ", []);
+                    return $command->queryColumn();           
+                });
+                
+                if($a) foreach ($a as $k => $idsp) {
+                    $return .= $this->renderPartial('/laptop/_item',[
+                        'idsp' => $idsp,
+                    ]);                
+                }
+                $more = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$connection,$where) {
+                    $command = $connection->createCommand("
+                        SELECT COUNT(*) FROM (
+                            SELECT `spdm_id_sp`
+                            FROM `db_sanpham_danhmuc`
+                            WHERE 
+                            ".$where."
+                            GROUP BY `spdm_id_sp`
+                        ) tuyen
+                        ", []);
+                    return $command->queryScalar();
+                });
+                $more = $more - ($page_size * ($page_index+1));
+                return [
+                    'html' => $return,
+                    'more' => ($more > 0?'Xem thêm '.$more.' laptop':''),
+                ]; 
+            }           
         } 
 
         elseif($p == '110001'){ //fiter mới
@@ -257,6 +274,63 @@ class SiteController extends Controller
           
             Aabc::$app->response->format = \aabc\web\Response::FORMAT_JSON;
             return $return;
+        }
+
+        elseif($p == '21001'){ //get album
+
+            // $productID = '';
+            // if(isset($_POST['productID'])) $productID = $_POST['productID'];
+
+            // $albumID = '';
+            // if(isset($_POST['imageType'])) $albumID = $_POST['imageType'];
+
+            // $sanpham = Tuyen::_dulieu('sanpham', $id, $type)
+
+            return '
+            <div class="fotorama" data-auto="false" data-allowfullscreen="true" data-nav="thumbs" data-fit="scaledown" data-thumbwidth="100" data-arrows="true" data-click="false" data-swipe="true">
+
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-1-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-1-org.jpg" data-picid="784572">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-2-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-2-org.jpg" data-picid="784573">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-3-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-3-org.jpg" data-picid="784574">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-4-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-4-org.jpg" data-picid="784575">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-5-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-5-org.jpg" data-picid="784576">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-6-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-6-org.jpg" data-picid="784577">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-7-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-7-org.jpg" data-picid="784578">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-8-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-8-org.jpg" data-picid="784579">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-9-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-9-org.jpg" data-picid="784580">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-91-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-91-org.jpg" data-picid="784581">
+                    
+                </div>
+                <div class="caption_ps" data-thumb="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-92-180x125.jpg" data-img="//cdn.tgdd.vn/Products/Images/44/106875/apple-macbook-air-mqd32sa-a-i5-5350u-bac-92-org.jpg" data-picid="784582">
+                    
+                </div>
+                
+            </div>
+        
+
+    ';
+
+
+
+
         }
     }
 }

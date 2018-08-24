@@ -69,6 +69,9 @@ return [
 		['450','300'], //Cove chi tiet san pham
 		['320','320'], //Cove chi tiet san pham
 
+
+		['100','64'], //Thumb open album
+
 		['590','500'], //Anh thong so
 
 		['780','430'], //slide cove san pham noi bat

@@ -51,7 +51,12 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 
 
     
-        <script defer="defer" async="async" src="<?= $assetsPrefix?>/js/detail.min.v201807181030.js"></script>
+        <!-- <script defer="defer" async="async" src="<?= $assetsPrefix?>/js/detail.min.v201807181030.js"></script> -->
+        <script type="text/javascript">
+           var assetsPrefix = '<?= $assetsPrefix?>';
+        </script>
+        <script defer="defer" async="async" src="<?= $assetsPrefix?>/js/detail.min.v201808201020.js"></script>
+        
         
        
         <div id="dlding">Đang xử lý, vui lòng đợi trong giây lát...</div>

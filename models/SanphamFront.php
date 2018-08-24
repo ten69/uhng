@@ -61,8 +61,8 @@ class SanphamFront extends Model
         $this->sp_album = json_decode($this->sp_album,true);
         $this->sp_phienban = json_decode($this->sp_phienban,true);
 
-        $this->sp_thongso = $this->sp_listdm[5];
-        $this->sp_danhmuc = $this->sp_listdm[1];
+        $this->sp_thongso = $this->sp_listdm[5]; //Array
+        $this->sp_danhmuc = !empty($this->sp_listdm[1][0])?$this->sp_listdm[1][0]:''; //1 id
 
         $ts_full = [];
         foreach ($this->sp_thongso as $idts => $arr) {
@@ -81,20 +81,19 @@ class SanphamFront extends Model
 
         $this->sp_baiviet = [];
 
-        if(is_array($this->sp_danhmuc)) foreach ($this->sp_danhmuc as $iddm) {
-            $dm = Tuyen::_dulieu('danhmuc',$iddm);
+        
+        $dm = Tuyen::_dulieu('danhmuc',$this->sp_danhmuc);
 
-            if(!empty($dm['dm_listbv'])) if(is_array($dm['dm_listbv'])){
-                $this->sp_baiviet = array_merge($this->sp_baiviet, $dm['dm_listbv']);
-            }
-
-            if(!empty($dm['dm_khuyenmai'])) if(is_array($dm['dm_khuyenmai'])){
-                $khuyenmai = array_merge($khuyenmai, $dm['dm_khuyenmai']);
-            }
-            if(!empty($dm['dm_chinhsach'])) if(is_array($dm['dm_chinhsach'])){
-                $chinhsach = array_merge($chinhsach, $dm['dm_chinhsach']);
-            }
+        if(!empty($dm['dm_listbv'])) if(is_array($dm['dm_listbv'])){
+            $this->sp_baiviet = array_merge($this->sp_baiviet, $dm['dm_listbv']);
         }
+        if(!empty($dm['dm_khuyenmai'])) if(is_array($dm['dm_khuyenmai'])){
+            $khuyenmai = array_merge($khuyenmai, $dm['dm_khuyenmai']);
+        }
+        if(!empty($dm['dm_chinhsach'])) if(is_array($dm['dm_chinhsach'])){
+            $chinhsach = array_merge($chinhsach, $dm['dm_chinhsach']);
+        }
+        
         $khuyenmai = array_merge($khuyenmai, $this->sp_khuyenmai);  
         $this->sp_khuyenmai = $khuyenmai;
 
