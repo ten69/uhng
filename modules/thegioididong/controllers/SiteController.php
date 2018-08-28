@@ -25,6 +25,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
+                    'cart' => ['POST','GET'],
                     'api' => ['POST','GET'],
                     'delete' => ['POST'],
                     'get-order' => ['GET'],
@@ -59,9 +60,21 @@ class SiteController extends Controller
     public function actionIndex()
     {
         // $this->layout = 'chuyenmuc/main';        
-        // $this->layout = 'site/main';       
+        // $this->layout = 'site/main'; 
         return $this->render('index');
     }
+
+    public function actionCart()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            echo '<pre>';
+            print_r($_POST['ts']);
+            echo '</pre>';
+        }else{   
+            echo 'get';
+        }
+    }
+
 
     public function actionApi($p = '')
     {        
@@ -124,7 +137,10 @@ class SiteController extends Controller
        
 
         if($p == '1000100'){//Kết quả số đếm search
-            $a = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$connection,$where) {
+
+            if(empty($data[0])) $where = '1 = 0';
+
+            // $a = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$connection,$where) {
                 // return SanphamDanhmuc::find()
                 //                     ->select(['spdm_id_sp'])
                 //                     ->where(['spdm_id_danhmuc' => $data])
@@ -138,8 +154,11 @@ class SiteController extends Controller
                     ".$where."
                     GROUP BY `spdm_id_sp`                           
                     ", []);
-                return $command->queryColumn();           
-            });
+            //     return $command->queryColumn();           
+            // });
+            
+            $a = $command->queryColumn();
+
             if($a){
                 $html = '<p class="doit"><button type="submit" class="viewresult" onclick="ShowResult()">Xem '.count($a).' kết quả</button></p>';
             }else{
@@ -175,7 +194,7 @@ class SiteController extends Controller
 
             }
             else{ //Thông số  
-                $a = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$orderby,$connection,$where) {
+                // $a = SanphamDanhmuc::getDb()->cache(function ($db) use ($data, $page_size, $page_index,$orderby,$connection,$where) {
                     $command = $connection->createCommand("
                         SELECT `spdm_id_sp`
                         FROM `db_sanpham_danhmuc`
@@ -187,8 +206,9 @@ class SiteController extends Controller
                         LIMIT ".$page_size."
                         OFFSET ".$page_size *  $page_index."            
                         ", []);
-                    return $command->queryColumn();           
-                });
+                //     return $command->queryColumn();           
+                // });
+                $a = $command->queryColumn();
                 
                 if($a) foreach ($a as $k => $idsp) {
                     $return .= $this->renderPartial('/laptop/_item',[

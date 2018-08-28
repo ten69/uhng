@@ -16,6 +16,14 @@ return [
 
 
 		[
+		    'pattern' => 'cart', //cart.html
+		    'route' => temp.'/site/cart',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+
+		[
 		    'pattern' => 'api', //san-pham.html
 		    'route' => temp.'/site/api',
 		    'defaults' => [/*'type' => 1*/],

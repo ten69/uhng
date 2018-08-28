@@ -369,16 +369,23 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                     }
                 </style>
     
+
+                <form id="order_sp" action="/cart.html" method="POST">
                 <?php if(is_array($model['sp_phienban'])){ ?>
                     <div class="area_promotion zero">
-                        <strong data-count="2">Tùy chọn thông số, phiên bản</strong>
+                        <strong data-count="2">Tùy chọn thông số, phiên bản</strong>                        
                     <?php 
                         foreach ($model['sp_phienban'] as $k_pb => $pb) {
                             echo '<div style="padding: 5px 20px;">';
                             echo '<h4 style="margin: 0 0 5px 0">'.$pb['title'].'</h4>';
-                            echo '<select name="pb-'.$k_pb.'">';
+                            echo '<select name="ts[pb-'.$k_pb.']">';
                             if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
-                                echo '<option value="'.$op['change'].'">'.$op['name'].'</option>';
+
+                                // echo '<pre>';
+                                // print_r($op);
+                                // echo '</pre>';
+
+                                echo '<option value="'.$k_op.'">'.$op['name'].'</option>';
                                 // echo '<label style="padding: 0 10px 0 0;">';
                                 // echo '<input type="radio" name="pb-'.$k_pb.'" value="'.$op['change'].'"/>';
                                 // echo '<span>'.$op['name'].'</span>';
@@ -387,22 +394,51 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                             echo '</select>';
                             echo '</div>';
                         }
-                    ?>
+                    ?>      
+                            
                     </div>
                 <?php } ?>
+                    <div class="area_order">
+                        <button class="buy_now" data-value="106880" style=" cursor: pointer; border: none;width: 100%;">
+                            <b>Mua ngay </b>
+                            <span>Giao trong 90 phút hoặc nhận tại cửa hàng</span>
+                        </button>
+                    </div>
+                </form>
 
+<?php
+$js = <<<XP
+    $('.buy_repay').on('click',function(){        
+        var form = $('form#order_sp')
+        var formData = form.serialize();
+        $.ajax({
+            url: form.attr("action"),
+            type: form.attr("method"),
+            cache: false,
+            data: formData,
+            success: function(data){
+                console.log(data)
+            },
+            error: function(){
 
+            }
+        })
+    })
+XP;
 
+$this->registerJs($js);
+?>
 
 
 
                 <div class="notechoose"></div>
 
                 <div class="area_order">
-                    <a href="https://www.thegioididong.com/them-vao-gio-hang?ProductId=106880" class="buy_now" data-value="106880">
-                        <b>Mua ngay </b>
+                    <a href="#123" class="buy_repay" data-value="106880" style="width: 100%;">
+                        <b>Thêm vào giỏ hàng </b>
                         <span>Giao trong 90 phút hoặc nhận tại cửa hàng</span>
                     </a>
+                   
                     <!-- <a class="buy_repay " href="https://www.thegioididong.com/tra-gop/laptop/apple-macbook-air-mqd42sa-a-i5-5350u">
                         <b>Mua trả góp 0%</b>
                         <span>Thủ tục đơn giản</span>
