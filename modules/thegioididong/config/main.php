@@ -16,8 +16,23 @@ return [
 
 
 		[
+		    'pattern' => 'add-cart', //cart.html
+		    'route' => temp.'/cart/add',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+
+		[
+		    'pattern' => 'add-cart-aj', //cart.html
+		    'route' => temp.'/cart/add-aj',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+		[
 		    'pattern' => 'cart', //cart.html
-		    'route' => temp.'/site/cart',
+		    'route' => temp.'/cart/index',
 		    'defaults' => [/*'type' => 1*/],
 		    'suffix' => '.html',
 		],
@@ -84,6 +99,7 @@ return [
 
 		['780','430'], //slide cove san pham noi bat
 		['100','60'], //trang san pham: anh bai viet
+		
 	]
 ];
 

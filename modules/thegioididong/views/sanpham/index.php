@@ -2,7 +2,7 @@
 use aabc\widgets\Menu;
 use aabc\helpers\ArrayHelper;
 use common\components\Tuyen;
-
+use aabc\helpers\Html;
 // use frontend\models\SanphamFront;
 
 use backend\models\Cauhinh;
@@ -370,26 +370,21 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                 </style>
     
 
-                <form id="order_sp" action="/cart.html" method="POST">
+                <form id="order_sp" action="/add-cart.html" method="POST">
                 <?php if(is_array($model['sp_phienban'])){ ?>
+                    <?php // Html::csrfMetaTags() ?>
+                    <input name="product" type="hidden" value="<?= $model['sp_id']?>" />
+                    <input id="form-token" type="hidden" name="<?= Aabc::$app->request->csrfParam?>"           value="<?= Aabc::$app->request->csrfToken?>"/>
+
                     <div class="area_promotion zero">
                         <strong data-count="2">Tùy chọn thông số, phiên bản</strong>                        
                     <?php 
                         foreach ($model['sp_phienban'] as $k_pb => $pb) {
                             echo '<div style="padding: 5px 20px;">';
                             echo '<h4 style="margin: 0 0 5px 0">'.$pb['title'].'</h4>';
-                            echo '<select name="ts[pb-'.$k_pb.']">';
+                            echo '<select name="ts['.$k_pb.']">';
                             if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
-
-                                // echo '<pre>';
-                                // print_r($op);
-                                // echo '</pre>';
-
                                 echo '<option value="'.$k_op.'">'.$op['name'].'</option>';
-                                // echo '<label style="padding: 0 10px 0 0;">';
-                                // echo '<input type="radio" name="pb-'.$k_pb.'" value="'.$op['change'].'"/>';
-                                // echo '<span>'.$op['name'].'</span>';
-                                // echo '</label>';
                             }
                             echo '</select>';
                             echo '</div>';
@@ -412,7 +407,7 @@ $js = <<<XP
         var form = $('form#order_sp')
         var formData = form.serialize();
         $.ajax({
-            url: form.attr("action"),
+            url: '/add-cart-aj.html',
             type: form.attr("method"),
             cache: false,
             data: formData,

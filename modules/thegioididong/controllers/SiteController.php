@@ -24,8 +24,7 @@ class SiteController extends Controller
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
-                'actions' => [
-                    'cart' => ['POST','GET'],
+                'actions' => [                    
                     'api' => ['POST','GET'],
                     'delete' => ['POST'],
                     'get-order' => ['GET'],
@@ -39,7 +38,13 @@ class SiteController extends Controller
         $this->layout = 'site/main';
         if ($action->id == 'error') $this->layout = 'main-error';
 
-        $this->enableCsrfValidation = false; 
+        $skip_action = [
+            'api',
+        ];
+
+        if(in_array($action->id,$skip_action)){
+            $this->enableCsrfValidation = false;
+        }
         
         return parent::beforeAction($action); 
     }
@@ -64,16 +69,7 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    public function actionCart()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            echo '<pre>';
-            print_r($_POST['ts']);
-            echo '</pre>';
-        }else{   
-            echo 'get';
-        }
-    }
+
 
 
     public function actionApi($p = '')

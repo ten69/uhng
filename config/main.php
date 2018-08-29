@@ -92,8 +92,10 @@ return [
 
         'request' => [
             'baseUrl' => '',
-            'csrfParam' => '_csrf-frontend',
+            'csrfParam' => 'frsc',
         ],
+
+
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,

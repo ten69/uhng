@@ -17,6 +17,7 @@ class SanphamFront extends Model
     public $sp_images_ts;
 
     public $sp_gia;
+    public $sp_gia_sort;
     public $sp_gia_label;
 
     public $sp_status;
@@ -42,7 +43,7 @@ class SanphamFront extends Model
     public function rules()
     {
         return [            
-            [['sp_id','sp_tensp','sp_conhang','sp_images','sp_images_ts','sp_gia','sp_gia_label','sp_status','sp_recycle','sp_linkseo','sp_album','sp_listdm','sp_phienban','sp_thongso','sp_khuyenmai','sp_danhmuc','sp_chinhsach','sp_baiviet','sp_thongso_full'],'safe'],   
+            [['sp_id','sp_tensp','sp_conhang','sp_images','sp_images_ts','sp_gia','sp_gia_label','sp_status','sp_recycle','sp_linkseo','sp_album','sp_listdm','sp_phienban','sp_thongso','sp_khuyenmai','sp_danhmuc','sp_chinhsach','sp_baiviet','sp_thongso_full', 'sp_gia_sort'],'safe'],   
 
         ];
     }
