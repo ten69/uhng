@@ -7112,7 +7112,8 @@
             text-transform: uppercase
         }
 
-        .area_order .buy_repay {
+        .area_order .buy_repay,
+        .area_order .buy_repay_clone {
             line-height: normal;
             display: block;
             padding: 7px 0;
@@ -7126,8 +7127,11 @@
             font-size: 16px;
             text-transform: uppercase;
             width: 48.5%;
-            float: left
+            float: left;
+            border: none;
+            cursor: pointer;
         }
+       
 
         .area_order .buy_repay.full {
             width: 100%

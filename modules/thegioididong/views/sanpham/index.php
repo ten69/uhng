@@ -401,38 +401,17 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                     </div>
                 </form>
 
-<?php
-$js = <<<XP
-    $('.buy_repay').on('click',function(){        
-        var form = $('form#order_sp')
-        var formData = form.serialize();
-        $.ajax({
-            url: '/add-cart-aj.html',
-            type: form.attr("method"),
-            cache: false,
-            data: formData,
-            success: function(data){
-                console.log(data)
-            },
-            error: function(){
 
-            }
-        })
-    })
-XP;
-
-$this->registerJs($js);
-?>
 
 
 
                 <div class="notechoose"></div>
 
                 <div class="area_order">
-                    <a href="#123" class="buy_repay" data-value="106880" style="width: 100%;">
+                    <button class="buy_repay" data-value="106880" style="width: 100%;">
                         <b>Thêm vào giỏ hàng </b>
                         <span>Giao trong 90 phút hoặc nhận tại cửa hàng</span>
-                    </a>
+                    </button>
                    
                     <!-- <a class="buy_repay " href="https://www.thegioididong.com/tra-gop/laptop/apple-macbook-air-mqd42sa-a-i5-5350u">
                         <b>Mua trả góp 0%</b>
@@ -1281,8 +1260,31 @@ $this->registerJs($js);
         <div class="clr"></div>
     </section>
 
-
-
+    <style type="text/css">
+        .shopping-cart {
+            position: fixed;
+            bottom: 40px;
+            right: 150px;
+            width: 100px;
+            background: #FF0;
+            height: 30px;
+        }
+        #clone img {
+            position: fixed;
+            width: 100px;
+            height: auto;
+            opacity: 0.8;
+            z-index: 99999;
+        }
+    </style>
+    <div id="clone"></div>
+    <div class="shopping-cart">
+        <?php 
+            $session = Aabc::$app->session;
+            $cart = $session['cart'];
+        ?>
+        <a href="/cart.html">Giỏ hàng (<?= sizeof($cart)?>)</a>
+    </div>
 
 
     <script type="application/ld+json">

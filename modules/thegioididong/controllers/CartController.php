@@ -69,38 +69,49 @@ class CartController extends Controller
      public function actionAdd()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            self::addcart(empty($_POST['product'])?0:$_POST['product']);            
-            $this->redirect(['/cart.html']);
+            ($_POST['ts'])?$thongso = $_POST['ts']:$thongso = '';
+            self::addcart(empty($_POST['product'])?0:$_POST['product'], $thongso);            
+            return $this->redirect(['/cart.html']);
         }
     }
 
     public function actionAddAj()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {            
-            self::addcart(empty($_POST['product'])?0:$_POST['product']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {    
+            ($_POST['ts'])?$thongso = $_POST['ts']:$thongso = '';
+            $return = [];
+            $return['status'] = self::addcart(empty($_POST['product'])?0:$_POST['product'], $thongso); 
+
+            $session = Aabc::$app->session;
+            $cart = $session['cart'];            
+            $return['count'] = sizeof($cart);
+            Aabc::$app->response->format = \aabc\web\Response::FORMAT_JSON; 
+            return $return;
         }else{   
             echo 'get';
         }
     }
 
-    protected function addcart($idsp = 0)
+    protected function addcart($idsp = 0, $thongso, $soluong = 1)
     {
         $idsp = (int)$idsp;
         if(!empty($idsp)){
             $sp = Tuyen::_dulieu('sanpham',$idsp);
             if($sp){                
                 $session = Aabc::$app->session;
-                $cart = $session['cart'];
+                $cart = $session['cart'];                
                 $cart[] = [
                     'sanpham' => $sp->sp_id,
-                    'soluong' => 1,
+                    'soluong' => $soluong,
                     'gia' => $sp->sp_gia_label,
-                    'thongso' => $_POST['ts'],
+                    'thongso' => $thongso,
                     'khuyenmai' => $sp->sp_khuyenmai,
                 ];
                 $session['cart'] = $cart;
+                return true;
             }           
         }
+        return false;
     }
 
 
@@ -109,29 +120,22 @@ class CartController extends Controller
      public function actionUpdate()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $session = Aabc::$app->session;                    
+            $session['cart'] = null;
 
-            $sp = Tuyen::_dulieu('sanpham',$_POST['product']);
-            $pb = $sp['sp_phienban'];
-            echo '<pre>';
-            print_r($sp['sp_phienban']);
-            echo '</pre>';
-
-            echo '<pre>';
-            print_r($_POST['ts']);
-            echo '</pre>';
-
-            $a = [];
-            foreach ($_POST['ts'] as $k_ts => $v_gt) {
-                $a = [
-                    'title' => $pb[$k_ts]['title'],
-                    'option' => $pb[$k_ts]['option'][$v_gt]['name'],
-                    '' => $pb[$k_ts]['option'][$v_gt]['name'],
-                ];
-
-                echo '<pre>';
-                print_r($a);
-                echo '</pre>';
+            if(isset($_POST['cart'])){
+                $cart_u = $_POST['cart'];                
+                foreach ($cart_u as $k => $v) {
+                    self::addcart($v['sanpham'], $v['thongso'], $v['soluong']);
+                } 
             }
+
+            $return = [];
+            $return['h'] = $this->renderPartial('index', [
+                'cart' => $session['cart'],
+            ]);
+            Aabc::$app->response->format = \aabc\web\Response::FORMAT_JSON; 
+            return $return;
         }else{   
             echo 'get';
         }

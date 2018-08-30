@@ -16,6 +16,14 @@ return [
 
 
 		[
+		    'pattern' => 'update-cart', //cart.html
+		    'route' => temp.'/cart/update',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+
+		[
 		    'pattern' => 'add-cart', //cart.html
 		    'route' => temp.'/cart/add',
 		    'defaults' => [/*'type' => 1*/],

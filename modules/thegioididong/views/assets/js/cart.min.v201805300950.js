@@ -107,18 +107,18 @@ function empty(n) {
     return !1
 }
 function getScriptChatTgdd() {
-    setTimeout(function() {
-        var n, t;
-        gl_fLoadChat || (gl_fLoadChat = !0,
-        n = getCookie("chat.username"),
-        (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (
-        $.getScript(t).done(function() {
-            console.log("GET SCRIPT CHAT: DONE")
-        })) : (
-        $.getScript(t).done(function() {
-            console.log("GET SCRIPT CHAT: DONE")
-        }))))
-    }, 1e4)
+    // setTimeout(function() {
+    //     var n, t;
+    //     gl_fLoadChat || (gl_fLoadChat = !0,
+    //     n = getCookie("chat.username"),
+    //     (empty(n) || !empty(n) && n.indexOf("@") < 0) && ("undefined" != typeof g_version ? (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.v" + g_version + ".js",
+    //     $.getScript(t).done(function() {
+    //         console.log("GET SCRIPT CHAT: DONE")
+    //     })) : (t = "https://cdn.thegioididong.com/dmxchat/chatclienttgddmobile.js",
+    //     $.getScript(t).done(function() {
+    //         console.log("GET SCRIPT CHAT: DONE")
+    //     }))))
+    // }, 1e4)
 }
 function CreateCookie(n, t, i) {
     var r = new Date, u;
@@ -170,1169 +170,622 @@ function getUrlParameter(n) {
             return t[1] === undefined ? !0 : t[1]
 }
 function getJsRateShip() {
-    setTimeout(function() {
-        $.getScript("/Scripts/mobile/V4/ratingship.min.js").done(function() {
-            console.log("getJsRateShip_js")
-        })
-    }, 11e3)
+    // setTimeout(function() {
+    //     $.getScript("/Scripts/mobile/V4/ratingship.min.js").done(function() {
+    //         console.log("getJsRateShip_js")
+    //     })
+    // }, 11e3)
 }
-function initRating() {
-    $(".boxRatingCmt .lStar i").unbind();
-    $(".boxRatingCmt .lStar i").click(function() {
-        var n, t;
-        for ($(".boxRatingCmt .ipt").removeClass("hide"),
-        $(".boxRatingCmt .lStar i").removeClass("iconcom-star"),
-        $(".boxRatingCmt .lStar i").removeClass("iconcom-unstar").addClass("iconcom-unstar"),
-        n = $(this).attr("id"),
-        n = parseInt(n.replace("s", "")),
-        t = 1; t <= n; t++)
-            $(".boxRatingCmt .lStar #s" + t).removeClass("iconcom-unstar"),
-            $(".boxRatingCmt .lStar #s" + t).addClass("iconcom-star");
-        $(this).attr("id") == "s1" ? $(".rsStar").html("Không thích") : $(this).attr("id") == "s2" ? $(".rsStar").html("Tạm được") : $(this).attr("id") == "s3" ? $(".rsStar").html("Bình thường") : $(this).attr("id") == "s4" ? $(".rsStar").html("Rất tốt") : $(this).attr("id") == "s5" && $(".rsStar").html("Tuyệt vời quá");
-        gl_prevScore = n;
-        $("#hdfStar").val(n)
-    });
-    $(".input .if [name=fRPhone]").unbind();
-    $(".input .if [name=fRPhone]").keydown(function(n) {
-        $.inArray(n.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || n.keyCode === 65 && (n.ctrlKey === !0 || n.metaKey === !0) || n.keyCode >= 35 && n.keyCode <= 40 || (n.shiftKey || n.keyCode < 48 || n.keyCode > 57) && (n.keyCode < 96 || n.keyCode > 105) && n.preventDefault()
-    });
-    $(".sttB").unbind();
-    $(".sttB").hover(function() {
-        $(".rcf").hide();
-        $(this).parents("li").find(".rcf").show();
-        gl_ifcH = !0
-    }, function() {
-        gl_ifcH = !1;
-        setTimeout(function() {
-            gl_ifcH == !1 && $(".rcf").hide()
-        }, 500)
-    });
-    $(".rcf").unbind();
-    $(".rcf").hover(function() {
-        $(".rcf").hide();
-        $(this).parents("li").find(".rcf").show();
-        gl_ifcH = !0
-    }, function() {
-        $(this).parents("li").find(".rcf").hide();
-        gl_ifcH = !1
-    });
-    $(".ratingLst .par").each(function() {
-        var n = $(this).attr("id"), t;
-        n = n.replace("r-", "");
-        t = $(".ratingLst .rp-" + n).length;
-        t > 0 && $(this).find(".cmtr").html(t + " thảo luận")
-    });
-    var n = getCookie("tgdd_fullname")
-      , t = getCookie("tgdd_email");
-    n != null && n != "" ? $(".ratingLst .ifrl").each(function() {
-        $(this).find("span").html(decodeURI(n));
-        $(this).find("a").html("Sửa tên")
-    }) : $(".ratingLst .ifrl").removeClass("hide").addClass("hide");
-    $("#comment").on("cmt.popupuseredit", function() {
-        $(".wrap_popup .titlebar").html("Nhập thông tin <a href='javascript:cmtClosePop();' class='back'><i class='iconcom-back'><\/i><\/a>");
-        $(".wrap_popup button").attr("onclick", "cmtConfirmUser(true, true);")
-    });
-    $("#comment").on("cmtFinishEditInfo", function() {
-        console.log("receive cmtFinishEditInfo");
-        var n = getCookie("tgdd_fullname")
-          , t = getCookie("tgdd_email");
-        n != null && n != "" && $(".ratingLst .ifrl").each(function() {
-            $(this).find("span").html(decodeURI(n));
-            $(this).find("a").html("Sửa tên");
-            $(".ratingLst .ifrl").removeClass("hide")
-        });
-        $(".wrap_comment .ajaxcomment #loadcomment").html("");
-        $(".wrap_comment .ajaxcomment").removeClass("hide").addClass("hide")
-    });
-    $(".ratingLst li").length == 0 && showInputRating();
-    console.log("init hover rating");
-    $(".lStar").hover(function() {}, function() {
-        gl_prevScore == 0 ? ($(".lStar i").removeClass("iconcom-star").addClass("iconcom-unstar"),
-        $(".rsStar").addClass("hide")) : gl_prevScore > 0 && $("#s" + gl_prevScore).click()
-    });
-    $(".lStar i").hover(function() {
-        var n, t;
-        for ($(".lStar i").removeClass("iconcom-star").addClass("iconcom-unstar"),
-        $(this).attr("id") == "s1" ? $(".rsStar").html("Không thích") : $(this).attr("id") == "s2" ? $(".rsStar").html("Tạm được") : $(this).attr("id") == "s3" ? $(".rsStar").html("Bình thường") : $(this).attr("id") == "s4" ? $(".rsStar").html("Rất tốt") : $(this).attr("id") == "s5" && $(".rsStar").html("Tuyệt vời quá"),
-        $(".rsStar").removeClass("hide"),
-        n = $(this).attr("id"),
-        n = parseInt(n.replace("s", "")),
-        t = 1; t <= n; t++)
-            $("#s" + t).removeClass("iconcom-unstar").addClass("iconcom-star");
-        n > 0 && $("#hdfStar").val(n)
-    }, function() {});
-    $(".notold").length == 1 && console.log("kkd");
-    getFileUpload();
-    $(".ratingLst li").length == 0 && $(".boxRatingCmt .ipt").removeClass("hide");
-    $(".boxRatingCmt .toprt .c").each(function() {
-        var n = $(this).find("strong").html();
-        n = parseInt(n);
-        n == 0 && ($(this).attr("onclick", ""),
-        $(this).addClass("n"))
-    });
-    $(".boxRatingCmt .toprt .lcrt").attr("data-gpa") == 0 && $(".boxRatingCmt .toprt .lcrt").remove();
-    $(".boxRatingCmt .crt .lcrt").length == 0 && $(".boxRatingCmt .crt .lcrt").length == 0 && ($(".boxRatingCmt .toprt").css("border", "none"),
-    $(".boxRatingCmt .toprt").css("padding", "0"),
-    $(".boxRatingCmt .crt").css("height", "auto"),
-    $(".boxRatingCmt .crt .bcrt a").css("margin", "0"))
-}
-function showInputRating() {
-    $(".boxRatingCmt .input").fadeIn();
-    $(".boxRatingCmt .sRt span").removeClass("hide");
-    $(".boxRatingCmt .sRt a").removeClass("hide").addClass("hide");
-    $(".boxRatingCmt .bcrt a").attr("href", "javascript:hideInputRating()");
-    $(".boxRatingCmt .bcrt a").html("Đóng lại");
-    $(".boxRatingCmt .bcrt a").addClass("close-btt")
-}
-function hideInputRating() {
-    $(".boxRatingCmt .input").fadeOut();
-    $(".boxRatingCmt .sRt span").removeClass("hide").addClass("hide");
-    $(".boxRatingCmt .sRt a").removeClass("hide");
-    $(".boxRatingCmt .bcrt a").attr("href", "javascript:showInputRating()");
-    $(".boxRatingCmt .bcrt a").html("Gửi đánh giá của bạn");
-    $(".boxRatingCmt .bcrt a").removeClass("close-btt")
-}
-function submitRatingComment() {
-    if (!gl_sendRating) {
-        if (gl_sendRating = !0,
-        !validateRating()) {
-            gl_sendRating = !1;
-            return
-        }
-        var n = $(".boxRatingCmt .input")
-          , t = n.serialize();
-        POSTAjax("/aj/ProductV4/SubmitRatingComment/", t, function() {}, function(n) {
-            if (n != null || n != "")
-                try {
-                    initRating();
-                    gl_sendRating = !1;
-                    n.res == 1 ? (alert("Đánh giá của bạn sẽ được hệ thống kiểm duyệt. Xin cám ơn."),
-                    resetRating(),
-                    hideInputRating()) : n.res == 0 && alert(n.mes)
-                } catch (t) {
-                    gl_sendRating = !1
-                }
-        }, function() {}, !0)
-    }
-}
-function getImgRating() {
-    if ($(".resImg li").length > 0) {
-        var n = "";
-        $(".resImg li").each(function() {
-            var t = $(this).attr("data-imgname");
-            t != null && t != "" && (n += t + "╬")
-        });
-        $(".hdfRatingImg").val(n)
-    }
-}
-function ratingRelply(n) {
-    var i, t, r, u;
-    if (gl_sendRating)
-        return !1;
-    if (gl_sendRating = !0,
-    i = $.trim($(".rr-" + n).find("input").val()),
-    i == null || i == "")
-        return alert("Vui lòng nhập nội dung cần thảo luận"),
-        gl_sendRating = !1,
-        !1;
-    if (t = getCookie("tgdd_fullname"),
-    t == null || t == "")
-        return cmtEditName(),
-        gl_sendRating = !1,
-        !1;
-    r = {
-        productid: productID,
-        commentid: n,
-        content: $(".rr-" + n).find("input").val(),
-        name: t
-    };
-    u = "/aj/ProductV2/SubmitRatingReply/";
-    POSTAjax(u, r, function() {}, function(n) {
-        if (n != null || n != "")
-            try {
-                n.res == 1 && ($(".ratingLst .reply input").val(""),
-                alert("Thảo luận của bạn sẽ được hệ thống kiểm duyệt. Xin cám ơn."));
-                gl_sendRating = !1
-            } catch (t) {}
-    }, function() {}, !0)
-}
-function clearBorder() {
-    $(".boxRatingCmt .ct").removeClass("borderWn");
-    $(".boxRatingCmt .if input").removeClass("borderWn")
-}
-function validateRating() {
-    var i, n, t;
-    return (clearBorder(),
-    i = parseInt($("#hdfStar").val()),
-    i == 0) ? ($(".lbMsgRt").html("Bạn chưa đánh giá điểm sao, vui lòng đánh giá."),
-    !1) : (n = $.trim($(".input .ct [name=fRContent]").val()),
-    n == null || n == "") ? ($(".lbMsgRt").html("Vui lòng nhập nội dung đánh giá về sản phẩm."),
-    $(".boxRatingCmt .ct").addClass("borderWn"),
-    !1) : n.length < 80 ? ($(".lbMsgRt").html("Nội dung đánh giá quá ít.\nVui lòng nhập thêm nội dung đánh giá về sản phẩm."),
-    $(".boxRatingCmt .ct").addClass("borderWn"),
-    !1) : (n = $.trim($(".input .if [name=fRName]").val()),
-    n == null || n == "") ? ($(".lbMsgRt").html("Vui lòng nhập họ tên"),
-    $(".input .if [name=fRName]").addClass("borderWn"),
-    !1) : (n = $.trim($(".input .if [name=fRPhone]").val()),
-    n == null || n == "") ? ($(".lbMsgRt").html("Vui lòng nhập số điện thoại."),
-    $(".input .if [name=fRPhone]").addClass("borderWn"),
-    !1) : (t = $.trim($(".input .if [name=fREmail]").val()),
-    t != null && t != "" && cmtValidateEmail(t) == !1) ? ($(".lbMsgRt").html("Email không đúng định dạng."),
-    $(".input .if [name=fREmail]").addClass("borderWn"),
-    !1) : !0
-}
-function resetRating() {
-    console.log("rs rt");
-    clearBorder();
-    $(".lStar i").each(function() {
-        $(this).removeClass("iconcom-star").addClass("iconcom-unstar")
-    });
-    $("#hdfStar").val("0");
-    $(".input .ct [name=fRContent]").val("");
-    $(".input .if [name=fRName]").val("");
-    $(".input .if [name=fRPhone]").val("");
-    $(".input .if [name=fREmail]").val("");
-    $(".rsStar").html("");
-    $(".rsStar").addClass("hide");
-    $(".lbMsgRt").html("");
-    $(".resImg").html("")
-}
-function showRatingCmtChild(n) {
-    var t = n.replace("r-", "");
-    $(".rp-" + t).removeClass("hide");
-    $(".rr-" + t).removeClass("hide")
-}
-function ratingCmtList(n, t) {
-    var i = gl_rtCurStar, r, u;
-    t != null && t >= 0 && (i = t,
-    gl_rtCurStar = t);
-    r = {
-        productid: productID,
-        page: n,
-        score: i
-    };
-    u = "/aj/ProductV4/RatingCommentList/";
-    POSTAjax(u, r, function() {}, function(n) {
-        if (n != null || n != "")
-            try {
-                $(".boxRatingCmt .list").html(n);
-                initRating();
-                initLazy();
-                $("img.lazy").trigger("sporty")
-            } catch (t) {}
-    }, function() {}, !0)
-}
-function likeRating(n) {
-    var t = {
-        id: n
-    };
-    POSTAjax("/aj/ProductV4/LikeRating/", t, function() {}, function(t) {
-        var i, r;
-        if (t != null || t != "")
-            try {
-                i = parseInt($("#r-" + n + " .cmtl").attr("data-like"));
-                i++;
-                $("#r-" + n).attr("data-like", i);
-                r = "<i class='iconcom-likeR'><\/i>" + i + " thích";
-                $("#r-" + n + " .cmtl").html(r);
-                $("#r-" + n + " .cmtl").attr("href", "javascript:;")
-            } catch (u) {}
-    }, function() {}, !0)
-}
-function unlikeRating() {}
-function getFileUpload() {
-    gl_isFeedbackLoad || $.getScript("/Scripts/desktop/jquery.html5uploader.min.js").done(function() {
-        gl_isFeedbackLoad = !0;
-        initUploadRating()
+function ganew_addImpression(n, t, i, r, u, f) {
+    ga(domainTracking + "ec:addImpression", {
+        id: n,
+        name: t,
+        category: i,
+        brand: r,
+        variant: u,
+        price: f,
+        position: 0
     })
 }
-function initUploadRating() {
-    setTimeout(function() {
-        $(".btnRatingUpload").on("click", function() {
-            if (console.log("up Img rating"),
-            $(".resImg li").length > 2)
-                return console.log("đã up load quá số ảnh quy định"),
-                !1;
-            $("#hdFileRatingUpload").click()
-        });
-        $("#hdFileRatingUpload").html5Uploader({
-            postUrl: "/aj/ProductV4/PostRatingImage/",
-            onClientLoadStart: function() {
-                console.log("onClientLoadStart - upload feedbackIMG")
-            },
-            onServerLoadStart: function() {},
-            onServerProgress: function() {},
-            onServerLoad: function() {},
-            onSuccess: function(n) {
-                var i = $.parseJSON(n.currentTarget.response), t;
-                if (i.status == -1) {
-                    $(".lbMsgRt").html("Xảy ra lỗi, vui lòng thử lại.");
-                    return
-                }
-                console.log("onSuccess - upload RatingIMG");
-                t = "<li data-imgName='" + i.imageName + "'  >";
-                t += "<img src='" + i.imageUrl + "' />";
-                t += "<i class='fbDelImg' onclick='fbDelImg(this)'>x<\/i>";
-                t += "<\/li>";
-                $(".resImg").append(t);
-                $(".resImg").removeClass("hide");
-                getImgRating()
-            }
-        })
-    }, 1e3)
+function ganew_viewProduct(n, t, i, r, u, f, e) {
+    ganew_addProduct(n, t, i, r, u, f, e);
+    ganew_sendAction(eventAction.detail);
+    ga(domainTracking + "send", "pageview")
 }
-function fbDelImg(n) {
-    $(n).parent().remove()
+function ganew_addCart(n, t, i, r, u, f, e) {
+    ganew_addProduct(n, t, i, r, u, f, e);
+    ganew_sendAction(eventAction.add);
+    ganew_sendEvent(eventCategory, eventAction.click, "add to cart")
 }
-function countTxtRating() {
-    var n = $("#boxRatingCmt .ct textarea").val().length, t;
-    n > 0 && n < 80 ? (t = n + " ký tự (tối thiểu 80)",
-    $(".ct .ckt").html(t)) : $(".ct .ckt").html("")
-}
-function PopupGalleryRatingCmt(n, t) {
-    if (gl_lFT) {
-        var i = {
-            productID: n,
-            imageType: 8,
-            colorID: 0
-        };
-        POSTAjax("/aj/ProductV4/GallerySlideFT/", i, function() {}, function(n) {
-            if (n != null || n != "")
-                try {
-                    if (n != null && n != "") {
-                        $(".slide_FT").html(n);
-                        gl_CurrColor = 0;
-                        $("#ajxgallery").remove();
-                        $("body").toggleClass("fixbody");
-                        $("body").removeClass("fixbody");
-                        var t = 0
-                          , i = !1;
-                        $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
-                            var f, u;
-                            $(".caption_ps").hide();
-                            i || (r.show(0),
-                            r.requestFullScreen(),
-                            i = !0);
-                            (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
-                            (t == 1 || f > 0) && (t = 1,
-                            u = $(r.activeFrame.html).find(".fb-like"),
-                            u != undefined && setTimeout(function() {
-                                var n = u.data("url");
-                                u.replaceWith('<iframe class="like" src="//www.facebook.com/plugins/like.php?href=' + n + '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=20&amp;appId=459645584142044" scrolling="no" frameborder="0" style="border:none;overflow:hidden; width:100%;height:20px;" allowTransparency="true"><\/iframe>');
-                                $(".caption_ps").show()
-                            }, 1e3)));
-                            n.type == "fotorama:load" && setTimeout(function() {
-                                $("div.caption_ps").each(function() {
-                                    var n = $(this).parent().parent().find("img").width() + 2;
-                                    $(this).width(n).fadeIn(300)
-                                })
-                            }, 100);
-                            n.type == "fotorama:fullscreenexit" && ($("body").click(),
-                            $("body").css("background-color", "#fff"),
-                            $("body").removeAttr("background-color"),
-                            r.destroy(),
-                            $(".slide_FT").html(""))
-                        }).fotorama()
-                    }
-                } catch (r) {}
-            else
-                $(".slide_FT").html("")
-        }, function() {}, !0)
-    } else
-        $.getScript(assetsPrefix+"/js/fotorama.min.js").done(function() {
-            gl_lFT = !0;
-            PopupGalleryRatingCmt(n, t)
-        })
-}
-function openFeedback() {
-    $(".wrap_fdback").removeClass("hide");
-    getFileUpload();
-    $(".wrap_fdback .txtfbPhone").unbind();
-    $(".wrap_fdback .txtfbPhone").keydown(function(n) {
-        $.inArray(n.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || n.keyCode === 65 && (n.ctrlKey === !0 || n.metaKey === !0) || n.keyCode >= 35 && n.keyCode <= 40 || (n.shiftKey || n.keyCode < 48 || n.keyCode > 57) && (n.keyCode < 96 || n.keyCode > 105) && n.preventDefault()
-    })
-}
-function closeFeedback() {
-    $(".wrap_fdback").removeClass("hide").addClass("hide")
-}
-function sendFeedback() {
-    if ((console.log("sendFeedback"),
-    isSendFback) || !validateSendFback())
-        return !1;
-    isSendFback = !0;
-    var n = $.trim($(".wrap_fdback textarea").val())
-      , t = $.trim($(".wrap_fdback .txtfbPhone").val())
-      , i = $.trim($(".wrap_fdback .txtfbName").val())
-      , r = document.URL
-      , u = {
-        content: n,
-        fullname: i,
-        phone: t,
-        image: $(".hdffbImg").attr("data-imageName"),
-        link: r,
-        productid: productID
-    };
-    POSTAjax("/aj/ProductV4/SendFeedback/", u, function() {}, function(n) {
-        if (n != null || n != "") {
-            try {
-                isSendFback = !1;
-                n.res != 0 ? (alert("Phản hồi báo lỗi của bạn sẽ được hệ thống kiểm duyệt. Xin cám ơn."),
-                resetfback(),
-                closeFeedback()) : n.res == 0 && alert(n.mes)
-            } catch (t) {}
-            isSendFback = !1
-        }
-    }, function() {}, !0)
-}
-function validateSendFback() {
-    var n = $.trim($(".wrap_fdback textarea").val())
-      , t = $.trim($(".wrap_fdback .txtfbPhone").val())
-      , i = $.trim($(".wrap_fdback .txtfbName").val());
-    return n == null || n == "" || n.length < 10 ? (alert("Vui lòng nhập nội dung góp phải hơn 10 ký tự."),
-    !1) : i == null || i == "" ? (alert("Vui lòng nhập họ tên"),
-    !1) : t == null || t == "" ? (alert("Vui lòng nhập số điện thoại"),
-    !1) : !0
-}
-function resetfback() {
-    fbDelImg();
-    $(".hdffbImg").attr("data-url", "");
-    $(".hdffbImg").attr("data-imagename", "");
-    $(".resImg img").attr("src", "");
-    $(".wrap_fdback textarea").val("");
-    $(".txtfbName").val("");
-    $(".txtfbPhone").val("")
-}
-function initRatingArticle() {
-    $(".bifRtAtc [name=txtPhoneNumber]").unbind();
-    $(".bifRtAtc [name=txtPhoneNumber]").keydown(function(n) {
-        $.inArray(n.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 || n.keyCode === 65 && (n.ctrlKey === !0 || n.metaKey === !0) || n.keyCode >= 35 && n.keyCode <= 40 || (n.shiftKey || n.keyCode < 48 || n.keyCode > 57) && (n.keyCode < 96 || n.keyCode > 105) && n.preventDefault()
-    })
-}
-function showRateArticle() {}
-function rtAtcChangeGder(n) {
-    $(".ifRtGd label").removeClass("choosed");
-    n == 1 ? $(".ifGdM").addClass("choosed") : n == 2 && $(".ifGdFm").addClass("choosed");
-    $(".ifRtGd").attr("data-val", n)
-}
-function sendRatingContent(n) {
-    n == 2 ? sendRatingArticle() : n == 3 && sendRatingGallery()
-}
-function sendRatingArticle() {
-    if (!gl_sendRating) {
-        if (gl_sendRating = !0,
-        !validateRatingArticle()) {
-            gl_sendRating = !1;
-            return
-        }
-        var n = $.trim($(".bRtAtc [name=txtContent]").val())
-          , t = $(".bRtAtc .ifRtGd").attr("data-val")
-          , i = $.trim($(".bRtAtc [name=txtFullName]").val())
-          , r = $.trim($(".bRtAtc [name=txtPhoneNumber]").val())
-          , u = $.trim($(".bRtAtc [name=txtEmail]").val())
-          , f = encodeURI(window.location.href)
-          , e = {
-            ct: n,
-            name: i,
-            phone: r,
-            email: u,
-            gender: t,
-            type: 2,
-            productID: productID,
-            lnk: f
-        };
-        POSTAjax("/aj/ProductV4/SubmitRatingArticle/", e, function() {}, function(n) {
-            var t, i, r;
-            (n != null || n != "") && (n.mes != null && n.mes != "" ? ($(".bRtAtc .alert").html(n.mes),
-            $(".bRtAtc .alert").removeClass("hide")) : (t = "bạn ",
-            i = parseInt($(".bRtAtc .ifRtGd").attr("data-val")),
-            i == 1 ? t = "anh " : i == 2 && (t = "chị "),
-            r = $.trim($(".bRtAtc [name=txtFullName]").val()),
-            $(".bRtAtc .alert").html("Cám ơn " + t + r + " đã đánh giá"),
-            $(".bRtAtc .alert").removeClass("hide").addClass("rtSuccess"),
-            setTimeout(function() {
-                $(".bRtAtc").addClass("hide");
-                $(".boxRtAtc .likewied .messenger").removeClass("act");
-                $(".boxRtAtc .likewied .messenger b").removeClass("iconcom-unlikeAtc").addClass("iconcom-likeAtc");
-                $(".bRtAtc .alert").removeClass("rtSuccess").addClass("hide");
-                resetRatingArticle()
-            }, 2e3)),
-            gl_sendRating = !1)
-        }, function() {}, !0)
-    }
-}
-function validateRatingArticle() {
-    var n = $.trim($(".bRtAtc [name=txtContent]").val());
-    return n == null || n == "" ? ($(".bRtAtc .alert").html("Vui lòng nhập nội dung đánh giá bài viết sản phẩm"),
-    !1) : !0
-}
-function resetRatingArticle() {
-    $(".bRtAtc [name=txtContent]").val("");
-    $(".ifRtGd").attr("data-val", 0);
-    $(".bRtAtc [name=txtFullName]").val("");
-    $(".bRtAtc [name=txtPhoneNumber]").val("");
-    $(".bRtAtc [name=txtEmail]").val("");
-    $(".bRtAtc label").removeClass("choosed")
-}
-function showRatingAtc() {
-    $(".bifRtCt").removeClass("hide");
-    $(".boxRtAtc .likewied .messenger").addClass("act");
-    $(".boxRtAtc .likewied .messenger b").addClass("iconcom-unlikeAtc")
-}
-function openRtGlr() {
-    var n = $(".fotorama").fotorama()
-      , t = n.data("fotorama");
-    t.destroy();
-    $(".wrap_rtglr").removeClass("hide");
-    $(".slide_FT").html("");
-    $(".bRtGlr").removeClass("hide")
-}
-function closeRtGlr() {
-    $(".wrap_rtglr").removeClass("hide").addClass("hide")
-}
-function satisRtGlr() {
-    $(".boxRatingGlr .hd b").removeClass("hide");
-    setTimeout(function() {
-        closeRtGlr();
-        $(".boxRatingGlr .hd b").addClass("hide");
-        var n = $(".fotorama").fotorama()
-          , t = n.data("fotorama");
-        t.destroy()
-    }, 2e3)
-}
-function sendRatingGallery() {
-    if (console.log("t-3"),
-    !gl_sendRating) {
-        if (gl_sendRating = !0,
-        !validateRatingGallery()) {
-            gl_sendRating = !1;
-            return
-        }
-        var n = $.trim($(".bRtGlr [name=txtContent]").val())
-          , t = $(".bRtGlr .ifRtGd").attr("data-val")
-          , i = $.trim($(".bRtGlr [name=txtFullName]").val())
-          , r = $.trim($(".bRtGlr [name=txtPhoneNumber]").val())
-          , u = $.trim($(".bRtGlr [name=txtEmail]").val())
-          , f = encodeURI(window.location.href)
-          , e = {
-            ct: n,
-            name: i,
-            phone: r,
-            email: u,
-            gender: t,
-            type: 3,
-            productID: productID,
-            lnk: f
-        };
-        POSTAjax("/aj/ProductV4/SubmitRatingArticle/", e, function() {}, function(n) {
-            var t, i, r;
-            (n != null || n != "") && (n.mes != null && n.mes != "" ? ($(".bRtGlr .alert").html(n.mes),
-            $(".bRtGlr .alert").removeClass("hide")) : (t = "bạn ",
-            i = parseInt($(".bRtGlr .ifRtGd").attr("data-val")),
-            i == 1 ? t = "anh " : i == 2 && (t = "chị "),
-            r = $.trim($(".bRtGlr [name=txtFullName]").val()),
-            $(".bRtGlr .alert").html("Cám ơn " + t + r + " đã đánh giá."),
-            $(".bRtGlr .alert").removeClass("hide").addClass("rtSuccess"),
-            setTimeout(function() {
-                $(".bRtGlr").addClass("hide");
-                $(".bRtGlr .likewied .messenger").removeClass("act");
-                $(".bRtGlr .likewied .messenger b").removeClass("iconcom-unlikeAtc").addClass("iconcom-likeAtc");
-                closeRtGlr();
-                resetRatingGallery()
-            }, 2e3)),
-            gl_sendRating = !1)
-        }, function() {}, !0)
-    }
-}
-function validateRatingGallery() {
-    var n = $.trim($(".bRtGlr [name=txtContent]").val());
-    return n == null || n == "" ? ($(".bRtGlr .alert").html("Vui lòng nhập nội dung đánh giá bộ hình sản phẩm"),
-    !1) : !0
-}
-function resetRatingGallery() {
-    $(".bRtGlr [name=txtContent]").val("");
-    $(".ifRtGd").attr("data-val", 0);
-    $(".bRtGlr [name=txtFullName]").val("");
-    $(".bRtGlr [name=txtPhoneNumber]").val("");
-    $(".bRtGlr [name=txtEmail]").val("");
-    $(".bRtGlr label").removeClass("choosed");
-    $(".bRtGlr .alert").html("")
-}
-function CallImageTracking() {
-    typeof productga != "undefined" && $.get("/aj/common/trackproductview?iProductId=" + productga.identifier)
-}
-function initPage() {
-    $(".lblCheckStore").length > 0 && $(".lblCheckStore").click(function() {
-        $(".checkexist").slideToggle()
-    })
-}
-function initLazy() {
-    $("img.lazy").lazyload({
-        event: "sporty"
-    })
-}
-function trigLazy() {
-    isTrigLazy || ($("img.lazy").trigger("sporty"),
-    isTrigLazy = !0)
-}
-function InitScroll() {
-    $(window).scroll(function() {
-        LoadJsComment();
-        trigLazy();
-        trackAlsoBuy == 1 && $(document).scrollTop() > $(".alsobuytrack").position().top && ($(".alsobuytrack ul li").each(function() {
-            var n = {
-                source: $(".alsobuytrack").data("id"),
-                desc: $(this).data("id"),
-                action: "impress"
-            };
-            POSTAjax("/aj/ProductV4/TrackAlsoBuy", n, function() {}, function() {
-                console.log("Track" + JSON.stringify(n))
-            }, function() {}, !0)
-        }),
-        trackAlsoBuy = 2)
-    })
-}
-function loadFeatureSlide() {
-    $("#owl-detail").owlCarousel({
-        singleItem: !0,
-        slideSpeed: 500,
-        navigation: !0,
-        pagination: !0,
-        lazyLoad: !0,
-        lazyEffect: !1,
-        lazyFollow: !1,
-        responsiveRefreshRate: 200,
-        stopOnHover: !0,
-        autoHeight: !0
-    })
-}
-function loadRtArtSlide() {
-    $(".ratingbox").owlCarousel({
-        singleItem: !0,
-        slideSpeed: 500,
-        pagination: !0,
-        lazyLoad: !0,
-        lazyEffect: !1,
-        lazyFollow: !1,
-        responsiveRefreshRate: 200,
-        stopOnHover: !0,
-        autoHeight: !0
-    })
-}
-function loadSpec() {
-
-    $.getScript(assetsPrefix+"/js/fotorama.min.js").done(function() {
-        gl_lFT = !0;
-    })
-
-    $(".viewparameterfull").click(function() {
-        $(".fullparameter").css("display") == "block" ? ($(".closebtn").hide(),
-        $(".fullparameter").hide(),
-        $("body").removeClass("fixbody"),
-        $(".fixparameter").remove(),
-        $(".boxtable").removeClass("boxpara")) : ($(".fullparameter").show(),
-        $(".closebtn").show(),
-        $("body").addClass("fixbody"),
-        $("body").prepend('<div class="fixparameter">content<\/div>'),
-        $(".boxtable").addClass("boxpara"))
+function ganew_updateCart(n, t) {
+    var i = $.grep(cart, function(t) {
+        return t.ProductId == n
     });
-    $(".closebtn").click(function() {
-        $(".viewparameterfull").click();
-        $("body").removeClass("fixbody");
-        $(".fixparameter").remove();
-        $(".closebtn").hide()
+    ganew_addProductbyItem(i[0]);
+    ganew_sendAction(eventAction.add);
+    ga(domainTracking + "send", "event", eventCategory, eventAction.click, t)
+}
+function ganew_removeCart(n) {
+    var t = $.grep(cart, function(t) {
+        return t.ProductId == n
     });
-    $(document.body).on("click", ".fixparameter", function() {
-        $("body").toggleClass("fixbody");
-        $(".fixparameter").remove();
-        $(".boxtable").removeClass("boxpara");
-        $(".viewparameterfull").click()
-    });
-    $(".characteristics").length == 0 && gl_isAccesory && ($(".tableparameter .viewparameterfull").hide(),
-    $(".fullparameter").hide());
-    gl_isAccesory && cateID == 1882 && ($(".tableparameter .viewparameterfull").show(),
-    $(".fullparameter .parameterfull").addClass("specWear"));
-    $(".boxnews").length == 0 && $(".viewarticle").hide();
-    $(".viewarticle").click(function() {
-        $("body").toggleClass("fixbody");
-        $(".fixparameter").remove();
-        $(".boxtable").removeClass("boxpara");
-        $(".viewparameterfull").click();
-        $(".firstArticle").length > 0 ? $(".firstArticle").click() : ($("body").prepend('<div id="ajxarticle"><\/div>'),
-        $("body").toggleClass("fixbody"),
-        ArticleDetail())
-    });
-    checkPinDevice();
-
-
-
-
-    var n = $(".g60_6339 div i").html();
-    n != null && n != "" && n.indexOf("hỗ trợ 4G") > -1 ? $(".liveevent").removeClass("hide") : (n = $(".g6339 div i").html(),
-    n != null && n != "" && n.indexOf("hỗ trợ 4G") > -1 && $(".liveevent").removeClass("hide"))
+    ganew_addProductbyItem(t[0]);
+    ganew_sendAction(eventAction.remove);
+    ganew_sendEvent(eventCategory, eventAction.click, "remove to cart")
 }
-function getFullSpec(n) {
-    if ($(".parameterfull").html() == "") {
-        var t = {
-            productID: n
-        };
-        POSTAjax("/api?p=10011", t, function() {}, function(n) {
-            if (n != null || n != "")
-                try {
-                    $(".parameterfull").html(n.spec);
-                    n.imgKit != "" ? $("#imgKit").attr("src", n.imgKit) : $("#imgKit").remove();
-                    checkPinDevice();
-                    var t = $(".parameterfull .g43 div").html();
-                    t = t.replace(/;/g, "<br>");
-                    $(".parameterfull .g43 div").html(t)
-                } catch (i) {}
-        }, function() {}, !0)
-    }
+function ganew_viewOrder() {
+    ganew_stepCart(1, "checkout")
 }
-function checkPinDevice() {
-    if ($(".g3039").length > 0) {
-        var n = $(".g3039 div").html();
-        n.indexOf("Wh") > -1 && $(".g3039 span").html("Mức năng lượng tiêu thụ")
-    }
-}
-function loadArticle() {
-    var t;
-    if ($("article img").attr("style", ""),
-    $(".imgCprW").length > 0 && checkAritcleCompareImg(),
-    $(".boxArticle").length > 0) {
-        if ($("article img").length > 0) {
-            var i = $(".boxArticle").offset().top
-              , r = $("article img").offset().top
-              , n = r - i;
-            n > 0 && (n = n + 250,
-            $(".area_article").attr("style", "height: " + n + "px;"))
-        }
-        gl_isAccesory && (t = $(".area_article").find("img").first().attr("data-original"),
-        $(".area_article").find("img").first().attr("src", t))
-    }
-    loadRtArtSlide()
-}
-function checkAritcleCompareImg() {
-    gl_cprImg ? $(".imgCprW").each(function() {
-        var n = $(this).attr("id")
-          , t = '<img src="' + $(this).attr("data-src1") + '" /> '
-          , i = '<img src="' + $(this).attr("data-src2") + '" /> ';
-        $(this).html("");
-        $(this).append(t);
-        $(this).append(i);
-        setTimeout(function() {
-            $("#" + n).twentytwenty({})
-        }, 1e3)
-    }) : $.getScript("/Scripts/mobile/jquery.twentytwenty.min.js").done(function() {
-        $.getScript("/Scripts/mobile/jquery.event.move.min.js").done(function() {
-            gl_cprImg = !0;
-            checkAritcleCompareImg()
-        })
+function ganew_stepCart(n, t) {
+    checkout();
+    ga(domainTracking + "ec:setAction", "checkout", {
+        step: n,
+        option: "step_" + t
     })
 }
-function showArticle() {
-    $(".area_article").addClass("area_articleFull");
-    $(".area_article").attr("style", "");
-    $(".show-more").remove();
-    initLazy();
-    $("article div.video").each(function() {
-        var n = $(this).attr("src"), t;
-        n != null && n != "" && (t = '<iframe src="' + n + '?rel=0" frameborder="0" allowfullscreen ><\/iframe>',
-        $(this).html(t))
-    })
-}
-function SuggestCompare(n, t) {
-    var f = $(n).val().replace(/:|;|!|@@|#|\$|%|\^|&|\*|'|"|>|<|,|\.|\?|\/|`|~|\+|=|_|\(|\)|{|}|\[|\]|\\|\|/gi, ""), u = f.trim().toLowerCase(), i, r;
-    if (u.length < 2) {
-        $(".wrapper-compare .search-suggestion-list").hide();
-        $(".popAddProd").css("height", "250px");
-        return
-    }
-    if (i = ".search-suggestion-list li",
-    t.which == 13 ? $(i + ".selected").find("a").click() : t.which != 40 && t.which != 38 && $.ajax({
-        url: "/aj/ProductV4/SuggestCompare",
-        type: "GET",
-        data: {
-            iCategory: GL_CATEGORYID,
-            sKeyword: u,
-            productid: productID
-        },
-        cache: !0,
-        success: function(n) {
-            if (n != null && n != "" && n != "[object XMLDocument]") {
-                var t = "";
-                t = '<div class="search-suggestion-wrapper clearfix"><ul class="search-suggestion-list nolist clearfix">';
-                t += n;
-                t += "<\/ul><\/div>";
-                $(".sggProd").find(".search-suggestion-wrapper").remove();
-                $(".sggProd").append(t);
-                t != "" && $(".popAddProd").css("height", "525px");
-                $(document).click(function(n) {
-                    var t = $(n.target);
-                    t.is(".search-suggestion-list") || t.is(".search-input-wrapper") || t.is(".search-input-wrapper input") || t.is(".search-suggestion-list li") || t.is(".search-suggestion-list li a") || t.is(".search-suggestion-list li a strong") || $(".search-suggestion-list").hide()
-                })
-            }
-        }
-    }),
-    t.which == 40) {
-        $(i + ".selected").length == 0 ? ($(i + ":first").addClass("selected"),
-        $(".sp #inputproduct").val($(i + ":first").text())) : $(i + ".selected").text() == $(i + ":last").text() ? ($(i + ".selected").removeClass("selected"),
-        $(i + ":first").addClass("selected"),
-        $(".sp #inputproduct").val($(i + ":first").text())) : (r = $(i + ".selected").next(),
-        $(i + ".selected").removeClass("selected"),
-        r.addClass("selected"),
-        $(".sp #inputproduct").val(r.text()));
-        return
-    }
-    if (t.which == 38) {
-        $(i + ".selected").length == 0 ? ($(i + ":last").addClass("selected"),
-        $(".sp #inputproduct").val($(i + ":last").text())) : $(i + ".selected").text() == $(i + ":first").text() ? ($(i + ".selected").removeClass("selected"),
-        $(i + ":last").addClass("selected"),
-        $(".sp #inputproduct").val($(i + ":last").text())) : (r = $(i + ".selected").prev(),
-        $(i + ".selected").removeClass("selected"),
-        r.addClass("selected"),
-        $(".sp #inputproduct").val(r.text()));
-        return
-    }
-}
-function LoadJsComment() {
-    flsc != !0 && typeof cmtaddcommentclick == "undefined" && (flsc = !0,
-    $.getScript(jsCommentUrl).done(function() {
-        setTimeout(function() {
-            cmtInitEvent()
-        }, 500)
+function ganew_completeOrder(n, t) {
+    ga("set", "&cu", "VND");
+    checkout();
+    ga("ec:setAction", "purchase", {
+        id: n,
+        affiliation: "CartV4 - Online",
+        revenue: t,
+        coupon: ""
+    });
+    ganew_sendEvent(eventCategory, eventAction.detail, typeof cart != "undefined" && cart.length == 1 ? "complete order" : "complete order multi");
+    ga("send", "pageview");
+    typeof dataLayer != "undefined" && (productga.price = t,
+    dataLayer.push({
+        event: "addCartComplete"
     }))
 }
-function loadGallery() {
-    $(".colorandpic ul li").length > 6 && ($(".tabscolor").owlCarousel({
-        items: 6,
-        navigation: !1,
-        pagination: !1
-    }),
-    $(".colorandpic div.prev").removeClass("hide"),
-    $(".colorandpic div.next").removeClass("hide"));
-    $(".prmImg").click(function() {
-        var t = $(this).index(".prmImg")
-          , n = $(this).attr("data-prdid");
-        PopupGalleryFT(7);
-        setTimeout(function() {
-            var f, r, e, u;
-            if ($("#glrKit").length > 0 && ($("#glrKit a").click(),
-            t > -1 && setTimeout(function() {
-                var t = -1, i, r;
-                $("#sync1 .owl-item").each(function(i) {
-                    var r = $(this).find("img").attr("data-id");
-                    r == n && (t = i)
-                });
-                t != -1 && (i = "sync1",
-                $("#sync3").length > 0 && (i = "sync3"),
-                r = $("#" + i).data("owlCarousel"),
-                r.jumpTo(t))
-            }, 300)),
-            $("#sPicId").length > 0 && (f = $("#sPicId").attr("data-prdid"),
-            r = f.split(";"),
-            r != null && r.length > 0))
-                for (i = 0; i < r.length; i++)
-                    if (r[i] == n)
-                        return e = $(".fotorama").fotorama(),
-                        u = e.data("fotorama"),
-                        u.requestFullScreen(),
-                        u.show(i),
-                        !1
-        }, 300)
+function onShippingComplete(n, t) {
+    ga(domainTracking + "ec:setAction", "checkout_option", {
+        step: n,
+        option: t
+    });
+    ga(domainTracking + "send", "event", "Checkout", "Option", {
+        hitCallback: function() {}
     })
 }
-function gotoGallery(this_) {
-    var this_ = $(this_),n = this_.find('>.album-content').html();
-    if (n != null && n != "")
-    try {        
-        $(".slide_FT").html(n);
-        gl_CurrColor = 0;
-        $("#ajxgallery").remove();
-        $("body").toggleClass("fixbody");
-        $("body").removeClass("fixbody");
-        var t = 0
-          , i = !1;
-        $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
-            var f, u;
-            $(".caption_ps").hide();
-            i || (r.show(0),
-            r.requestFullScreen(),
-            i = !0);
-            (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
-            (t == 1 || f > 0) && (t = 1,
-            u = $(r.activeFrame.html).find(".fb-like"),
-            u != undefined && setTimeout(function() {
-                var n = u.data("url");
-                u.replaceWith('<iframe><\/iframe>');
-                $(".caption_ps").show()
-            }, 1e3)));
-            n.type == "fotorama:load" && setTimeout(function() {
-                $("div.caption_ps").each(function() {
-                    var n = $(this).parent().parent().find("img").width() + 2;
-                    $(this).width(n).fadeIn(300)
-                })
-            }, 100);
-            n.type == "fotorama:fullscreenexit" && ($("body").click(),
-            $("body").css("background-color", "#fff"),
-            $("body").removeAttr("background-color"),
-            r.destroy(),
-            $(".slide_FT").html(""))
-        }).fotorama()        
-    } catch (err) {}
-
+function checkout() {
+    if (typeof cart != "undefined")
+        for (var n = 0; n < cart.length; n++)
+            ganew_addProductbyItem(cart[n])
 }
-function PopupGalleryFT(n,t, html) {
-    // console.log('PopupGalleryFT '+n);
-    // if (gl_lFT) {
-    //     var t = {
-    //         productID: n,
-    //         imageType: t,
-    //         colorID: t,
-    //     };
-    //     console.log(t);
-
-    //     n = html;
-
-    //     if (n != null || n != "")
-    //             try {
-    //                 if (n != null && n != "") {
-    //                     $(".slide_FT").html(n);
-    //                     gl_CurrColor = 0;
-    //                     $("#ajxgallery").remove();
-    //                     $("body").toggleClass("fixbody");
-    //                     $("body").removeClass("fixbody");
-    //                     var t = 0
-    //                       , i = !1;
-    //                     $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
-    //                         var f, u;
-    //                         $(".caption_ps").hide();
-    //                         i || (r.show(0),
-    //                         r.requestFullScreen(),
-    //                         i = !0);
-    //                         (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
-    //                         (t == 1 || f > 0) && (t = 1,
-    //                         u = $(r.activeFrame.html).find(".fb-like"),
-    //                         u != undefined && setTimeout(function() {
-    //                             var n = u.data("url");
-    //                             u.replaceWith('<iframe class="like" src="//www.facebook.com/plugins/like.php?href=' + n + '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=20&amp;appId=459645584142044" scrolling="no" frameborder="0" style="border:none;overflow:hidden; width:100%;height:20px;" allowTransparency="true"><\/iframe>');
-    //                             $(".caption_ps").show()
-    //                         }, 1e3)));
-    //                         n.type == "fotorama:load" && setTimeout(function() {
-    //                             $("div.caption_ps").each(function() {
-    //                                 var n = $(this).parent().parent().find("img").width() + 2;
-    //                                 $(this).width(n).fadeIn(300)
-    //                             })
-    //                         }, 100);
-    //                         n.type == "fotorama:fullscreenexit" && ($("body").click(),
-    //                         $("body").css("background-color", "#fff"),
-    //                         $("body").removeAttr("background-color"),
-    //                         r.destroy(),
-    //                         $(".slide_FT").html(""))
-    //                     }).fotorama()
-    //                 }
-    //             } catch (r) {}
-
-
-    //     // POSTAjax("/api?p=21001", t, function() {}, function(n) {
-    //     //     // console.log(n)
-    //     //     if (n != null || n != "")
-    //     //         try {
-    //     //             if (n != null && n != "") {
-    //     //                 $(".slide_FT").html(n);
-    //     //                 gl_CurrColor = 0;
-    //     //                 $("#ajxgallery").remove();
-    //     //                 $("body").toggleClass("fixbody");
-    //     //                 $("body").removeClass("fixbody");
-    //     //                 var t = 0
-    //     //                   , i = !1;
-    //     //                 $(".fotorama").on("fotorama:show fotorama:load fotorama:fullscreenexit fotorama:fullscreenenter", function(n, r) {
-    //     //                     var f, u;
-    //     //                     $(".caption_ps").hide();
-    //     //                     i || (r.show(0),
-    //     //                     r.requestFullScreen(),
-    //     //                     i = !0);
-    //     //                     (n.type == "fotorama:show" || n.type == "fotorama:fullscreenenter") && (f = r.activeFrame.i,
-    //     //                     (t == 1 || f > 0) && (t = 1,
-    //     //                     u = $(r.activeFrame.html).find(".fb-like"),
-    //     //                     u != undefined && setTimeout(function() {
-    //     //                         var n = u.data("url");
-    //     //                         u.replaceWith('<iframe class="like" src="//www.facebook.com/plugins/like.php?href=' + n + '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=20&amp;appId=459645584142044" scrolling="no" frameborder="0" style="border:none;overflow:hidden; width:100%;height:20px;" allowTransparency="true"><\/iframe>');
-    //     //                         $(".caption_ps").show()
-    //     //                     }, 1e3)));
-    //     //                     n.type == "fotorama:load" && setTimeout(function() {
-    //     //                         $("div.caption_ps").each(function() {
-    //     //                             var n = $(this).parent().parent().find("img").width() + 2;
-    //     //                             $(this).width(n).fadeIn(300)
-    //     //                         })
-    //     //                     }, 100);
-    //     //                     n.type == "fotorama:fullscreenexit" && ($("body").click(),
-    //     //                     $("body").css("background-color", "#fff"),
-    //     //                     $("body").removeAttr("background-color"),
-    //     //                     r.destroy(),
-    //     //                     $(".slide_FT").html(""))
-    //     //                 }).fotorama()
-    //     //             }
-    //     //         } catch (r) {}
-    //     //     else
-    //     //         $(".slide_FT").html("")
-    //     // }, function() {}, !0)
-    // } else
-    //     $.getScript(assetsPrefix+"/js/fotorama.min.js").done(function() 
-    //     {
-    //         gl_lFT = !0;
-    //         PopupGalleryFT(n, t)
-    //     })
+function ganew_sendAction(n, t) {
+    t != undefined ? ga(domainTracking + "ec:setAction", n, t) : ga(domainTracking + "ec:setAction", n)
+}
+function ganew_sendEvent(n, t, i) {
+    // ga(domainTracking + "send", "event", n, t, i)
+}
+function ganew_addProduct(n, t, i, r, u, f, e) {
+    ga(domainTracking + "ec:addProduct", {
+        id: n,
+        name: t,
+        category: i,
+        brand: r,
+        variant: u,
+        price: f,
+        quantity: e
+    })
+}
+function ganew_addProductbyItem(n) {
+    ga(domainTracking + "ec:addProduct", {
+        id: n.ProductId,
+        name: n.ProductName,
+        category: n.CategoryName,
+        brand: n.BrandName,
+        variant: n.ProductCode,
+        price: n.ProductPrice,
+        quantity: n.Quantity
+    })
+}
+function ga_conversion(n) {
+    if (typeof dataLayer != "undefined")
+        switch (n) {
+        case 1:
+            dataLayer.push({
+                event: "addCartCompleteAtHome"
+            });
+            break;
+        case 2:
+            dataLayer.push({
+                event: "addCartCompleteAtStore"
+            });
+            break;
+        case 3:
+            dataLayer.push({
+                event: "addCartCompleteAtInstallment"
+            })
+        }
 }
 
-function PopupGallery() {
-    var n = {
-        productID: productID
-    };
-    POSTAjax("/aj/ProductV4/GetImgProduct_Popup/", n, function() {}, function(n) {
-        var i, t;
-        if (n != null || n != "")
-            try {
-                $("body").prepend('<div id="ajxgallery"><\/div>');
-                $("body").toggleClass("fixbody");
-                i = '<div class="closegallery">x<\/i><\/div>';
-                $("#ajxgallery").append(i);
-                t = '<div class="boxpicture">';
-                t += n.res;
-                t += "<\/div>";
-                $("#ajxgallery").append(t);
-                $(".contenttab").css("display", "none");
-                gl_CurrTypeGlr = 0;
-                $("#tgdd360-designGallery").show();
-                $("#picture").hide();
-                $("#tgdd360-designGallery div").length == 0 && $.getScript("/Scripts/desktop/tgdd.360.js").done(function() {});
-                $("#ajxgallery .closegallery").unbind();
-                $("#ajxgallery .closegallery").click(function() {
-                    $("#ajxgallery").remove();
-                    $("body").toggleClass("fixbody");
-                    $("body").removeClass("fixbody")
-                })
-            } catch (r) {}
-    }, function() {}, !0)
+
+
+function u_cart(){
+    var form = $('form#order_sp')
+    var formData = form.serialize();
+    $.ajax({
+        url: '/update-cart.html',
+        type: form.attr("method"),
+        cache: false,
+        data: formData,
+        success: function(data){
+            $('#wrap_cart').parent().html(data.h)
+        },
+        error: function(){
+
+        }
+    })
 }
-function slideFltNext(n) {
-    $(".tabscolor").owlCarousel();
-    var t = $(".tabscolor").data("owlCarousel");
-    n == 1 ? t.next() : t.prev()
-}
-function showGalleryPS() {
-    gotoGallery(7, 0)
-}
-function checkHashTag() {
-    if (window.location.hash) {
-        var n = window.location.hash.substring(1);
-        console.log("#" + n);
-        (n == "danhgia" || n == "DANHGIA") && setTimeout(function() {
-            $("html, body").animate({
-                scrollTop: $("#danhgia").offset().top
-            }, 500)
-        }, 2e3);
-        n.indexOf("cmtdtl") != -1 && (console.log("#" + n),
-        $("html, body").animate({
-            scrollTop: $("#comment").offset().top
-        }, 500),
-        setTimeout(function() {
-            var i = n.replace("cmtdtl", ""), t;
-            $(".cmtKey").val(i);
-            t = $.Event("keyup");
-            t.keyCode = 13;
-            $(".cmtKey").trigger(t);
-            $(".cmtKey").val(i);
-            setTimeout(function() {
-                $(".cmtKey").val("")
-            }, 1e3)
-        }, 1e3));
-        n.indexOf("cmthl") != -1 && (console.log("#" + n),
-        $("html, body").animate({
-            scrollTop: $("#comment").offset().top
-        }, 500),
-        setTimeout(function() {
-            var t = n.replace("cmthl", ""), i;
-            $(".cmtKey").val(t);
-            i = $.Event("keyup");
-            i.keyCode = 13;
-            $(".cmtKey").trigger(i);
-            $(".cmtKey").val(t);
-            setTimeout(function() {
-                $(".cmtKey").val("");
-                satisfiedCmt(t)
-            }, 1e3)
-        }, 1e3));
-        n.indexOf("cmtkhl") != -1 && (console.log("#" + n),
-        $("html, body").animate({
-            scrollTop: $("#comment").offset().top
-        }, 500),
-        setTimeout(function() {
-            var t = n.replace("cmtkhl", ""), i;
-            $(".cmtKey").val(t);
-            i = $.Event("keyup");
-            i.keyCode = 13;
-            $(".cmtKey").trigger(i);
-            $(".cmtKey").val(t);
-            setTimeout(function() {
-                $(".cmtKey").val("");
-                unsatisfiedCmt(t);
-                $(".wrap_comment").attr("style", "min-height:720px;")
-            }, 1e3)
-        }, 2e3))
-    }
-}
-function initAcc() {
-    $(".boxArticle").length == 0 && $(".left_content .accessories").addClass("bordernone");
-    $(".boxRatingCmt").length > 0 && $(".accessories ").addClass("borderBot")
-}
-function openPopWrt() {
-    $(".wrap_wrtp").removeClass("hide")
-}
-function closePopWrt() {
-    $(".wrap_wrtp").removeClass("hide").addClass("hide")
-}
-function checkHaNoi() {
-    getCookie("tgdd_province_hanoi") == undefined && setTimeout(function() {
-        POSTAjax("/aj/order/checkiphanoi", {}, BeforeSendAjax, function(n) {
-            n == "True" && $(".quahanoi").show();
+
+
+
+function AddEventOrderAccessory() {    
+    $(document).on('click',".listorder button.delete", function() {
+        $(this).parent().parent().remove();
+        u_cart();
+    });
+    
+    $(".itemfull button.delete").click(function() {
+        $(".itemfull").hide();
+        POSTAjax("/aj/OrderV4/DeleteProductTmp", {}, BeforeSendAjax, function() {
             EndSendAjax()
-        }, ErrorAjax, !0)
-    }, 5e3)
-}
-function ClickDis() {
-    $(".checkexist .listdist .scroll a").click(function() {
-        $(".checkexist .dist span").html($(this).text());
-        $("#DistricId").val($(this).attr("data-value"));
-        $(".listdist").slideToggle();
-        CheckStockLoadStore()
+        }, function() {
+            EndSendAjax()
+        }, !0)
+    });
+
+
+
+    $(document).on('click',".listorder li .choosenumber .augment", function() {
+        //Tang
+        var soluong = $(this).parents("li").find(".hdQuantity")
+        var a = parseInt(soluong.val()) + 1;
+        soluong.val(a) ;        
+        u_cart();
+    });
+    $(document).on('click',".listorder li .choosenumber .abate", function() {
+        //Giam
+        var soluong = $(this).parents("li").find(".hdQuantity")
+        var a = parseInt(soluong.val()) - 1;
+        soluong.val(a) ;        
+        u_cart();
+    });
+
+
+
+    $(".listorder .listcolor a").click(function() {
+        var n = $(this).parents("li").attr("data-value");
+        $(this).parents("li").find(".ProductCode").val($(this).attr("data-value"));
+        $(this).parents("li").find(".ProductNameCode").val($(this).attr("data-name"));
+        $(this).parents("li").find(".choosecolor span").text("Màu: " + $(this).attr("data-name"));
+        $(this).parents("li").find(".colimg img").attr("src", $(this).find("img").attr("src"));
+        cartConfig.colorclicksubmit && (POSTAjax("/aj/OrderV4/UpdateProductProductCode", {
+            ProductId: n,
+            ProductCode: $(this).attr("data-value")
+        }, BeforeSendAjax, function(t) {
+            UpdateInfoCart(t);
+            LoadStore();
+            EndSendAjax();
+            ganew_updateCart(n, eventLabel.updateColor)
+        }, function() {
+            EndSendAjax()
+        }, !0),
+        LoadAllDistrictByProvince(),
+        $("#BillingAddress_DistictId").val() != "-1" && setTimeout(function() {
+            $(".area_address .listdist .scroll a[data-value=" + $("#BillingAddress_DistictId").val() + "]").click()
+        }, 2e3))
+    });
+    $(".choosecolor").click(function() {
+        $(this).find(".listcolor").slideToggle()
+    });
+    $("#IsShipAtStore").val() === "true" && ShowTabStore();
+    $("#IsShipAtHome").val() === "true" && ShowTabHome();
+    $(".promotion .title").click(function() {
+        $(this).hide();
+        $(this).parent(".promotion").find("span").css("display", "block")
+    });
+    $(".promotion .pro-chosse").click(function() {
+        var n = $(this).parents("li").attr("data-value")
+          , t = $(this).attr("data-group");
+        $(".pro" + t).removeClass("choose");
+        $(this).addClass("choose");
+        POSTAjax("/aj/OrderV4/UpdatePromotion", {
+            ProductId: n,
+            ProductCode: $(this).attr("data-value"),
+            GroupId: t,
+            PromotionId: $(this).attr("data-promotionid"),
+            IndexOrder: $(this).attr("data-index")
+        }, BeforeSendAjax, function(t) {
+            UpdateInfoCart(t);
+            EndSendAjax();
+            ganew_updateCart(n, eventLabel.updateColor)
+        }, function() {
+            EndSendAjax()
+        }, !0)
     })
 }
-function CheckStockLoadStore() {
-    $(".checkexist .listcolor li").length > 1 && $(".resultcheck").show();
-    $(".listmarket").show();
-    $(".listmarket  .listst").html("<a ><div>Đang tải dữ liệu...<\/div><\/a>");
-    POSTAjax("/aj/OrderV4/LoadStoreByFilter", {
-        iProvince: $("#ProvinceId").val(),
-        iProductID: productID,
-        iDistrict: $("#DistricId").val(),
-        sProCode: $("#ProductCode").val(),
-        clearcache: clearcache
-    }, BeforeSendAjax, function(n) {
-        $(".listmarket  .listst").html(n);
-        $(".checkexist .listmarket .oldstore").length == 1 ? $(".checkexist .listmarket strong").hide() : $(".checkexist .listmarket strong").show();
-        $(".listmarket .buynowpop").addClass("buydisable");
-        $(".listst li").click(function() {
-            $("#StoreId").val($(this).attr("data-id"));
-            $("#ProvinceId").val($(this).attr("data-pro"));
-            $("#DistricId").val($(this).attr("data-dis"));
-            $("#IsStock").val($(this).find("label").hasClass("yes"));
-            $("#StockStatus").val($(this).find("label").text());
-            $(".listst li").removeClass("choosemarket");
-            $(".listmarket .buynowpop").removeClass("buydisable");
-            $(this).addClass("choosemarket");
-            $(".btn_store").click()
+function UpdateInfoCart(n) {
+    if ($(n).find(".detail_cart .listorder").length == 0)
+        return window.location.href = "/gio-hang",
+        !1;
+    $(".detail_cart").html($(n).find(".detail_cart").html());
+    $("header .cart span").html($(n).find("#TotalQuantityAll").val());
+    AddEventOrderAccessory();
+    $(n).filter("script").each(function() {
+        $.globalEval(this.text || this.textContent || this.innerHTML || "")
+    });
+    $("#IsShipAtStore").val() === "true" && ($(".shipping_home").hide(),
+    $(".shipping_store").show());
+    InitDataTime()
+}
+function CartSubmitOrder() {
+    return f_CartSubmitOrder ? !1 : (f_CartSubmitOrder = !0,
+    $("#wrap_cart .massage").hide(),
+    $("#IsShipAtStore").val() === "true" && ShowTabStore(),
+    $("#IsShipAtHome").val() === "true" && ShowTabHome(),
+    typeof localStorage != "undefined" && ($("#TrackTest").val(""),
+    localStorage.getItem("sp-camp-c5") !== null && $("#TrackTest").val("sp-camp-c5"),
+    localStorage.getItem("sp-camp-c3") !== null && $("#TrackTest").val($("#TrackTest").val() + "sp-camp-c3")),
+    POSTAjax(cartConfig.linksubmitorder, $("#wrap_cart form").serialize(), BeforeSendAjax, function(n) {
+        n.success === !0 ? window.location.href = n.data : $("#wrap_cart .message").show().html(n.errors);
+        f_CartSubmitOrder = !1;
+        EndSendAjax()
+    }, function() {
+        f_CartSubmitOrder = !1;
+        var n = "";
+        n += "<div><span onclick=\"$('.massage').hide();\">x<\/span>Hệ thông không ghi nhận được đơn hàng này.<br><div>Bạn vui lòng tải lại trang và thử lại<br><\/div><\/div>";
+        $("#wrap_cart .massage").show().html(n);
+        EndSendAjax()
+    }, !0),
+    !1)
+}
+function InitDataTime() {
+    $("#BillingAddress_ProvinceId").val() == "3" || $("#BillingAddress_ProvinceId").val() == "5" ? ($(".showtimeship_address .listhours span.hcm:last").show(),
+    $(".showtimeship_address .listhours span.ahour").show(),
+    $("#IsStockHome").val() == "true" && $("#BillingAddress_ProvinceId").val() == "3" && $(".listorder li").length == 1 && $(".listorder li.samsung").length == 1 && $(".listorder li.samsung .hdQuantity").val() == "1" ? ($(".notemoreproduct").show(),
+    $(".notemoreproduct .listmorecolor li").show().removeClass("choosed"),
+    $("#IsNoteMoreProductCode").val(""),
+    $('.notemoreproduct li[data-value="' + GetProductCode() + '"]').hide(),
+    $(".notemoreproduct").hasClass("check") ? $("#IsNoteMoreColorProduct").val("true") : $("#IsNoteMoreColorProduct").val("false")) : ($(".notemoreproduct").hide(),
+    $("#IsNoteMoreColorProduct").val("false"))) : ($(".showtimeship_address .listhours span.hcm:last").hide(),
+    $(".showtimeship_address .listhours span:first").hide(),
+    $(".notemoreproduct").hide(),
+    $("#IsNoteMoreColorProduct").val("false"))
+}
+function ShowTabHome() {
+    $("#IsShipAtHome").val("true");
+    $("#IsShipAtStore").val("false");
+    $("#IsShipAtHome").val() === "true" && ($(".area_address .OrderNoteHome").length > 0 && $("#OrderNote").val($(".area_address .OrderNoteHome").val()),
+    $(this).toggleClass("check"),
+    $(".cathe").hasClass("check") && $("#PaymentMethod").val(1),
+    $(".shipping_home").show(),
+    $(".shipping_store").hide(),
+    $("#wrap_cart input[name='BillingAddress.ProvinceName']").val($("#wrap_cart .area_address .citydis .city span").text()),
+    $("#wrap_cart input[name='BillingAddress.DistictName']").val($("#wrap_cart .area_address .citydis .dist span").text()),
+    $("#BillingAddress_ProvinceId").val($("#wrap_cart .area_address .citydis .city span").attr("data-id")),
+    $("#BillingAddress_DistictId").val($("#wrap_cart .area_address .citydis .dist span").attr("data-id")),
+    typeof $(".area_address .date span").attr("data-id") != "undefined" && $("#BillingAddress_ShipDay").val($(".area_address .date span").attr("data-id")),
+    $(".area_market").hide(),
+    $(".area_address").show(),
+    $(".area_market .EmailSecond").prop("disabled", !0),
+    $(".area_address .EmailSecond").prop("disabled", !1))
+}
+function ChangeHours(n) {
+    ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHomeclickDay);
+    var t = $(n).attr("data-value");
+    $("#BillingAddress_ShipDay").val(t);
+    $("#BillingAddress_ShipDay").val() !== "0" ? $(".today").css("display", "block") : $(".today").css("display", "none");
+    InitDataTime();
+    $(".area_address .date span").text($(n).text());
+    $(".area_address .date span").attr("data-id", t);
+    $(".listdate").hide();
+    $(".listhours").show();
+    $(".area_address .citydis .listhours span:visible").length > 0 && $(".area_address .citydis .listhours span:visible")[0].click()
+}
+function AddEventAtHome() {
+    AddEventListProv();
+    AddEventListDist();
+    $(".area_address .listward .scroll a").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHomeclickDistict);
+        $("#BillingAddress_WardId-error").remove();
+        $(".area_address .listward").hide();
+        $(".area_address .ward span").attr("data-id", $(this).attr("data-value")).html($(this).text());
+        $("#BillingAddress_WardId").val($(this).attr("data-value"));
+        updateInfoShippingCost();
+        updateInfoTmp()
+    });
+    $(".area_address .listmarket li").click(function() {
+        $(this).hasClass("choosemarket") || ($(this).parent().find("li").removeClass("choosemarket"),
+        $(this).addClass("choosemarket"),
+        $(".area_address .listcity .scroll a[data-value=" + $(this).attr("data-pro") + "]").click(),
+        $("#BillingAddress_DistictId").val($(this).attr("data-dis")),
+        $("#BillingAddress_Address").val($(this).attr("data-ad")),
+        setTimeout(function() {
+            $(".area_address .listdist .scroll a[data-value=" + $("#BillingAddress_DistictId").val() + "]").click()
+        }, 2e3),
+        $(".area_address .citydis .dist span").html($(this).attr("data-disname")),
+        $(".area_address .citydis .dist span").attr("data-id", $(this).attr("data-dis")),
+        updateInfoTmp())
+    });
+    $(".area_address .date").click(function() {
+        $(".layer").not(".listdate").hide();
+        $(".listdate").slideToggle()
+    });
+    $(".area_address .hours").click(function() {
+        $(".layer").not(".listhours").hide();
+        $(".listhours").slideToggle()
+    });
+    $(".area_address .citydis .listhours span").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHomeclickHour);
+        $("#BillingAddress_ShipHour").val($(this).attr("data-value"));
+        $(".area_address .hours span").text($(this).children(":visible").text());
+        $(".layer").hide()
+    });
+    $(".notemoreproduct .first").click(function() {
+        $(".notemoreproduct").toggleClass("check");
+        $(".notemoreproduct").hasClass("check") ? ($("#IsNoteMoreColorProduct").val("true"),
+        $(".notemoreproduct .last").show(),
+        $(".notemoreproduct .first").hide()) : ($("#IsNoteMoreColorProduct").val("false"),
+        $(".notemoreproduct .last").hide())
+    });
+    $(".notemoreproduct .listmorecolor li").click(function() {
+        return $(this).hasClass("choosed") ? ($("#IsNoteMoreProductCode").val(""),
+        $(".notemoreproduct .listmorecolor li").removeClass("choosed"),
+        !1) : ($("#IsNoteMoreProductCode").val($(this).attr("data-value")),
+        $(".notemoreproduct .listmorecolor li").removeClass("choosed"),
+        $(this).addClass("choosed"),
+        POSTAjax("/aj/OrderV4/CheckNoteMoreProduct", {
+            iProvince: $("#BillingAddress_ProvinceId").val(),
+            sProCode: $(this).attr("data-value"),
+            iDistrict: $("#BillingAddress_DistictId").val()
+        }, BeforeSendAjax, function(n) {
+            n === "" && ($("#IsNoteMoreProductCode").val(""),
+            $(".notemoreproduct .listmorecolor li").removeClass("choosed"),
+            alert("Màu này đã hết hàng. Vui lòng chọn màu khác"));
+            EndSendAjax()
+        }, ErrorAjax, !0),
+        !1)
+    })
+}
+function AddEventListProv() {
+    $(".area_address .citydis .listcity a").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHomeclickProvince);
+        $(".area_address .citydis .listcity").hide();
+        $(".area_address .city span").attr("data-id", $(this).attr("data-value")).html($(this).text());
+        $("#BillingAddress_ProvinceId").val($(this).attr("data-value"));
+        $("#BillingAddress_DistictId").val("-1");
+        $(".area_address .citydis .dist span").attr("data-id", "0").html("Chọn quận, huyện");
+        $(".note_address").hide();
+        LoadAllDistrictByProvince();
+        updateInfoTmp();
+        InitDataTime();
+        $(".showtimeship_address .listdate span:first").click()
+    })
+}
+function AddEventListDist() {
+    $(".area_address .listdist .scroll a").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHomeclickDistict);
+        $("#BillingAddress_DistictId-error").remove();
+        $(".area_address .listdist").hide();
+        $(".area_address .dist span").attr("data-id", $(this).attr("data-value")).html($(this).text());
+        $("#BillingAddress_DistictId").val($(this).attr("data-value"));
+        var n = $(this).attr("data-stock");
+        UpdateStockHome(n);
+        LoadAllWardByDistrict();
+        updateInfoTmp();
+        $(".showtimeship_address .listdate span:first").click()
+    })
+}
+function LoadAllProvinceAtHomeByProductCode() {
+    // POSTAjax("/aj/OrderV4/LoadProviceByProductCode", {
+    //     sProCode: GetProductCode()
+    // }, BeforeSendAjax, function(n) {
+    //     n != "" && $(".area_address .citydis .listcity .scroll").html(n);
+    //     AddEventListProv();
+    //     $(".area_address .listdist .scroll a[data-value=" + $("#BillingAddress_DistictId").val() + "]").click();
+    //     EndSendAjax()
+    // }, ErrorAjax, !0)
+}
+function UpdateStockHome(n) {
+    n == "0" ? ($(".showtimeship_address").hide(),
+    $("#IsStockHome").val("false"),
+    $(".note_address").show(),
+    $(".note_address p").html("Sản phẩm hiện đã <b>tạm hết hàng tại khu vực " + $(".area_address .citydis .dist span").html() + "<\/b>. Thời gian nhận hàng dự kiến sau <b>2 - 7 ngày<\/b>.")) : ($(".showtimeship_address").show(),
+    $("#IsStockHome").val("true"),
+    $(".note_address").hide(),
+    $(".note_address p").html(""))
+}
+function LoadAllDistrictByProvince() {
+    POSTAjax(url_LoadAllDistrictByProvince, {
+        iProvince: $("#BillingAddress_ProvinceId").val(),
+        sProCode: GetProductCode()
+    }, function() {
+        $(".area_address .overlay").show()
+    }, function(n) {
+        $(".area_address .listdist .scroll").html(n);
+        AddEventListDist();
+        LoadAllWardByDistrict();
+        setTimeout(function() {
+            $(".area_address .overlay").hide()
+        }, 2e3)
+    }, ErrorAjax, !0)
+}
+function LoadAllWardByDistrict() {
+    $(".area_address .citydis .ward span").attr("data-id", "0").html("Chọn phường, xã");
+    $("#BillingAddress_WardId").val("-1");
+    POSTAjax(url_LoadAllWardByDistrict, {
+        iDistrict: $("#BillingAddress_DistictId").val(),
+        sProCode: GetProductCode()
+    }, function() {
+        $(".area_address .overlay").show()
+    }, function(n) {
+        $(".area_address .listward .scroll").html(n);
+        $(".area_address .listward .scroll a").click(function() {
+            ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHomeclickDistict);
+            $("#BillingAddress_WardId-error").remove();
+            $(".area_address .listward").hide();
+            $(".area_address .ward span").attr("data-id", $(this).attr("data-value")).html($(this).text());
+            $("#BillingAddress_WardId").val($(this).attr("data-value"));
+            updateInfoShippingCost();
+            updateInfoTmp()
         });
-        $(".listst .viewmorest").click(function() {
+        setTimeout(function() {
+            $(".area_address .overlay").hide()
+        }, 2e3)
+    }, ErrorAjax, !0)
+}
+function updateInfoShippingCost() {
+    $(".area_address .cod-area").html("");
+    $(".area_address .overlay").show();
+    updateInfoButtonShippingCost();
+    $.ajax({
+        async: !0,
+        data: $("#wrap_cart form").serialize(),
+        type: "POST",
+        error: function() {
+            $(".area_address .overlay").hide()
+        },
+        success: function(n) {
+            $(".area_address .cod-area").html($(n).html());
+            updateInfoButtonShippingCost();
+            $(".area_address .cod-area label").click(function() {
+                $(".area_address .cod-area label").removeClass("choosed");
+                $(".area_address .cod-area p").hide();
+                $(this).addClass("choosed");
+                $(this).next().show();
+                $(this).attr("data-cod") == "0" ? $("#IsShipFast").val("false") : $("#IsShipFast").val("true");
+                updateInfoButtonShippingCost()
+            });
+            $(".area_address .overlay").hide()
+        },
+        url: "/aj/OrderV4/UpdateShippingCost"
+    })
+}
+function updateInfoButtonShippingCost() {
+    $(".area_address .new-cod label.choosed").length == 1 ? ($(".area_address .new-cod label.choosed").attr("data-sms") == "1" ? $(".payoffline").html("Hoàn tất<span>Nhắn tin SMS xác nhận " + $(".area_address .new-cod label.choosed").attr("data-cost") + "<\/span>") : $(".area_address .city span").attr("data-id") != "3" && $(".area_address .new-cod label.choosed").attr("data-cost") != "0" ? $(".payoffline").html("Thanh toán tại siêu thị<span>Tối thiểu " + $(".area_address .new-cod label.choosed").attr("data-cost") + "<\/span>") : $(".payoffline").html("Thanh toán khi nhận hàng<span>Xem hàng trước, không mua không sao<\/span>"),
+    $(".payonline span:first").text("Tổng tiền đơn hàng " + $(".area_address .new-cod label.choosed").attr("data-total"))) : $(".payoffline").html("Thanh toán khi nhận hàng<span>Xem hàng trước, không mua không sao<\/span>")
+}
+function ShowTabStore() {
+    $("#IsShipAtHome").val("false");
+    $("#IsShipAtStore").val("true");
+    $("#IsShipAtStore").val() === "true" && ($("#wrap_cart input[name='BillingAddress.ProvinceName']").val($("#wrap_cart .area_market .citydis .city span").text()),
+    $("#wrap_cart input[name='BillingAddress.DistictName']").val($("#wrap_cart .area_market .citydis .dist span").text()),
+    $("#BillingAddress_ProvinceId").val($("#wrap_cart .area_market .citydis .city span").attr("data-id")),
+    $("#BillingAddress_DistictId").val($("#wrap_cart .area_market .citydis .dist span").attr("data-id")),
+    typeof $(".area_market .date span").attr("data-id") != "undefined" && $("#BillingAddress_ShipDay").val($(".area_market .date span").attr("data-id")),
+    $(".area_market .OrderNoteHome").length > 0 && $("#OrderNote").val($(".area_market .homenumber").val()),
+    $("#PaymentMethod").val() == "1" && $("#PaymentMethod").val(0),
+    $(".shipping_home").hide(),
+    $(".shipping_store").show(),
+    $(".area_market").show(),
+    $(".area_address").hide(),
+    $(".area_market .EmailSecond").prop("disabled", !1),
+    $(".area_address .EmailSecond").prop("disabled", !0))
+}
+function EventDistClick() {
+    $(".area_market .citydis .listdist .scroll a").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickDistict);
+        $(".area_market .listdist").hide();
+        $(".area_market .citydis .dist span").attr("data-id", $(this).attr("data-value")).html($(this).text());
+        $("#BillingAddress_DistictId").val($(this).attr("data-value"));
+        LoadStore()
+    })
+}
+function AddEventAtStore() {
+    $(".area_market .citydis .listcity a").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickProvince);
+        $(".area_market .listcity").hide();
+        $(".area_market .city span").attr("data-id", $(this).attr("data-value")).html($(this).text());
+        $("#BillingAddress_ProvinceId").val($(this).attr("data-value"));
+        $("#BillingAddress_DistictId").val("-1");
+        $(".area_market .dist span").attr("data-id", "0").html("Chọn quận, huyện");
+        POSTAjax(cartConfig.link_store_loaddistict, {
+            iProvince: $("#BillingAddress_ProvinceId").val(),
+            sProCode: GetProductCode(),
+            iProductID: $("#ProductId").val()
+        }, function() {
+            $(".area_market .overlay").show()
+        }, function(n) {
+            $(".area_market .listdist .scroll").html(n);
+            EventDistClick();
+            LoadStore()
+        }, ErrorAjax, !0)
+    });
+    EventDistClick();
+    $("#BillingAddress_ProvinceId").val() != "0" && $("#buyatstore").length == 1 && LoadAllDistrictStoreByProvince();
+    $(".area_market .choosetime .liday .city a:first").click();
+    $(".area_market .date").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickDay);
+        $(".listdate").slideToggle()
+    });
+    $(".area_market .listdate span").click(function() {
+        $(".listdate").hide();
+        $(".area_market .date span").text($(this).text());
+        $("#BillingAddress_ShipDay").val($(this).attr("data-value"));
+        $(".area_market .date span").attr("data-id", $(this).attr("data-value"))
+    })
+}
+function LoadAllDistrictStoreByProvince() {
+    POSTAjax(cartConfig.link_store_loaddistict, {
+        iProvince: $("#BillingAddress_ProvinceId").val(),
+        sProCode: GetProductCode(),
+        iProductID: $("#ProductId").val()
+    }, BeforeSendAjax, function(n) {
+        $(".area_market .listdist .listcity").html(n);
+        EventDistClick();
+        $(".area_market .citydis .listdist .scroll a:first").click();
+        EndSendAjax()
+    }, ErrorAjax, !0)
+}
+function LoadAllProvince() {
+    POSTAjax(cartConfig.link_store_loadprovince, {
+        sProCode: GetProductCode(),
+        iProductID: $("#ProductId").val()
+    }, function() {
+        $(".area_market .overlay").show()
+    }, function(n) {
+        $(".area_market .listcity .scroll").html(n);
+        $(".area_market .overlay").hide();
+        $(".area_market .citydis .listcity a").click(function() {
+            ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickProvince);
+            $(".area_market .listcity").hide();
+            $(".area_market .city span").attr("data-id", $(this).attr("data-value")).html($(this).text());
+            $("#BillingAddress_ProvinceId").val($(this).attr("data-value"));
+            $("#BillingAddress_DistictId").val("-1");
+            $(".area_market .dist span").attr("data-id", "0").html("Chọn quận, huyện");
+            POSTAjax(cartConfig.link_store_loaddistict, {
+                iProvince: $("#BillingAddress_ProvinceId").val(),
+                sProCode: GetProductCode(),
+                iProductID: $("#ProductId").val()
+            }, function() {
+                $(".area_market .overlay").show()
+            }, function(n) {
+                $(".area_market .listdist .scroll").html(n);
+                EventDistClick();
+                LoadStore()
+            }, ErrorAjax, !0)
+        });
+        $(".area_market .citydis .listcity a:first").click()
+    }, ErrorAjax, !0)
+}
+function LoadStore() {
+    $(".area_market  .listmarket").html("");
+    POSTAjax(cartConfig.link_loadstore, {
+        iProvince: $("#BillingAddress_ProvinceId").val(),
+        iDistrict: $("#BillingAddress_DistictId").val(),
+        sProCode: GetProductCode()
+    }, function() {
+        $(".area_market .overlay").show()
+    }, function(n) {
+        $(".area_market  .listmarket").html(n);
+        $("#BillingAddress_StoreId").val("0");
+        $("#BillingAddress_StoreName").val("");
+        EventStoreClickItem();
+        $(".listmarket .viewmorest").click(function() {
+            ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickStoreMore);
             $(this).hide();
             $(this).next().removeClass("none");
             $(this).next().next().removeClass("none");
@@ -1341,6 +794,108 @@ function CheckStockLoadStore() {
             $(this).next().next().next().next().next().removeClass("none");
             $(this).next().next().next().next().next().next().removeClass("none")
         });
+        $(".area_market .overlay").hide();
+        $(".searchstore input[type=text]").val("").trigger("keyup")
+    }, ErrorAjax, !0)
+}
+function EventStoreClickItem() {
+    $(".area_market .cod-area").html("");
+    $(".area_market .listmarket li").click(function() {
+        (ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickStore),
+        $("#BillingAddress_StoreId").val($(this).attr("data-id")),
+        $("#BillingAddress_StoreName").val($(this).find(".name").text()),
+        $("#BillingAddress_StoreId-error").remove(),
+        $(this).hasClass("choosemarket")) || ($(this).parent().find("li").removeClass("choosemarket"),
+        $(this).addClass("choosemarket"),
+        UpdateStockStore($(this).attr("data-stock")))
+    })
+}
+function updateInfoShippingCostStore() {
+    $(".area_market .cod-area").html("");
+    $(".area_market .overlay").show();
+    updateInfoButtonShippingCostStore();
+    $.ajax({
+        async: !0,
+        data: $("#wrap_cart form").serialize(),
+        type: "POST",
+        error: function() {
+            $(".area_market .overlay").hide()
+        },
+        success: function(n) {
+            $(".area_market .cod-area").html($(n).html());
+            updateInfoButtonShippingCostStore();
+            $(".area_market .cod-area label").click(function() {
+                $(".area_market .cod-area label").removeClass("choosed");
+                $(".area_market .cod-area p").hide();
+                $(this).addClass("choosed");
+                $(this).next().show();
+                $(this).attr("data-cod") == "0" ? $("#IsShipFast").val("false") : $("#IsShipFast").val("true");
+                updateInfoButtonShippingCostStore()
+            });
+            $(".area_market .overlay").hide()
+        },
+        url: "/aj/OrderV4/UpdateShippingCost"
+    })
+}
+function updateInfoButtonShippingCostStore() {
+    $(".area_market .new-cod label.choosed").length == 1 ? ($(".area_market .new-cod label.choosed").attr("data-sms") == "1" ? $(".payoffline").html("Hoàn tất<span>Nhắn tin SMS xác nhận " + $(".area_market .new-cod label.choosed").attr("data-cost") + "<\/span>") : $(".area_market .city span").attr("data-id") != "3" && $(".payoffline").html("Thanh toán tại siêu thị<span>Tối thiểu " + $(".area_market .new-cod label.choosed").attr("data-cost") + "<\/span>"),
+    $(".payonline span:first").text("Tổng tiền đơn hàng " + $(".area_market .new-cod label.choosed").attr("data-total"))) : $(".payoffline").html("Thanh toán khi nhận hàng<span>Xem hàng trước, không mua không sao<\/span>")
+}
+function UpdateStockStore(n) {
+    n == "1" ? ($(".area_market .timeship").show(),
+    $(".area_market .note_market").hide(),
+    $("#IsStock").val("true")) : ($(".area_market .timeship").hide(),
+    $(".area_market .note_market").show(),
+    $("#IsStock").val("false"))
+}
+function StoreActiveTabStore(n, t, i) {
+    $(".supermarket label").click();
+    $('.area_market .citydis .listcity a[data-value="' + t + '"]').click();
+    CheckClidkDist(i, n)
+}
+function CheckClidkDist(n, t) {
+    $('.area_market .citydis .listdist .scroll a[data-value="' + n + '"]').length == 0 && n > 0 ? setTimeout(function() {
+        CheckClidkDist(n, t)
+    }, 200) : $(".area_market  .listmarket li").length == 0 ? setTimeout(function() {
+        CheckClidkDist(n, t)
+    }, 300) : ($('.area_market .citydis .listdist .scroll a[data-value="' + n + '"]').click(),
+    setTimeout(function() {
+        CheckClickStore(t)
+    }, 1e3))
+}
+function CheckClickStore(n) {
+    if ($('.area_market .listmarket li[data-id="' + n + '"]').length == 0)
+        setTimeout(function() {
+            CheckClickStore(n)
+        }, 200);
+    else {
+        var t = $(".area_market .listmarket li:first")
+          , i = $(".area_market .listmarket li:first").attr("data-id")
+          , r = $('.area_market .listmarket li[data-id="' + n + '"]');
+        $('.area_market .listmarket li[data-id="' + n + '"]').replaceWith(t);
+        $(".area_market .listmarket").prepend(r);
+        $(".area_market .listmarket li:first").hasClass("none") && ($(".area_market .listmarket li:first").removeClass("none"),
+        $('.area_market .listmarket li[data-id="' + i + '"]').addClass("none"));
+        EventStoreClickItem();
+        $('.area_market .listmarket li[data-id="' + n + '"]').click()
+    }
+}
+function addEventPromotionAcc() {
+    $(".buy_promotion .buyacc").click(function() {
+        var n = $(this).attr("data-href");
+        return $(this).addClass("none"),
+        $(this).next().removeClass("none"),
+        POSTAjax(n, {}, BeforeSendAjax, function(n) {
+            UpdateInfoCart(n);
+            EndSendAjax()
+        }, ErrorAjax, !0),
+        !1
+    })
+}
+function updatePromotionAcc() {
+    POSTAjax("/aj/OrderV4/CheckAccessoriesPromotion", {}, BeforeSendAjax, function(n) {
+        $(".buy_promotion").replaceWith(n);
+        addEventPromotionAcc();
         EndSendAjax()
     }, ErrorAjax, !0)
 }
@@ -1360,22 +915,53 @@ function locdau(n) {
     n = n.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y"),
     n.replace(/Đ/g, "D")
 }
-var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_rtCurStar, gl_isFeedbackLoad, isSendFback, isTrigLazy, gl_cprImg, flsc, gl_lFT, f_sttk;
+function GetProductCode() {
+    var n = "";
+    return $(".ProductCode").each(function() {
+        n += $(this).val() + ","
+    }),
+    n = n.trimRight(",")
+}
+function BeforeSendAjax() {
+    $(".loading-cart").show();
+    $("body").addClass("htmlloading");
+    $("html").addClass("htmlloading")
+}
+function EndSendAjax() {
+    $(".loading-cart").hide();
+    $("body").removeClass("htmlloading");
+    $("html").removeClass("htmlloading")
+}
+function ErrorAjax() {
+    $(".loading-cart").hide();
+    $("body").removeClass("htmlloading");
+    $("html").removeClass("htmlloading")
+}
+function CheckOrderValidateNew() {
+    $("#IsShipAtStore").val() != "true" ? ($("#BillingAddress_StoreId").removeClass("min1"),
+    $(".area_market .EmailSecond").prop("disabled", !0)) : ($("#BillingAddress_StoreId").addClass("min1"),
+    $(".area_market .EmailSecond").prop("disabled", !1));
+    $("#IsShipAtHome").val() != "true" ? ($("#BillingAddress_DistictId").removeClass("min1"),
+    $(".area_address .EmailSecond").prop("disabled", !0)) : ($("#BillingAddress_DistictId").addClass("min1"),
+    $(".area_address .EmailSecond").prop("disabled", !1));
+    form.valid() && CartSubmitOrder()
+}
+var lastSuggest, timmer, gl_fLoadChat, cartConfig, f_CartSubmitOrder, url_LoadAllDistrictByProvince, url_LoadAllWardByDistrict, flag_firstloadstore, updateInfoTmp, form;
 (function(n, t) {
-    function hf(n) {
-        var t = yt[n] = {};
+    function yu(n) {
+        var t = wt[n] = {};
         return i.each(n.split(h), function(n, i) {
             t[i] = !0
         }),
         t
     }
-    function li(n, r, u) {
+    function ui(n, r, u) {
         if (u === t && n.nodeType === 1) {
-            var f = "data-" + r.replace(ci, "-$1").toLowerCase();
+            var f = "data-" + r.replace(sr, "-$1").toLowerCase();
             if (u = n.getAttribute(f),
             typeof u == "string") {
                 try {
-                    u = u === "true" ? !0 : u === "false" ? !1 : u === "null" ? null : +u + "" === u ? +u : hi.test(u) ? i.parseJSON(u) : u
+                    u = u === "true" ? !0 : u === "false" ? !1 : u === "null" ? null : +u + "" === u ? +u : or.test(u) ? i.parseJSON(u) : u
                 } catch (e) {}
                 i.data(n, r, u)
             } else
@@ -1383,7 +969,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         }
         return u
     }
-    function pt(n) {
+    function at(n) {
         for (var t in n)
             if ((t !== "data" || !i.isEmptyObject(n[t])) && t !== "toJSON")
                 return !1;
@@ -1392,18 +978,18 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     function v() {
         return !1
     }
-    function it() {
+    function g() {
         return !0
     }
     function k(n) {
         return !n || !n.parentNode || n.parentNode.nodeType === 11
     }
-    function nr(n, t) {
+    function fi(n, t) {
         do
             n = n[t];
         while (n && n.nodeType !== 1);return n
     }
-    function tr(n, t, r) {
+    function ei(n, t, r) {
         if (t = t || 0,
         i.isFunction(t))
             return i.grep(n, function(n, i) {
@@ -1418,7 +1004,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             var u = i.grep(n, function(n) {
                 return n.nodeType === 1
             });
-            if (df.test(t))
+            if (fe.test(t))
                 return i.filter(t, u, !r);
             t = i.filter(t, u)
         }
@@ -1426,18 +1012,18 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return i.inArray(n, t) >= 0 === r
         })
     }
-    function ir(n) {
-        var i = rr.split("|")
+    function oi(n) {
+        var i = kr.split("|")
           , t = n.createDocumentFragment();
         if (t.createElement)
             while (i.length)
                 t.createElement(i.pop());
         return t
     }
-    function oe(n, t) {
+    function pu(n, t) {
         return n.getElementsByTagName(t)[0] || n.appendChild(n.ownerDocument.createElement(t))
     }
-    function hr(n, t) {
+    function si(n, t) {
         if (t.nodeType === 1 && i.hasData(n)) {
             var u, f, o, s = i._data(n), r = i._data(t, s), e = s.events;
             if (e) {
@@ -1451,52 +1037,52 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             r.data && (r.data = i.extend({}, r.data))
         }
     }
-    function cr(n, t) {
+    function hi(n, t) {
         var r;
         t.nodeType === 1 && (t.clearAttributes && t.clearAttributes(),
         t.mergeAttributes && t.mergeAttributes(n),
         r = t.nodeName.toLowerCase(),
         r === "object" ? (t.parentNode && (t.outerHTML = n.outerHTML),
-        i.support.html5Clone && n.innerHTML && !i.trim(t.innerHTML) && (t.innerHTML = n.innerHTML)) : r === "input" && er.test(n.type) ? (t.defaultChecked = t.checked = n.checked,
+        i.support.html5Clone && n.innerHTML && !i.trim(t.innerHTML) && (t.innerHTML = n.innerHTML)) : r === "input" && nu.test(n.type) ? (t.defaultChecked = t.checked = n.checked,
         t.value !== n.value && (t.value = n.value)) : r === "option" ? t.selected = n.defaultSelected : r === "input" || r === "textarea" ? t.defaultValue = n.defaultValue : r === "script" && t.text !== n.text && (t.text = n.text),
         t.removeAttribute(i.expando))
     }
-    function rt(n) {
+    function nt(n) {
         return typeof n.getElementsByTagName != "undefined" ? n.getElementsByTagName("*") : typeof n.querySelectorAll != "undefined" ? n.querySelectorAll("*") : []
     }
-    function lr(n) {
-        er.test(n.type) && (n.defaultChecked = n.checked)
+    function ci(n) {
+        nu.test(n.type) && (n.defaultChecked = n.checked)
     }
-    function pr(n, t) {
+    function li(n, t) {
         if (t in n)
             return t;
-        for (var r = t.charAt(0).toUpperCase() + t.slice(1), u = t, i = yr.length; i--; )
-            if (t = yr[i] + r,
+        for (var r = t.charAt(0).toUpperCase() + t.slice(1), u = t, i = fu.length; i--; )
+            if (t = fu[i] + r,
             t in n)
                 return t;
         return u
     }
-    function ft(n, t) {
+    function tt(n, t) {
         return n = t || n,
         i.css(n, "display") === "none" || !i.contains(n.ownerDocument, n)
     }
-    function wr(n, t) {
+    function ai(n, t) {
         for (var r, o, e = [], f = 0, s = n.length; f < s; f++)
             (r = n[f],
             r.style) && (e[f] = i._data(r, "olddisplay"),
-            t ? (e[f] || r.style.display !== "none" || (r.style.display = ""),
-            r.style.display === "" && ft(r) && (e[f] = i._data(r, "olddisplay", gr(r.nodeName)))) : (o = u(r, "display"),
-            e[f] || o === "none" || i._data(r, "olddisplay", o)));
+            t ? (!e[f] && r.style.display === "none" && (r.style.display = ""),
+            r.style.display === "" && tt(r) && (e[f] = i._data(r, "olddisplay", wi(r.nodeName)))) : (o = u(r, "display"),
+            !e[f] && o !== "none" && i._data(r, "olddisplay", o)));
         for (f = 0; f < s; f++)
             (r = n[f],
             r.style) && (t && r.style.display !== "none" && r.style.display !== "" || (r.style.display = t ? e[f] || "" : "none"));
         return n
     }
-    function br(n, t, i) {
-        var r = le.exec(t);
+    function vi(n, t, i) {
+        var r = be.exec(t);
         return r ? Math.max(0, r[1] - (i || 0)) + (r[2] || "px") : t
     }
-    function kr(n, t, r, f) {
+    function yi(n, t, r, f) {
         for (var e = r === (f ? "border" : "content") ? 4 : t === "width" ? 1 : 0, o = 0; e < 4; e += 2)
             r === "margin" && (o += i.css(n, r + c[e], !0)),
             f ? (r === "content" && (o -= parseFloat(u(n, "padding" + c[e])) || 0),
@@ -1504,23 +1090,23 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             r !== "padding" && (o += parseFloat(u(n, "border" + c[e] + "Width")) || 0));
         return o
     }
-    function dr(n, t, r) {
+    function pi(n, t, r) {
         var f = t === "width" ? n.offsetWidth : n.offsetHeight
           , e = !0
           , o = i.support.boxSizing && i.css(n, "boxSizing") === "border-box";
         if (f <= 0 || f == null) {
             if (f = u(n, t),
             (f < 0 || f == null) && (f = n.style[t]),
-            ut.test(f))
+            ot.test(f))
                 return f;
             e = o && (i.support.boxSizingReliable || f === n.style[t]);
             f = parseFloat(f) || 0
         }
-        return f + kr(n, t, r || (o ? "border" : "content"), e) + "px"
+        return f + yi(n, t, r || (o ? "border" : "content"), e) + "px"
     }
-    function gr(n) {
-        if (ni[n])
-            return ni[n];
+    function wi(n) {
+        if (ti[n])
+            return ti[n];
         var f = i("<" + n + ">").appendTo(r.body)
           , t = f.css("display");
         return f.remove(),
@@ -1535,22 +1121,22 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         f = p.body.appendChild(p.createElement(n)),
         t = u(f, "display"),
         r.body.removeChild(y)),
-        ni[n] = t,
+        ti[n] = t,
         t
     }
-    function ti(n, t, r, u) {
+    function vt(n, t, r, u) {
         var f;
         if (i.isArray(t))
             i.each(t, function(t, i) {
-                r || we.test(n) ? u(n, i) : ti(n + "[" + (typeof i == "object" ? t : "") + "]", i, r, u)
+                r || to.test(n) ? u(n, i) : vt(n + "[" + (typeof i == "object" ? t : "") + "]", i, r, u)
             });
         else if (r || i.type(t) !== "object")
             u(n, t);
         else
             for (f in t)
-                ti(n + "[" + f + "]", t[f], r, u)
+                vt(n + "[" + f + "]", t[f], r, u)
     }
-    function eu(n) {
+    function bi(n) {
         return function(t, r) {
             typeof t != "string" && (r = t,
             t = "*");
@@ -1564,24 +1150,24 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     o[f ? "unshift" : "push"](r)
         }
     }
-    function et(n, i, r, u, f, e) {
+    function it(n, i, r, u, f, e) {
         f = f || i.dataTypes[0];
         e = e || {};
         e[f] = !0;
         for (var o, s = n[f], h = 0, l = s ? s.length : 0, c = n === ii; h < l && (c || !o); h++)
             o = s[h](i, r, u),
             typeof o == "string" && (!c || e[o] ? o = t : (i.dataTypes.unshift(o),
-            o = et(n, i, r, u, o, e)));
-        return !c && o || e["*"] || (o = et(n, i, r, u, "*", e)),
+            o = it(n, i, r, u, o, e)));
+        return (c || !o) && !e["*"] && (o = it(n, i, r, u, "*", e)),
         o
     }
-    function ou(n, r) {
+    function ki(n, r) {
         var u, f, e = i.ajaxSettings.flatOptions || {};
         for (u in r)
             r[u] !== t && ((e[u] ? n : f || (f = {}))[u] = r[u]);
         f && i.extend(!0, n, f)
     }
-    function uo(n, i, r) {
+    function wu(n, i, r) {
         var o, u, e, s, h = n.contents, f = n.dataTypes, c = n.responseFields;
         for (u in c)
             u in r && (i[c[u]] = r[u]);
@@ -1610,7 +1196,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return e !== f[0] && f.unshift(e),
             r[e]
     }
-    function fo(n, t) {
+    function bu(n, t) {
         var i, o, r, e, s = n.dataTypes.slice(), f = s[0], u = {}, h = 0;
         if (n.dataFilter && (t = n.dataFilter(t, n.dataType)),
         s[1])
@@ -1649,34 +1235,34 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             data: t
         }
     }
-    function cu() {
+    function di() {
         try {
             return new n.XMLHttpRequest
         } catch (t) {}
     }
-    function so() {
+    function ku() {
         try {
             return new n.ActiveXObject("Microsoft.XMLHTTP")
         } catch (t) {}
     }
-    function lu() {
+    function gi() {
         return setTimeout(function() {
             b = t
         }, 0),
         b = i.now()
     }
-    function ao(n, t) {
+    function du(n, t) {
         i.each(t, function(t, i) {
             for (var u = (d[t] || []).concat(d["*"]), r = 0, f = u.length; r < f; r++)
                 if (u[r].call(n, t, i))
                     return
         })
     }
-    function au(n, t, r) {
-        var e, o = 0, c = ct.length, f = i.Deferred().always(function() {
+    function nr(n, t, r) {
+        var e, o = 0, c = lt.length, f = i.Deferred().always(function() {
             delete h.elem
         }), h = function() {
-            for (var o = b || lu(), t = Math.max(0, u.startTime + u.duration - o), s = t / u.duration || 0, i = 1 - s, r = 0, e = u.tweens.length; r < e; r++)
+            for (var o = b || gi(), t = Math.max(0, u.startTime + u.duration - o), s = t / u.duration || 0, i = 1 - s, r = 0, e = u.tweens.length; r < e; r++)
                 u.tweens[r].run(i);
             return f.notifyWith(n, [u, i, t]),
             i < 1 && e ? t : (f.resolveWith(n, [u]),
@@ -1689,7 +1275,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }, r),
             originalProperties: t,
             originalOptions: r,
-            startTime: b || lu(),
+            startTime: b || gi(),
             duration: r.duration,
             tweens: [],
             createTween: function(t, r) {
@@ -1704,11 +1290,11 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 this
             }
         }), s = u.props;
-        for (vo(s, u.opts.specialEasing); o < c; o++)
-            if (e = ct[o].call(u, n, s, u.opts),
+        for (gu(s, u.opts.specialEasing); o < c; o++)
+            if (e = lt[o].call(u, n, s, u.opts),
             e)
                 return e;
-        return ao(u, s),
+        return du(u, s),
         i.isFunction(u.opts.start) && u.opts.start.call(n, u),
         i.fx.timer(i.extend(h, {
             anim: u,
@@ -1717,7 +1303,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         })),
         u.progress(u.opts.progress).done(u.opts.done, u.opts.complete).fail(u.opts.fail).always(u.opts.always)
     }
-    function vo(n, t) {
+    function gu(n, t) {
         var r, f, e, u, o;
         for (r in n)
             if (f = i.camelCase(r),
@@ -1737,8 +1323,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             } else
                 t[f] = e
     }
-    function yo(n, t, r) {
-        var o, u, a, v, s, y, l, f, b, h = this, e = n.style, p = {}, w = [], c = n.nodeType && ft(n);
+    function nf(n, t, r) {
+        var o, u, a, v, s, y, l, f, b, h = this, e = n.style, p = {}, w = [], c = n.nodeType && tt(n);
         r.queue || (f = i._queueHooks(n, "fx"),
         f.unqueued == null && (f.unqueued = 0,
         b = f.empty.fire,
@@ -1754,7 +1340,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             })
         }));
         n.nodeType === 1 && ("height"in t || "width"in t) && (r.overflow = [e.overflow, e.overflowX, e.overflowY],
-        i.css(n, "display") === "inline" && i.css(n, "float") === "none" && (i.support.inlineBlockNeedsLayout && gr(n.nodeName) !== "inline" ? e.zoom = 1 : e.display = "inline-block"));
+        i.css(n, "display") === "inline" && i.css(n, "float") === "none" && (!i.support.inlineBlockNeedsLayout || wi(n.nodeName) === "inline" ? e.display = "inline-block" : e.zoom = 1));
         r.overflow && (e.overflow = "hidden",
         i.support.shrinkWrapBlocks || h.done(function() {
             e.overflow = r.overflow[0];
@@ -1763,7 +1349,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         }));
         for (o in t)
             if (a = t[o],
-            ho.exec(a)) {
+            ao.exec(a)) {
                 if (delete t[o],
                 y = y || a === "toggle",
                 a === (c ? "hide" : "show"))
@@ -1795,7 +1381,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     function f(n, t, i, r, u) {
         return new f.prototype.init(n,t,i,r,u)
     }
-    function lt(n, t) {
+    function rt(n, t) {
         var r, i = {
             height: n
         }, u = 0;
@@ -1805,18 +1391,18 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         return t && (i.opacity = i.width = n),
         i
     }
-    function vu(n) {
+    function tr(n) {
         return i.isWindow(n) ? n : n.nodeType === 9 ? n.defaultView || n.parentWindow : !1
     }
-    var ui, g, r = n.document, yu = n.location, pu = n.navigator, wu = n.jQuery, bu = n.$, fi = Array.prototype.push, o = Array.prototype.slice, ei = Array.prototype.indexOf, ku = Object.prototype.toString, at = Object.prototype.hasOwnProperty, vt = String.prototype.trim, i = function(n, t) {
-        return new i.fn.init(n,t,ui)
-    }, nt = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source, du = /\S/, h = /\s+/, gu = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, nf = /^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/, oi = /^<(\w+)\s*\/?>(?:<\/\1>|)$/, tf = /^[\],:{}\s]*$/, rf = /(?:^|:|,)(?:\s*\[)+/g, uf = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g, ff = /"[^"\\\r\n]*"|true|false|null|-?(?:\d\d*\.|)\d+(?:[eE][\-+]?\d+|)/g, ef = /^-ms-/, of = /-([\da-z])/gi, sf = function(n, t) {
+    var ir, ut, r = n.document, tf = n.location, rf = n.navigator, uf = n.jQuery, ff = n.$, rr = Array.prototype.push, o = Array.prototype.slice, ur = Array.prototype.indexOf, ef = Object.prototype.toString, yt = Object.prototype.hasOwnProperty, pt = String.prototype.trim, i = function(n, t) {
+        return new i.fn.init(n,t,ir)
+    }, ft = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source, of = /\S/, h = /\s+/, sf = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, hf = /^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/, fr = /^<(\w+)\s*\/?>(?:<\/\1>|)$/, cf = /^[\],:{}\s]*$/, lf = /(?:^|:|,)(?:\s*\[)+/g, af = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g, vf = /"[^"\\\r\n]*"|true|false|null|-?(?:\d\d*\.|)\d+(?:[eE][\-+]?\d+|)/g, yf = /^-ms-/, pf = /-([\da-z])/gi, wf = function(n, t) {
         return (t + "").toUpperCase()
-    }, tt = function() {
-        r.addEventListener ? (r.removeEventListener("DOMContentLoaded", tt, !1),
-        i.ready()) : r.readyState === "complete" && (r.detachEvent("onreadystatechange", tt),
+    }, et = function() {
+        r.addEventListener ? (r.removeEventListener("DOMContentLoaded", et, !1),
+        i.ready()) : r.readyState === "complete" && (r.detachEvent("onreadystatechange", et),
         i.ready())
-    }, si = {}, yt, hi, ci, w, st, hu, ri;
+    }, er = {}, wt, or, sr, w, ht, vu, ri;
     i.fn = i.prototype = {
         constructor: i,
         init: function(n, u, f) {
@@ -1828,13 +1414,13 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 this.length = 1,
                 this;
             if (typeof n == "string") {
-                if (e = n.charAt(0) === "<" && n.charAt(n.length - 1) === ">" && n.length >= 3 ? [null, n, null] : nf.exec(n),
+                if (e = n.charAt(0) === "<" && n.charAt(n.length - 1) === ">" && n.length >= 3 ? [null, n, null] : hf.exec(n),
                 e && (e[1] || !u)) {
                     if (e[1])
                         return u = u instanceof i ? u[0] : u,
                         s = u && u.nodeType ? u.ownerDocument || u : r,
                         n = i.parseHTML(e[1], s, !0),
-                        oi.test(e[1]) && i.isPlainObject(u) && this.attr.call(n, u, !0),
+                        fr.test(e[1]) && i.isPlainObject(u) && this.attr.call(n, u, !0),
                         i.merge(this, n);
                     if (o = r.getElementById(e[2]),
                     o && o.parentNode) {
@@ -1900,7 +1486,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         end: function() {
             return this.prevObject || this.constructor(null)
         },
-        push: fi,
+        push: rr,
         sort: [].sort,
         splice: [].splice
     };
@@ -1910,7 +1496,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         for (typeof n == "boolean" && (c = n,
         n = arguments[1] || {},
         f = 2),
-        typeof n == "object" || i.isFunction(n) || (n = {}),
+        typeof n != "object" && !i.isFunction(n) && (n = {}),
         l === f && (n = this,
         --f); f < l; f++)
             if ((o = arguments[f]) != null)
@@ -1925,8 +1511,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     ;
     i.extend({
         noConflict: function(t) {
-            return n.$ === i && (n.$ = bu),
-            t && n.jQuery === i && (n.jQuery = wu),
+            return n.$ === i && (n.$ = ff),
+            t && n.jQuery === i && (n.jQuery = uf),
             i
         },
         isReady: !1,
@@ -1939,7 +1525,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 if (!r.body)
                     return setTimeout(i.ready, 1);
                 (i.isReady = !0,
-                n !== !0 && --i.readyWait > 0) || (g.resolveWith(r, [i]),
+                n !== !0 && --i.readyWait > 0) || (ut.resolveWith(r, [i]),
                 i.fn.trigger && i(r).trigger("ready").off("ready"))
             }
         },
@@ -1957,20 +1543,20 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return !isNaN(parseFloat(n)) && isFinite(n)
         },
         type: function(n) {
-            return n == null ? String(n) : si[ku.call(n)] || "object"
+            return n == null ? String(n) : er[ef.call(n)] || "object"
         },
         isPlainObject: function(n) {
             if (!n || i.type(n) !== "object" || n.nodeType || i.isWindow(n))
                 return !1;
             try {
-                if (n.constructor && !at.call(n, "constructor") && !at.call(n.constructor.prototype, "isPrototypeOf"))
+                if (n.constructor && !yt.call(n, "constructor") && !yt.call(n.constructor.prototype, "isPrototypeOf"))
                     return !1
             } catch (u) {
                 return !1
             }
             for (var r in n)
                 ;
-            return r === t || at.call(n, r)
+            return r === t || yt.call(n, r)
         },
         isEmptyObject: function(n) {
             for (var t in n)
@@ -1985,8 +1571,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return !n || typeof n != "string" ? null : (typeof t == "boolean" && (u = t,
             t = 0),
             t = t || r,
-            f = oi.exec(n)) ? [t.createElement(f[1])] : (f = i.buildFragment([n], t, u ? null : []),
-            i.merge([], (f.cacheable ? i.clone(f.fragment) : f.fragment).childNodes))
+            (f = fr.exec(n)) ? [t.createElement(f[1])] : (f = i.buildFragment([n], t, u ? null : []),
+            i.merge([], (f.cacheable ? i.clone(f.fragment) : f.fragment).childNodes)))
         },
         parseJSON: function(t) {
             if (!t || typeof t != "string")
@@ -1994,7 +1580,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             if (t = i.trim(t),
             n.JSON && n.JSON.parse)
                 return n.JSON.parse(t);
-            if (tf.test(t.replace(uf, "@").replace(ff, "]").replace(rf, "")))
+            if (cf.test(t.replace(af, "@").replace(vf, "]").replace(lf, "")))
                 return new Function("return " + t)();
             i.error("Invalid JSON: " + t)
         },
@@ -2010,18 +1596,18 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             } catch (e) {
                 u = t
             }
-            return u && u.documentElement && !u.getElementsByTagName("parsererror").length || i.error("Invalid XML: " + r),
+            return (!u || !u.documentElement || u.getElementsByTagName("parsererror").length) && i.error("Invalid XML: " + r),
             u
         },
         noop: function() {},
         globalEval: function(t) {
-            t && du.test(t) && (n.execScript || function(t) {
+            t && of.test(t) && (n.execScript || function(t) {
                 n.eval.call(n, t)
             }
             )(t)
         },
         camelCase: function(n) {
-            return n.replace(ef, "ms-").replace(of, sf)
+            return n.replace(yf, "ms-").replace(pf, wf)
         },
         nodeName: function(n, t) {
             return n.nodeName && n.nodeName.toLowerCase() === t.toLowerCase()
@@ -2047,24 +1633,24 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                         break;
             return n
         },
-        trim: vt && !vt.call("﻿ ") ? function(n) {
-            return n == null ? "" : vt.call(n)
+        trim: pt && !pt.call("﻿ ") ? function(n) {
+            return n == null ? "" : pt.call(n)
         }
         : function(n) {
-            return n == null ? "" : (n + "").replace(gu, "")
+            return n == null ? "" : (n + "").replace(sf, "")
         }
         ,
         makeArray: function(n, t) {
             var r, u = t || [];
             return n != null && (r = i.type(n),
-            n.length == null || r === "string" || r === "function" || r === "regexp" || i.isWindow(n) ? fi.call(u, n) : i.merge(u, n)),
+            n.length == null || r === "string" || r === "function" || r === "regexp" || i.isWindow(n) ? rr.call(u, n) : i.merge(u, n)),
             u
         },
         inArray: function(n, t, i) {
             var r;
             if (t) {
-                if (ei)
-                    return ei.call(t, n, i);
+                if (ur)
+                    return ur.call(t, n, i);
                 for (r = t.length,
                 i = i ? i < 0 ? Math.max(0, r + i) : i : 0; i < r; i++)
                     if (i in t && t[i] === n)
@@ -2107,16 +1693,16 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         guid: 1,
         proxy: function(n, r) {
             var f, e, u;
-            return (typeof r == "string" && (f = n[r],
+            return typeof r == "string" && (f = n[r],
             r = n,
             n = f),
-            !i.isFunction(n)) ? t : (e = o.call(arguments, 2),
+            i.isFunction(n) ? (e = o.call(arguments, 2),
             u = function() {
                 return n.apply(r, e.concat(o.call(arguments)))
             }
             ,
             u.guid = n.guid = n.guid || i.guid++,
-            u)
+            u) : t
         },
         access: function(n, r, u, f, e, o, s) {
             var c, l = u == null, h = 0, a = n.length;
@@ -2144,15 +1730,15 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         }
     });
     i.ready.promise = function(t) {
-        if (!g)
-            if (g = i.Deferred(),
+        if (!ut)
+            if (ut = i.Deferred(),
             r.readyState === "complete")
                 setTimeout(i.ready, 1);
             else if (r.addEventListener)
-                r.addEventListener("DOMContentLoaded", tt, !1),
+                r.addEventListener("DOMContentLoaded", et, !1),
                 n.addEventListener("load", i.ready, !1);
             else {
-                r.attachEvent("onreadystatechange", tt);
+                r.attachEvent("onreadystatechange", et);
                 n.attachEvent("onload", i.ready);
                 var u = !1;
                 try {
@@ -2169,16 +1755,16 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     }
                 }()
             }
-        return g.promise(t)
+        return ut.promise(t)
     }
     ;
     i.each("Boolean Number String Function Array Date RegExp Object".split(" "), function(n, t) {
-        si["[object " + t + "]"] = t.toLowerCase()
+        er["[object " + t + "]"] = t.toLowerCase()
     });
-    ui = i(r);
-    yt = {};
+    ir = i(r);
+    wt = {};
     i.Callbacks = function(n) {
-        n = typeof n == "string" ? yt[n] || hf(n) : i.extend({}, n);
+        n = typeof n == "string" ? wt[n] || yu(n) : i.extend({}, n);
         var f, c, o, l, s, e, r = [], u = !n.once && [], a = function(t) {
             for (f = n.memory && t,
             c = !0,
@@ -2199,7 +1785,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     (function u(t) {
                         i.each(t, function(t, f) {
                             var e = i.type(f);
-                            e === "function" ? n.unique && h.has(f) || r.push(f) : f && f.length && e !== "string" && u(f)
+                            e === "function" ? (!n.unique || !h.has(f)) && r.push(f) : f && f.length && e !== "string" && u(f)
                         })
                     }
                     )(arguments);
@@ -2440,8 +2026,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         h = e = c = l = f = o = t = null,
         u
     }();
-    hi = /(?:\{[\s\S]*\}|\[[\s\S]*\])$/;
-    ci = /([A-Z])/g;
+    or = /(?:\{[\s\S]*\}|\[[\s\S]*\])$/;
+    sr = /([A-Z])/g;
     i.extend({
         cache: {},
         deletedIds: [],
@@ -2454,7 +2040,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         },
         hasData: function(n) {
             return n = n.nodeType ? i.cache[n[i.expando]] : n[i.expando],
-            !!n && !pt(n)
+            !!n && !at(n)
         },
         data: function(n, r, u, f) {
             if (i.acceptData(n)) {
@@ -2479,16 +2065,16 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 if (u[f]) {
                     if (t && (e = r ? u[f] : u[f].data,
                     e)) {
-                        for (i.isArray(t) || (t in e ? t = [t] : (t = i.camelCase(t),
-                        t = t in e ? [t] : t.split(" "))),
+                        for (i.isArray(t) || ((t in e) ? t = [t] : (t = i.camelCase(t),
+                        t = (t in e) ? [t] : t.split(" "))),
                         o = 0,
                         h = t.length; o < h; o++)
                             delete e[t[o]];
-                        if (!(r ? pt : i.isEmptyObject)(e))
+                        if (!(r ? at : i.isEmptyObject)(e))
                             return
                     }
                     (r || (delete u[f].data,
-                    pt(u[f]))) && (s ? i.cleanData([n], !0) : i.support.deleteExpando || u != u.window ? delete u[f] : u[f] = null)
+                    at(u[f]))) && (s ? i.cleanData([n], !0) : i.support.deleteExpando || u != u.window ? delete u[f] : u[f] = null)
                 }
             }
         },
@@ -2510,7 +2096,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     l = h.length; c < l; c++)
                         o = h[c].name,
                         o.indexOf("data-") || (o = i.camelCase(o.substring(5)),
-                        li(e, o, f[o]));
+                        ui(e, o, f[o]));
                     i._data(e, "parsedAttrs", !0)
                 }
                 return f
@@ -2524,7 +2110,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 if (r === t)
                     return f = this.triggerHandler("getData" + s, [u[0]]),
                     f === t && e && (f = i.data(e, n),
-                    f = li(e, n, f)),
+                    f = ui(e, n, f)),
                     f === t && u[1] ? this.data(u[0]) : f;
                 u[1] = r;
                 this.each(function() {
@@ -2579,10 +2165,10 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     i.fn.extend({
         queue: function(n, r) {
             var u = 2;
-            return (typeof n != "string" && (r = n,
+            return typeof n != "string" && (r = n,
             n = "fx",
             u--),
-            arguments.length < u) ? i.queue(this[0], n) : r === t ? this : this.each(function() {
+            arguments.length < u ? i.queue(this[0], n) : r === t ? this : this.each(function() {
                 var t = i.queue(this, n, r);
                 i._queueHooks(this, n);
                 n === "fx" && t[0] !== "inprogress" && i.dequeue(this, n)
@@ -2620,7 +2206,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             o.promise(r)
         }
     });
-    var s, ai, vi, yi = /[\t\r\n]/g, cf = /\r/g, lf = /^(?:button|input)$/i, af = /^(?:button|input|object|select|textarea)$/i, vf = /^a(?:rea|)$/i, pi = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i, wi = i.support.getSetAttribute;
+    var s, hr, cr, lr = /[\t\r\n]/g, bf = /\r/g, kf = /^(?:button|input)$/i, df = /^(?:button|input|object|select|textarea)$/i, gf = /^a(?:rea|)$/i, ar = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i, vr = i.support.getSetAttribute;
     i.fn.extend({
         attr: function(n, t) {
             return i.access(this, i.attr, n, t, arguments.length > 1)
@@ -2676,7 +2262,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 c = this.length; o < c; o++)
                     if (u = this[o],
                     u.nodeType === 1 && u.className) {
-                        for (r = (" " + u.className + " ").replace(yi, " "),
+                        for (r = (" " + u.className + " ").replace(lr, " "),
                         f = 0,
                         s = e.length; f < s; f++)
                             while (r.indexOf(" " + e[f] + " ") >= 0)
@@ -2702,7 +2288,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         },
         hasClass: function(n) {
             for (var i = " " + n + " ", t = 0, r = this.length; t < r; t++)
-                if (this[t].nodeType === 1 && (" " + this[t].className + " ").replace(yi, " ").indexOf(i) >= 0)
+                if (this[t].nodeType === 1 && (" " + this[t].className + " ").replace(lr, " ").indexOf(i) >= 0)
                     return !0;
             return !1
         },
@@ -2718,8 +2304,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 r = i.valHooks[this.type] || i.valHooks[this.nodeName.toLowerCase()],
                 r && "set"in r && r.set(this, f, "value") !== t || (this.value = f))
             })) : f ? (r = i.valHooks[f.type] || i.valHooks[f.nodeName.toLowerCase()],
-            r && "get"in r && (u = r.get(f, "value")) !== t) ? u : (u = f.value,
-            typeof u == "string" ? u.replace(cf, "") : u == null ? "" : u) : void 0
+            r && "get"in r && (u = r.get(f, "value")) !== t ? u : (u = f.value,
+            typeof u == "string" ? u.replace(bf, "") : u == null ? "" : u)) : void 0
         }
     });
     i.extend({
@@ -2762,7 +2348,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     return i.prop(n, r, u);
                 if (h = c !== 1 || !i.isXMLDoc(n),
                 h && (r = r.toLowerCase(),
-                o = i.attrHooks[r] || (pi.test(r) ? ai : s)),
+                o = i.attrHooks[r] || (ar.test(r) ? hr : s)),
                 u !== t) {
                     if (u === null) {
                         i.removeAttr(n, r);
@@ -2781,15 +2367,15 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 for (f = t.split(h); o < f.length; o++)
                     r = f[o],
                     r && (u = i.propFix[r] || r,
-                    e = pi.test(r),
+                    e = ar.test(r),
                     e || i.attr(n, r, ""),
-                    n.removeAttribute(wi ? r : u),
+                    n.removeAttribute(vr ? r : u),
                     e && u in n && (n[u] = !1))
         },
         attrHooks: {
             type: {
                 set: function(n, t) {
-                    if (lf.test(n.nodeName) && n.parentNode)
+                    if (kf.test(n.nodeName) && n.parentNode)
                         i.error("type property can't be changed");
                     else if (!i.support.radioValue && t === "radio" && i.nodeName(n, "input")) {
                         var r = n.value;
@@ -2836,12 +2422,12 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             tabIndex: {
                 get: function(n) {
                     var i = n.getAttributeNode("tabindex");
-                    return i && i.specified ? parseInt(i.value, 10) : af.test(n.nodeName) || vf.test(n.nodeName) && n.href ? 0 : t
+                    return i && i.specified ? parseInt(i.value, 10) : df.test(n.nodeName) || gf.test(n.nodeName) && n.href ? 0 : t
                 }
             }
         }
     });
-    ai = {
+    hr = {
         get: function(n, r) {
             var u, f = i.prop(n, r);
             return f === !0 || typeof f != "boolean" && (u = n.getAttributeNode(r)) && u.nodeValue !== !1 ? r.toLowerCase() : t
@@ -2854,7 +2440,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             r
         }
     };
-    wi || (vi = {
+    vr || (cr = {
         name: !0,
         id: !0,
         coords: !0
@@ -2863,7 +2449,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         get: function(n, i) {
             var r;
             return r = n.getAttributeNode(i),
-            r && (vi[i] ? r.value !== "" : r.specified) ? r.value : t
+            r && (cr[i] ? r.value !== "" : r.specified) ? r.value : t
         },
         set: function(n, t, i) {
             var u = n.getAttributeNode(i);
@@ -2928,14 +2514,14 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }
         })
     });
-    var wt = /^(?:textarea|input|select)$/i
-      , bi = /^([^\.]*|)(?:\.(.+)|)$/
-      , yf = /(?:^|\s)hover(\.\S+|)\b/
-      , pf = /^key/
-      , wf = /^(?:mouse|contextmenu)|click/
-      , ki = /^(?:focusinfocus|focusoutblur)$/
-      , di = function(n) {
-        return i.event.special.hover ? n : n.replace(yf, "mouseenter$1 mouseleave$1")
+    var bt = /^(?:textarea|input|select)$/i
+      , yr = /^([^\.]*|)(?:\.(.+)|)$/
+      , ne = /(?:^|\s)hover(\.\S+|)\b/
+      , te = /^key/
+      , ie = /^(?:mouse|contextmenu)|click/
+      , pr = /^(?:focusinfocus|focusoutblur)$/
+      , wr = function(n) {
+        return i.event.special.hover ? n : n.replace(ne, "mouseenter$1 mouseleave$1")
     };
     i.event = {
         add: function(n, r, u, f, e) {
@@ -2949,13 +2535,13 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 v || (a.events = v = {}),
                 s = a.handle,
                 s || (a.handle = s = function(n) {
-                    return typeof i != "undefined" && (!n || i.event.triggered !== n.type) ? i.event.dispatch.apply(s.elem, arguments) : t
+                    return typeof i == "undefined" || !!n && i.event.triggered === n.type ? t : i.event.dispatch.apply(s.elem, arguments)
                 }
                 ,
                 s.elem = n),
-                r = i.trim(di(r)).split(" "),
+                r = i.trim(wr(r)).split(" "),
                 y = 0; y < r.length; y++)
-                    p = bi.exec(r[y]) || [],
+                    p = yr.exec(r[y]) || [],
                     o = p[1],
                     b = (p[2] || "").split(".").sort(),
                     h = i.event.special[o] || {},
@@ -2986,9 +2572,9 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         remove: function(n, t, r, u, f) {
             var l, p, e, w, h, b, a, v, c, o, s, y = i.hasData(n) && i._data(n);
             if (y && (v = y.events)) {
-                for (t = i.trim(di(t || "")).split(" "),
+                for (t = i.trim(wr(t || "")).split(" "),
                 l = 0; l < t.length; l++) {
-                    if (p = bi.exec(t[l]) || [],
+                    if (p = yr.exec(t[l]) || [],
                     e = w = p[1],
                     h = p[2],
                     !e) {
@@ -3006,7 +2592,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                         (f || w === s.origType) && (!r || r.guid === s.guid) && (!h || h.test(s.namespace)) && (!u || u === s.selector || u === "**" && s.selector) && (o.splice(a--, 1),
                         s.selector && o.delegateCount--,
                         c.remove && c.remove.call(n, s));
-                    o.length === 0 && b !== o.length && (c.teardown && c.teardown.call(n, h, y.handle) !== !1 || i.removeEvent(n, e, y.handle),
+                    o.length === 0 && b !== o.length && ((!c.teardown || c.teardown.call(n, h, y.handle) === !1) && i.removeEvent(n, e, y.handle),
                     delete v[e])
                 }
                 i.isEmptyObject(v) && (delete y.handle,
@@ -3021,58 +2607,61 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         trigger: function(u, f, e, o) {
             if (!e || e.nodeType !== 3 && e.nodeType !== 8) {
                 var w, d, c, h, l, v, a, y, p, k, s = u.type || u, b = [];
-                if (!ki.test(s + i.event.triggered) && (s.indexOf("!") >= 0 && (s = s.slice(0, -1),
+                if (pr.test(s + i.event.triggered))
+                    return;
+                if (s.indexOf("!") >= 0 && (s = s.slice(0, -1),
                 d = !0),
                 s.indexOf(".") >= 0 && (b = s.split("."),
                 s = b.shift(),
                 b.sort()),
-                e && !i.event.customEvent[s] || i.event.global[s])) {
-                    if (u = typeof u == "object" ? u[i.expando] ? u : new i.Event(s,u) : new i.Event(s),
-                    u.type = s,
-                    u.isTrigger = !0,
-                    u.exclusive = d,
-                    u.namespace = b.join("."),
-                    u.namespace_re = u.namespace ? new RegExp("(^|\\.)" + b.join("\\.(?:.*\\.|)") + "(\\.|$)") : null,
-                    v = s.indexOf(":") < 0 ? "on" + s : "",
-                    !e) {
-                        w = i.cache;
-                        for (c in w)
-                            w[c].events && w[c].events[s] && i.event.trigger(u, f, w[c].handle.elem, !0);
-                        return
-                    }
-                    if (u.result = t,
-                    u.target || (u.target = e),
-                    f = f != null ? i.makeArray(f) : [],
-                    f.unshift(u),
-                    a = i.event.special[s] || {},
-                    !a.trigger || a.trigger.apply(e, f) !== !1) {
-                        if (p = [[e, a.bindType || s]],
-                        !o && !a.noBubble && !i.isWindow(e)) {
-                            for (k = a.delegateType || s,
-                            h = ki.test(k + s) ? e : e.parentNode,
-                            l = e; h; h = h.parentNode)
-                                p.push([h, k]),
-                                l = h;
-                            l === (e.ownerDocument || r) && p.push([l.defaultView || l.parentWindow || n, k])
-                        }
-                        for (c = 0; c < p.length && !u.isPropagationStopped(); c++)
-                            h = p[c][0],
-                            u.type = p[c][1],
-                            y = (i._data(h, "events") || {})[u.type] && i._data(h, "handle"),
-                            y && y.apply(h, f),
-                            y = v && h[v],
-                            y && i.acceptData(h) && y.apply && y.apply(h, f) === !1 && u.preventDefault();
-                        return u.type = s,
-                        o || u.isDefaultPrevented() || a._default && a._default.apply(e.ownerDocument, f) !== !1 || s === "click" && i.nodeName(e, "a") || !i.acceptData(e) || v && e[s] && (s !== "focus" && s !== "blur" || u.target.offsetWidth !== 0) && !i.isWindow(e) && (l = e[v],
-                        l && (e[v] = null),
-                        i.event.triggered = s,
-                        e[s](),
-                        i.event.triggered = t,
-                        l && (e[v] = l)),
-                        u.result
-                    }
+                (!e || i.event.customEvent[s]) && !i.event.global[s])
+                    return;
+                if (u = typeof u == "object" ? u[i.expando] ? u : new i.Event(s,u) : new i.Event(s),
+                u.type = s,
+                u.isTrigger = !0,
+                u.exclusive = d,
+                u.namespace = b.join("."),
+                u.namespace_re = u.namespace ? new RegExp("(^|\\.)" + b.join("\\.(?:.*\\.|)") + "(\\.|$)") : null,
+                v = s.indexOf(":") < 0 ? "on" + s : "",
+                !e) {
+                    w = i.cache;
+                    for (c in w)
+                        w[c].events && w[c].events[s] && i.event.trigger(u, f, w[c].handle.elem, !0);
+                    return
                 }
+                if (u.result = t,
+                u.target || (u.target = e),
+                f = f != null ? i.makeArray(f) : [],
+                f.unshift(u),
+                a = i.event.special[s] || {},
+                a.trigger && a.trigger.apply(e, f) === !1)
+                    return;
+                if (p = [[e, a.bindType || s]],
+                !o && !a.noBubble && !i.isWindow(e)) {
+                    for (k = a.delegateType || s,
+                    h = pr.test(k + s) ? e : e.parentNode,
+                    l = e; h; h = h.parentNode)
+                        p.push([h, k]),
+                        l = h;
+                    l === (e.ownerDocument || r) && p.push([l.defaultView || l.parentWindow || n, k])
+                }
+                for (c = 0; c < p.length && !u.isPropagationStopped(); c++)
+                    h = p[c][0],
+                    u.type = p[c][1],
+                    y = (i._data(h, "events") || {})[u.type] && i._data(h, "handle"),
+                    y && y.apply(h, f),
+                    y = v && h[v],
+                    y && i.acceptData(h) && y.apply && y.apply(h, f) === !1 && u.preventDefault();
+                return u.type = s,
+                !o && !u.isDefaultPrevented() && (!a._default || a._default.apply(e.ownerDocument, f) === !1) && (s !== "click" || !i.nodeName(e, "a")) && i.acceptData(e) && v && e[s] && (s !== "focus" && s !== "blur" || u.target.offsetWidth !== 0) && !i.isWindow(e) && (l = e[v],
+                l && (e[v] = null),
+                i.event.triggered = s,
+                e[s](),
+                i.event.triggered = t,
+                l && (e[v] = l)),
+                u.result
             }
+            return
         },
         dispatch: function(r) {
             r = i.event.fix(r || n.event);
@@ -3080,7 +2669,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             if (k[0] = r,
             r.delegateTarget = this,
             !w.preDispatch || w.preDispatch.call(this, r) !== !1) {
-                if (p && !(r.button && r.type === "click"))
+                if (p && (!r.button || r.type !== "click"))
                     for (e = r.target; e != this; e = e.parentNode || this)
                         if (e.disabled !== !0 || r.type !== "click") {
                             for (a = {},
@@ -3133,7 +2722,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 n.pageX = i.clientX + (u && u.scrollLeft || f && f.scrollLeft || 0) - (u && u.clientLeft || f && f.clientLeft || 0),
                 n.pageY = i.clientY + (u && u.scrollTop || f && f.scrollTop || 0) - (u && u.clientTop || f && f.clientTop || 0)),
                 !n.relatedTarget && s && (n.relatedTarget = s === n.target ? i.toElement : s),
-                n.which || e === t || (n.which = e & 1 ? 1 : e & 2 ? 3 : e & 4 ? 2 : 0),
+                !n.which && e !== t && (n.which = e & 1 ? 1 : e & 2 ? 3 : e & 4 ? 2 : 0),
                 n
             }
         },
@@ -3194,7 +2783,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return new i.Event(n,t);
         n && n.type ? (this.originalEvent = n,
         this.type = n.type,
-        this.isDefaultPrevented = n.defaultPrevented || n.returnValue === !1 || n.getPreventDefault && n.getPreventDefault() ? it : v) : this.type = n;
+        this.isDefaultPrevented = n.defaultPrevented || n.returnValue === !1 || n.getPreventDefault && n.getPreventDefault() ? g : v) : this.type = n;
         t && i.extend(this, t);
         this.timeStamp = n && n.timeStamp || i.now();
         this[i.expando] = !0
@@ -3202,18 +2791,18 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     ;
     i.Event.prototype = {
         preventDefault: function() {
-            this.isDefaultPrevented = it;
+            this.isDefaultPrevented = g;
             var n = this.originalEvent;
             n && (n.preventDefault ? n.preventDefault() : n.returnValue = !1)
         },
         stopPropagation: function() {
-            this.isPropagationStopped = it;
+            this.isPropagationStopped = g;
             var n = this.originalEvent;
             n && (n.stopPropagation && n.stopPropagation(),
             n.cancelBubble = !0)
         },
         stopImmediatePropagation: function() {
-            this.isImmediatePropagationStopped = it;
+            this.isImmediatePropagationStopped = g;
             this.stopPropagation()
         },
         isDefaultPrevented: v,
@@ -3261,7 +2850,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     });
     i.support.changeBubbles || (i.event.special.change = {
         setup: function() {
-            if (wt.test(this.nodeName))
+            if (bt.test(this.nodeName))
                 return (this.type === "checkbox" || this.type === "radio") && (i.event.add(this, "propertychange._change", function(n) {
                     n.originalEvent.propertyName === "checked" && (this._just_changed = !0)
                 }),
@@ -3272,7 +2861,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 !1;
             i.event.add(this, "beforeactivate._change", function(n) {
                 var t = n.target;
-                wt.test(t.nodeName) && !i._data(t, "_change_attached") && (i.event.add(t, "change._change", function(n) {
+                bt.test(t.nodeName) && !i._data(t, "_change_attached") && (i.event.add(t, "change._change", function(n) {
                     !this.parentNode || n.isSimulated || n.isTrigger || i.event.simulate("change", this.parentNode, n, !0)
                 }),
                 i._data(t, "_change_attached", !0))
@@ -3285,7 +2874,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         },
         teardown: function() {
             return i.event.remove(this, "._change"),
-            !wt.test(this.nodeName)
+            !bt.test(this.nodeName)
         }
     });
     i.support.focusinBubbles || i.each({
@@ -3363,8 +2952,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return this.off(n, null, t)
         },
         live: function(n, t, r) {
-            i(this.context).on(n, this.selector, t, r);
-            return this
+            return i(this.context).on(n, this.selector, t, r),
+            this
         },
         die: function(n, t) {
             return i(this.context).off(n, this.selector || "**", t),
@@ -3410,8 +2999,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             arguments.length > 0 ? this.on(t, null, n, i) : this.trigger(t)
         }
         ;
-        pf.test(t) && (i.event.fixHooks[t] = i.event.keyHooks);
-        wf.test(t) && (i.event.fixHooks[t] = i.event.mouseHooks)
+        te.test(t) && (i.event.fixHooks[t] = i.event.keyHooks);
+        ie.test(t) && (i.event.fixHooks[t] = i.event.mouseHooks)
     }),
     function(n, t) {
         function r(n, t, i, r) {
@@ -3422,43 +3011,42 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 return i;
             if (s !== 1 && s !== 9)
                 return [];
-            if (o = g(t),
-            !o && !r && (e = wi.exec(n)))
+            if (o = it(t),
+            !o && !r && (e = ki.exec(n)))
                 if (f = e[1]) {
-                    if (s === 9)
+                    if (s === 9) {
                         if (u = t.getElementById(f),
-                        u && u.parentNode) {
-                            if (u.id === f)
-                                return i.push(u),
-                                i
-                        } else
+                        !u || !u.parentNode)
                             return i;
-                    else if (t.ownerDocument && (u = t.ownerDocument.getElementById(f)) && gt(t, u) && u.id === f)
+                        if (u.id === f)
+                            return i.push(u),
+                            i
+                    } else if (t.ownerDocument && (u = t.ownerDocument.getElementById(f)) && ti(t, u) && u.id === f)
                         return i.push(u),
                         i
                 } else {
                     if (e[2])
                         return p.apply(i, w.call(t.getElementsByTagName(n), 0)),
                         i;
-                    if ((f = e[3]) && oi && t.getElementsByClassName)
+                    if ((f = e[3]) && hi && t.getElementsByClassName)
                         return p.apply(i, w.call(t.getElementsByClassName(f), 0)),
                         i
                 }
-            return dt(n.replace(it, "$1"), t, i, r, o)
+            return lt(n.replace(ft, "$1"), t, i, r, o)
         }
-        function k(n) {
+        function b(n) {
             return function(t) {
                 var i = t.nodeName.toLowerCase();
                 return i === "input" && t.type === n
             }
         }
-        function si(n) {
+        function gt(n) {
             return function(t) {
                 var i = t.nodeName.toLowerCase();
                 return (i === "input" || i === "button") && t.type === n
             }
         }
-        function y(n) {
+        function a(n) {
             return s(function(t) {
                 return t = +t,
                 s(function(i, r) {
@@ -3467,7 +3055,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 })
             })
         }
-        function ut(n, t, i) {
+        function d(n, t, i) {
             if (n === t)
                 return i;
             for (var r = n.nextSibling; r; ) {
@@ -3477,33 +3065,33 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }
             return 1
         }
-        function ft(n, t) {
-            var o, f, h, s, i, c, l, a = ri[e][n + " "];
+        function g(n, t) {
+            var o, f, h, s, i, c, l, a = fi[e][n + " "];
             if (a)
                 return t ? 0 : a.slice(0);
             for (i = n,
             c = [],
             l = u.preFilter; i; ) {
-                (!o || (f = vi.exec(i))) && (f && (i = i.slice(f[0].length) || i),
+                (!o || (f = pi.exec(i))) && (f && (i = i.slice(f[0].length) || i),
                 c.push(h = []));
                 o = !1;
-                (f = yi.exec(i)) && (h.push(o = new ti(f.shift())),
+                (f = wi.exec(i)) && (h.push(o = new ri(f.shift())),
                 i = i.slice(o.length),
-                o.type = f[0].replace(it, " "));
+                o.type = f[0].replace(ft, " "));
                 for (s in u.filter)
-                    (f = rt[s].exec(i)) && (!l[s] || (f = l[s](f))) && (h.push(o = new ti(f.shift())),
+                    (f = et[s].exec(i)) && (!l[s] || (f = l[s](f))) && (h.push(o = new ri(f.shift())),
                     i = i.slice(o.length),
                     o.type = s,
                     o.matches = f);
                 if (!o)
                     break
             }
-            return t ? i.length : i ? r.error(n) : ri(n, c).slice(0)
+            return t ? i.length : i ? r.error(n) : fi(n, c).slice(0)
         }
-        function pt(n, t, i) {
+        function ot(n, t, i) {
             var r = t.dir
               , u = i && t.dir === "parentNode"
-              , f = ci++;
+              , f = ai++;
             return t.first ? function(t, i, f) {
                 while (t = t[r])
                     if (u || t.nodeType === 1)
@@ -3515,7 +3103,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                         if ((u || t.nodeType === 1) && n(t, i, o))
                             return t
                 } else
-                    for (var s, h = tt + " " + f + " ", c = h + ot; t = t[r]; )
+                    for (var s, h = ut + " " + f + " ", c = h + at; t = t[r]; )
                         if (u || t.nodeType === 1) {
                             if ((s = t[e]) === c)
                                 return t.sizset;
@@ -3532,7 +3120,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                         }
             }
         }
-        function wt(n) {
+        function st(n) {
             return n.length > 1 ? function(t, i, r) {
                 for (var u = n.length; u--; )
                     if (!n[u](t, i, r))
@@ -3541,20 +3129,20 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }
             : n[0]
         }
-        function et(n, t, i, r, u) {
+        function nt(n, t, i, r, u) {
             for (var e, o = [], f = 0, s = n.length, h = t != null; f < s; f++)
                 (e = n[f]) && (!i || i(e, r, u)) && (o.push(e),
                 h && t.push(f));
             return o
         }
-        function bt(n, t, i, r, u, f) {
-            return r && !r[e] && (r = bt(r)),
-            u && !u[e] && (u = bt(u, f)),
+        function ht(n, t, i, r, u, f) {
+            return r && !r[e] && (r = ht(r)),
+            u && !u[e] && (u = ht(u, f)),
             s(function(f, e, o, s) {
-                var l, c, a, w = [], y = [], b = e.length, k = f || rr(t || "*", o.nodeType ? [o] : o, []), v = n && (f || !t) ? et(k, w, n, o, s) : k, h = i ? u || (f ? n : b || r) ? [] : e : v;
+                var l, c, a, w = [], y = [], b = e.length, k = f || li(t || "*", o.nodeType ? [o] : o, []), v = n && (f || !t) ? nt(k, w, n, o, s) : k, h = i ? u || (f ? n : b || r) ? [] : e : v;
                 if (i && i(v, h, o, s),
                 r)
-                    for (l = et(h, y),
+                    for (l = nt(h, y),
                     r(l, [], o, s),
                     c = l.length; c--; )
                         (a = l[c]) && (h[y[c]] = !(v[y[c]] = a));
@@ -3567,51 +3155,51 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                             u(null, h = [], l, s)
                         }
                         for (c = h.length; c--; )
-                            (a = h[c]) && (l = u ? lt.call(f, a) : w[c]) > -1 && (f[l] = !(e[l] = a))
+                            (a = h[c]) && (l = u ? wt.call(f, a) : w[c]) > -1 && (f[l] = !(e[l] = a))
                     }
                 } else
-                    h = et(h === e ? h.splice(b, h.length) : h),
+                    h = nt(h === e ? h.splice(b, h.length) : h),
                     u ? u(null, e, h, s) : p.apply(e, h)
             })
         }
-        function kt(n) {
-            for (var s, r, i, o = n.length, h = u.relative[n[0].type], c = h || u.relative[" "], t = h ? 1 : 0, l = pt(function(n) {
+        function ct(n) {
+            for (var s, r, i, o = n.length, h = u.relative[n[0].type], c = h || u.relative[" "], t = h ? 1 : 0, l = ot(function(n) {
                 return n === s
-            }, c, !0), a = pt(function(n) {
-                return lt.call(s, n) > -1
+            }, c, !0), a = ot(function(n) {
+                return wt.call(s, n) > -1
             }, c, !0), f = [function(n, t, i) {
-                return !h && (i || t !== nt) || ((s = t).nodeType ? l(n, t, i) : a(n, t, i))
+                return !h && (i || t !== rt) || ((s = t).nodeType ? l(n, t, i) : a(n, t, i))
             }
             ]; t < o; t++)
                 if (r = u.relative[n[t].type])
-                    f = [pt(wt(f), r)];
+                    f = [ot(st(f), r)];
                 else {
                     if (r = u.filter[n[t].type].apply(null, n[t].matches),
                     r[e]) {
                         for (i = ++t; i < o; i++)
                             if (u.relative[n[i].type])
                                 break;
-                        return bt(t > 1 && wt(f), t > 1 && n.slice(0, t - 1).join("").replace(it, "$1"), r, t < i && kt(n.slice(t, i)), i < o && kt(n = n.slice(i)), i < o && n.join(""))
+                        return ht(t > 1 && st(f), t > 1 && n.slice(0, t - 1).join("").replace(ft, "$1"), r, t < i && ct(n.slice(t, i)), i < o && ct(n = n.slice(i)), i < o && n.join(""))
                     }
                     f.push(r)
                 }
-            return wt(f)
+            return st(f)
         }
-        function ir(n, t) {
+        function ci(n, t) {
             var f = t.length > 0
               , e = n.length > 0
               , i = function(o, s, c, l, a) {
-                var y, b, k, w = [], d = 0, v = "0", g = o && [], it = a != null, rt = nt, ft = o || e && u.find.TAG("*", a && s.parentNode || s), ut = tt += rt == null ? 1 : Math.E;
-                for (it && (nt = s !== h && s,
-                ot = i.el); (y = ft[v]) != null; v++) {
+                var y, b, k, w = [], d = 0, v = "0", g = o && [], tt = a != null, it = rt, et = o || e && u.find.TAG("*", a && s.parentNode || s), ft = ut += it == null ? 1 : Math.E;
+                for (tt && (rt = s !== h && s,
+                at = i.el); (y = et[v]) != null; v++) {
                     if (e && y) {
                         for (b = 0; k = n[b]; b++)
                             if (k(y, s, c)) {
                                 l.push(y);
                                 break
                             }
-                        it && (tt = ut,
-                        ot = ++i.el)
+                        tt && (ut = ft,
+                        at = ++i.el)
                     }
                     f && ((y = !k && y) && d--,
                     o && g.push(y))
@@ -3623,39 +3211,39 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     if (o) {
                         if (d > 0)
                             while (v--)
-                                g[v] || w[v] || (w[v] = li.call(l));
-                        w = et(w)
+                                g[v] || w[v] || (w[v] = vi.call(l));
+                        w = nt(w)
                     }
                     p.apply(l, w);
-                    it && !o && w.length > 0 && d + t.length > 1 && r.uniqueSort(l)
+                    tt && !o && w.length > 0 && d + t.length > 1 && r.uniqueSort(l)
                 }
-                return it && (tt = ut,
-                nt = rt),
+                return tt && (ut = ft,
+                rt = it),
                 g
             };
             return i.el = 0,
             f ? s(i) : i
         }
-        function rr(n, t, i) {
+        function li(n, t, i) {
             for (var u = 0, f = t.length; u < f; u++)
                 r(n, t[u], i);
             return i
         }
-        function dt(n, t, i, r, f) {
-            var o, e, s, c, l, h = ft(n), a = h.length;
+        function lt(n, t, i, r, f) {
+            var o, e, s, c, l, h = g(n), a = h.length;
             if (!r && h.length === 1) {
                 if (e = h[0] = h[0].slice(0),
                 e.length > 2 && (s = e[0]).type === "ID" && t.nodeType === 9 && !f && u.relative[e[1].type]) {
-                    if (t = u.find.ID(s.matches[0].replace(v, ""), t, f)[0],
+                    if (t = u.find.ID(s.matches[0].replace(y, ""), t, f)[0],
                     !t)
                         return i;
                     n = n.slice(e.shift().length)
                 }
-                for (o = rt.POS.test(n) ? -1 : e.length - 1; o >= 0; o--) {
+                for (o = et.POS.test(n) ? -1 : e.length - 1; o >= 0; o--) {
                     if (s = e[o],
                     u.relative[c = s.type])
                         break;
-                    if ((l = u.find[c]) && (r = l(s.matches[0].replace(v, ""), yt.test(e[0].type) && t.parentNode || t, f))) {
+                    if ((l = u.find[c]) && (r = l(s.matches[0].replace(y, ""), dt.test(e[0].type) && t.parentNode || t, f))) {
                         if (e.splice(o, 1),
                         n = r.length && e.join(""),
                         !n)
@@ -3665,11 +3253,11 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     }
                 }
             }
-            return ht(n, h)(r, t, f, i, yt.test(n)),
+            return yt(n, h)(r, t, f, i, dt.test(n)),
             i
         }
-        function hi() {}
-        var ot, st, u, d, g, gt, ht, ct, b, nt, ni = !0, c = "undefined", e = ("sizcache" + Math.random()).replace(".", ""), ti = String, h = n.document, o = h.documentElement, tt = 0, ci = 0, li = [].pop, p = [].push, w = [].slice, lt = [].indexOf || function(n) {
+        function ni() {}
+        var at, vt, u, tt, it, ti, yt, pt, k, rt, ii = !0, c = "undefined", e = ("sizcache" + Math.random()).replace(".", ""), ri = String, h = n.document, o = h.documentElement, ut = 0, ai = 0, vi = [].pop, p = [].push, w = [].slice, wt = [].indexOf || function(n) {
             for (var t = 0, i = this.length; t < i; t++)
                 if (this[t] === n)
                     return t;
@@ -3678,23 +3266,23 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         , s = function(n, t) {
             return n[e] = t == null || t,
             n
-        }, at = function() {
+        }, bt = function() {
             var n = {}
               , t = [];
             return s(function(i, r) {
                 return t.push(i) > u.cacheLength && delete n[t.shift()],
                 n[i + " "] = r
             }, n)
-        }, ii = at(), ri = at(), ui = at(), f = "[\\x20\\t\\r\\n\\f]", a = "(?:\\\\.|[-\\w]|[^\\x00-\\xa0])+", ai = a.replace("w", "w#"), fi = "\\[" + f + "*(" + a + ")" + f + "*(?:([*^$|!~]?=)" + f + "*(?:(['\"])((?:\\\\.|[^\\\\])*?)\\3|(" + ai + ")|)|)" + f + "*\\]", vt = ":(" + a + ")(?:\\((?:(['\"])((?:\\\\.|[^\\\\])*?)\\2|([^()[\\]]*|(?:(?:" + fi + ")|[^:]|\\\\.)*|.*))\\)|)", ei = ":(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + f + "*((?:-\\d)?\\d*)" + f + "*\\)|)(?=[^-]|$)", it = new RegExp("^" + f + "+|((?:^|[^\\\\])(?:\\\\.)*)" + f + "+$","g"), vi = new RegExp("^" + f + "*," + f + "*"), yi = new RegExp("^" + f + "*([\\x20\\t\\r\\n\\f>+~])" + f + "*"), pi = new RegExp(vt), wi = /^(?:#([\w\-]+)|(\w+)|\.([\w\-]+))$/, yt = /[\x20\t\r\n\f]*[+~]/, bi = /h\d/i, ki = /input|select|textarea|button/i, v = /\\(?!\\)/g, rt = {
-            ID: new RegExp("^#(" + a + ")"),
-            CLASS: new RegExp("^\\.(" + a + ")"),
-            NAME: new RegExp("^\\[name=['\"]?(" + a + ")['\"]?\\]"),
-            TAG: new RegExp("^(" + a.replace("w", "w*") + ")"),
-            ATTR: new RegExp("^" + fi),
-            PSEUDO: new RegExp("^" + vt),
-            POS: new RegExp(ei,"i"),
+        }, ui = bt(), fi = bt(), ei = bt(), f = "[\\x20\\t\\r\\n\\f]", v = "(?:\\\\.|[-\\w]|[^\\x00-\\xa0])+", yi = v.replace("w", "w#"), oi = "\\[" + f + "*(" + v + ")" + f + "*(?:([*^$|!~]?=)" + f + "*(?:(['\"])((?:\\\\.|[^\\\\])*?)\\3|(" + yi + ")|)|)" + f + "*\\]", kt = ":(" + v + ")(?:\\((?:(['\"])((?:\\\\.|[^\\\\])*?)\\2|([^()[\\]]*|(?:(?:" + oi + ")|[^:]|\\\\.)*|.*))\\)|)", si = ":(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + f + "*((?:-\\d)?\\d*)" + f + "*\\)|)(?=[^-]|$)", ft = new RegExp("^" + f + "+|((?:^|[^\\\\])(?:\\\\.)*)" + f + "+$","g"), pi = new RegExp("^" + f + "*," + f + "*"), wi = new RegExp("^" + f + "*([\\x20\\t\\r\\n\\f>+~])" + f + "*"), bi = new RegExp(kt), ki = /^(?:#([\w\-]+)|(\w+)|\.([\w\-]+))$/, dt = /[\x20\t\r\n\f]*[+~]/, di = /h\d/i, gi = /input|select|textarea|button/i, y = /\\(?!\\)/g, et = {
+            ID: new RegExp("^#(" + v + ")"),
+            CLASS: new RegExp("^\\.(" + v + ")"),
+            NAME: new RegExp("^\\[name=['\"]?(" + v + ")['\"]?\\]"),
+            TAG: new RegExp("^(" + v.replace("w", "w*") + ")"),
+            ATTR: new RegExp("^" + oi),
+            PSEUDO: new RegExp("^" + kt),
+            POS: new RegExp(si,"i"),
             CHILD: new RegExp("^:(only|nth|first|last)-child(?:\\(" + f + "*(even|odd|(([+-]|)(\\d*)n|)" + f + "*(?:([+-]|)" + f + "*(\\d+)|))" + f + "*\\)|)","i"),
-            needsContext: new RegExp("^" + f + "*[>+~]|" + ei,"i")
+            needsContext: new RegExp("^" + f + "*[>+~]|" + si,"i")
         }, l = function(n) {
             var t = h.createElement("div");
             try {
@@ -3704,26 +3292,26 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             } finally {
                 t = null
             }
-        }, di = l(function(n) {
+        }, nr = l(function(n) {
             return n.appendChild(h.createComment("")),
             !n.getElementsByTagName("*").length
-        }), gi = l(function(n) {
+        }), tr = l(function(n) {
             return n.innerHTML = "<a href='#'><\/a>",
             n.firstChild && typeof n.firstChild.getAttribute !== c && n.firstChild.getAttribute("href") === "#"
-        }), nr = l(function(n) {
+        }), ir = l(function(n) {
             n.innerHTML = "<select><\/select>";
             var t = typeof n.lastChild.getAttribute("multiple");
             return t !== "boolean" && t !== "string"
-        }), oi = l(function(n) {
-            return (n.innerHTML = "<div class='hidden e'><\/div><div class='hidden'><\/div>",
-            !n.getElementsByClassName || !n.getElementsByClassName("e").length) ? !1 : (n.lastChild.className = "e",
+        }), hi = l(function(n) {
+            return n.innerHTML = "<div class='hidden e'><\/div><div class='hidden'><\/div>",
+            !n.getElementsByClassName || !n.getElementsByClassName("e").length ? !1 : (n.lastChild.className = "e",
             n.getElementsByClassName("e").length === 2)
-        }), tr = l(function(n) {
+        }), rr = l(function(n) {
             n.id = e + 0;
             n.innerHTML = "<a name='" + e + "'><\/a><div name='" + e + "'><\/div>";
             o.insertBefore(n, o.firstChild);
             var t = h.getElementsByName && h.getElementsByName(e).length === 2 + h.getElementsByName(e + 0).length;
-            return st = !h.getElementById(e),
+            return vt = !h.getElementById(e),
             o.removeChild(n),
             t
         });
@@ -3744,28 +3332,28 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return r(t, null, null, [n]).length > 0
         }
         ;
-        d = r.getText = function(n) {
+        tt = r.getText = function(n) {
             var r, i = "", u = 0, t = n.nodeType;
             if (t) {
                 if (t === 1 || t === 9 || t === 11) {
                     if (typeof n.textContent == "string")
                         return n.textContent;
                     for (n = n.firstChild; n; n = n.nextSibling)
-                        i += d(n)
+                        i += tt(n)
                 } else if (t === 3 || t === 4)
                     return n.nodeValue
             } else
                 for (; r = n[u]; u++)
-                    i += d(r);
+                    i += tt(r);
             return i
         }
         ;
-        g = r.isXML = function(n) {
+        it = r.isXML = function(n) {
             var t = n && (n.ownerDocument || n).documentElement;
             return t ? t.nodeName !== "HTML" : !1
         }
         ;
-        gt = r.contains = o.contains ? function(n, t) {
+        ti = r.contains = o.contains ? function(n, t) {
             var r = n.nodeType === 9 ? n.documentElement : n
               , i = t && t.parentNode;
             return n === i || !!(i && i.nodeType === 1 && r.contains && r.contains(i))
@@ -3781,17 +3369,17 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         }
         ;
         r.attr = function(n, t) {
-            var i, r = g(n);
-            return (r || (t = t.toLowerCase()),
-            i = u.attrHandle[t]) ? i(n) : r || nr ? n.getAttribute(t) : (i = n.getAttributeNode(t),
+            var i, r = it(n);
+            return r || (t = t.toLowerCase()),
+            (i = u.attrHandle[t]) ? i(n) : r || ir ? n.getAttribute(t) : (i = n.getAttributeNode(t),
             i ? typeof n[t] == "boolean" ? n[t] ? t : null : i.specified ? i.value : null : null)
         }
         ;
         u = r.selectors = {
             cacheLength: 50,
             createPseudo: s,
-            match: rt,
-            attrHandle: gi ? {} : {
+            match: et,
+            attrHandle: tr ? {} : {
                 href: function(n) {
                     return n.getAttribute("href", 2)
                 },
@@ -3800,7 +3388,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 }
             },
             find: {
-                ID: st ? function(n, t, i) {
+                ID: vt ? function(n, t, i) {
                     if (typeof t.getElementById !== c && !i) {
                         var r = t.getElementById(n);
                         return r && r.parentNode ? [r] : []
@@ -3813,7 +3401,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     }
                 }
                 ,
-                TAG: di ? function(n, t) {
+                TAG: nr ? function(n, t) {
                     if (typeof t.getElementsByTagName !== c)
                         return t.getElementsByTagName(n)
                 }
@@ -3828,12 +3416,12 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     return f
                 }
                 ,
-                NAME: tr && function(n, t) {
+                NAME: rr && function(n, t) {
                     if (typeof t.getElementsByName !== c)
                         return t.getElementsByName(name)
                 }
                 ,
-                CLASS: oi && function(n, t, i) {
+                CLASS: hi && function(n, t, i) {
                     if (typeof t.getElementsByClassName !== c && !i)
                         return t.getElementsByClassName(n)
                 }
@@ -3856,8 +3444,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             },
             preFilter: {
                 ATTR: function(n) {
-                    return n[1] = n[1].replace(v, ""),
-                    n[3] = (n[4] || n[5] || "").replace(v, ""),
+                    return n[1] = n[1].replace(y, ""),
+                    n[3] = (n[4] || n[5] || "").replace(y, ""),
                     n[2] === "~=" && (n[3] = " " + n[3] + " "),
                     n.slice(0, 4)
                 },
@@ -3870,21 +3458,21 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 },
                 PSEUDO: function(n) {
                     var t, i;
-                    return rt.CHILD.test(n[0]) ? null : (n[3] ? n[2] = n[3] : (t = n[4]) && (pi.test(t) && (i = ft(t, !0)) && (i = t.indexOf(")", t.length - i) - t.length) && (t = t.slice(0, i),
+                    return et.CHILD.test(n[0]) ? null : (n[3] ? n[2] = n[3] : (t = n[4]) && (bi.test(t) && (i = g(t, !0)) && (i = t.indexOf(")", t.length - i) - t.length) && (t = t.slice(0, i),
                     n[0] = n[0].slice(0, i)),
                     n[2] = t),
                     n.slice(0, 3))
                 }
             },
             filter: {
-                ID: st ? function(n) {
-                    return n = n.replace(v, ""),
+                ID: vt ? function(n) {
+                    return n = n.replace(y, ""),
                     function(t) {
                         return t.getAttribute("id") === n
                     }
                 }
                 : function(n) {
-                    return n = n.replace(v, ""),
+                    return n = n.replace(y, ""),
                     function(t) {
                         var i = typeof t.getAttributeNode !== c && t.getAttributeNode("id");
                         return i && i.value === n
@@ -3895,15 +3483,15 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     return n === "*" ? function() {
                         return !0
                     }
-                    : (n = n.replace(v, "").toLowerCase(),
+                    : (n = n.replace(y, "").toLowerCase(),
                     function(t) {
                         return t.nodeName && t.nodeName.toLowerCase() === n
                     }
                     )
                 },
                 CLASS: function(n) {
-                    var t = ii[e][n + " "];
-                    return t || (t = new RegExp("(^|" + f + ")" + n + "(" + f + "|$)")) && ii(n, function(n) {
+                    var t = ui[e][n + " "];
+                    return t || (t = new RegExp("(^|" + f + ")" + n + "(" + f + "|$)")) && ui(n, function(n) {
                         return t.test(n.className || typeof n.getAttribute !== c && n.getAttribute("class") || "")
                     })
                 },
@@ -3952,7 +3540,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     return i[e] ? i(t) : i.length > 1 ? (f = [n, n, "", t],
                     u.setFilters.hasOwnProperty(n.toLowerCase()) ? s(function(n, r) {
                         for (var u, f = i(n, t), e = f.length; e--; )
-                            u = lt.call(n, f[e]),
+                            u = wt.call(n, f[e]),
                             n[u] = !(r[u] = f[e])
                     }) : function(n) {
                         return i(n, 0, f)
@@ -3964,7 +3552,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 not: s(function(n) {
                     var i = []
                       , r = []
-                      , t = ht(n.replace(it, "$1"));
+                      , t = yt(n.replace(ft, "$1"));
                     return t[e] ? s(function(n, i, r, u) {
                         for (var e, o = t(n, null, u, []), f = n.length; f--; )
                             (e = o[f]) && (n[f] = !(i[f] = e))
@@ -3981,7 +3569,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 }),
                 contains: s(function(n) {
                     return function(t) {
-                        return (t.textContent || t.innerText || d(t)).indexOf(n) > -1
+                        return (t.textContent || t.innerText || tt(t)).indexOf(n) > -1
                     }
                 }),
                 enabled: function(n) {
@@ -4011,25 +3599,25 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     return !0
                 },
                 header: function(n) {
-                    return bi.test(n.nodeName)
+                    return di.test(n.nodeName)
                 },
                 text: function(n) {
                     var t, i;
                     return n.nodeName.toLowerCase() === "input" && (t = n.type) === "text" && ((i = n.getAttribute("type")) == null || i.toLowerCase() === t)
                 },
-                radio: k("radio"),
-                checkbox: k("checkbox"),
-                file: k("file"),
-                password: k("password"),
-                image: k("image"),
-                submit: si("submit"),
-                reset: si("reset"),
+                radio: b("radio"),
+                checkbox: b("checkbox"),
+                file: b("file"),
+                password: b("password"),
+                image: b("image"),
+                submit: gt("submit"),
+                reset: gt("reset"),
                 button: function(n) {
                     var t = n.nodeName.toLowerCase();
                     return t === "input" && n.type === "button" || t === "button"
                 },
                 input: function(n) {
-                    return ki.test(n.nodeName)
+                    return gi.test(n.nodeName)
                 },
                 focus: function(n) {
                     var t = n.ownerDocument;
@@ -4038,56 +3626,55 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 active: function(n) {
                     return n === n.ownerDocument.activeElement
                 },
-                first: y(function() {
+                first: a(function() {
                     return [0]
                 }),
-                last: y(function(n, t) {
+                last: a(function(n, t) {
                     return [t - 1]
                 }),
-                eq: y(function(n, t, i) {
+                eq: a(function(n, t, i) {
                     return [i < 0 ? i + t : i]
                 }),
-                even: y(function(n, t) {
+                even: a(function(n, t) {
                     for (var i = 0; i < t; i += 2)
                         n.push(i);
                     return n
                 }),
-                odd: y(function(n, t) {
+                odd: a(function(n, t) {
                     for (var i = 1; i < t; i += 2)
                         n.push(i);
                     return n
                 }),
-                lt: y(function(n, t, i) {
+                lt: a(function(n, t, i) {
                     for (var r = i < 0 ? i + t : i; --r >= 0; )
                         n.push(r);
                     return n
                 }),
-                gt: y(function(n, t, i) {
+                gt: a(function(n, t, i) {
                     for (var r = i < 0 ? i + t : i; ++r < t; )
                         n.push(r);
                     return n
                 })
             }
         };
-        ct = o.compareDocumentPosition ? function(n, t) {
-            return n === t ? (b = !0,
+        pt = o.compareDocumentPosition ? function(n, t) {
+            return n === t ? (k = !0,
             0) : (!n.compareDocumentPosition || !t.compareDocumentPosition ? n.compareDocumentPosition : n.compareDocumentPosition(t) & 4) ? -1 : 1
         }
         : function(n, t) {
             var i;
             if (n === t)
-                return b = !0,
+                return k = !0,
                 0;
             if (n.sourceIndex && t.sourceIndex)
                 return n.sourceIndex - t.sourceIndex;
             var e, h, u = [], f = [], o = n.parentNode, s = t.parentNode, r = o;
             if (o === s)
-                return ut(n, t);
-            if (o) {
-                if (!s)
-                    return 1
-            } else
+                return d(n, t);
+            if (!o)
                 return -1;
+            if (!s)
+                return 1;
             while (r)
                 u.unshift(r),
                 r = r.parentNode;
@@ -4098,17 +3685,17 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             h = f.length,
             i = 0; i < e && i < h; i++)
                 if (u[i] !== f[i])
-                    return ut(u[i], f[i]);
-            return i === e ? ut(n, f[i], -1) : ut(u[i], t, 1)
+                    return d(u[i], f[i]);
+            return i === e ? d(n, f[i], -1) : d(u[i], t, 1)
         }
         ;
-        [0, 0].sort(ct);
-        ni = !b;
+        [0, 0].sort(pt);
+        ii = !k;
         r.uniqueSort = function(n) {
             var r, u = [], t = 1, i = 0;
-            if (b = ni,
-            n.sort(ct),
-            b) {
+            if (k = ii,
+            n.sort(pt),
+            k) {
                 for (; r = n[t]; t++)
                     r === n[t - 1] && (i = u.push(t));
                 while (i--)
@@ -4121,20 +3708,20 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             throw new Error("Syntax error, unrecognized expression: " + n);
         }
         ;
-        ht = r.compile = function(n, t) {
-            var r, u = [], f = [], i = ui[e][n + " "];
+        yt = r.compile = function(n, t) {
+            var r, u = [], f = [], i = ei[e][n + " "];
             if (!i) {
-                for (t || (t = ft(n)),
+                for (t || (t = g(n)),
                 r = t.length; r--; )
-                    i = kt(t[r]),
+                    i = ct(t[r]),
                     i[e] ? u.push(i) : f.push(i);
-                i = ui(n, ir(f, u))
+                i = ei(n, ci(f, u))
             }
             return i
         }
         ;
         h.querySelectorAll && function() {
-            var u, s = dt, h = /'|\\/g, c = /\=[\x20\t\r\n\f]*([^'"\]]*)[\x20\t\r\n\f]*\]/g, n = [":focus"], t = [":active"], i = o.matchesSelector || o.mozMatchesSelector || o.webkitMatchesSelector || o.oMatchesSelector || o.msMatchesSelector;
+            var u, s = lt, h = /'|\\/g, c = /\=[\x20\t\r\n\f]*([^'"\]]*)[\x20\t\r\n\f]*\]/g, n = [":focus"], t = [":active"], i = o.matchesSelector || o.mozMatchesSelector || o.webkitMatchesSelector || o.oMatchesSelector || o.msMatchesSelector;
             l(function(t) {
                 t.innerHTML = "<select><option selected=''><\/option><\/select>";
                 t.querySelectorAll("[selected]").length || n.push("\\[" + f + "*(?:checked|disabled|ismap|multiple|readonly|selected|value)");
@@ -4147,16 +3734,16 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 t.querySelectorAll(":enabled").length || n.push(":enabled", ":disabled")
             });
             n = new RegExp(n.join("|"));
-            dt = function(t, i, r, u, f) {
+            lt = function(t, i, r, u, f) {
                 if (!u && !f && !n.test(t)) {
                     var o, l, a = !0, c = e, y = i, v = i.nodeType === 9 && t;
                     if (i.nodeType === 1 && i.nodeName.toLowerCase() !== "object") {
-                        for (o = ft(t),
+                        for (o = g(t),
                         (a = i.getAttribute("id")) ? c = a.replace(h, "\\$&") : i.setAttribute("id", c),
                         c = "[id='" + c + "'] ",
                         l = o.length; l--; )
                             o[l] = c + o[l].join("");
-                        y = yt.test(t) && i.parentNode || i;
+                        y = dt.test(t) && i.parentNode || i;
                         v = o.join(",")
                     }
                     if (v)
@@ -4174,13 +3761,13 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 u = i.call(n, "div");
                 try {
                     i.call(n, "[test!='']:sizzle");
-                    t.push("!=", vt)
+                    t.push("!=", kt)
                 } catch (r) {}
             }),
             t = new RegExp(t.join("|")),
             r.matchesSelector = function(f, e) {
                 if (e = e.replace(c, "='$1']"),
-                !g(f) && !t.test(e) && !n.test(e))
+                !it(f) && !t.test(e) && !n.test(e))
                     try {
                         var o = i.call(f, e);
                         if (o || u || f.document && f.document.nodeType !== 11)
@@ -4191,8 +3778,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             )
         }();
         u.pseudos.nth = u.pseudos.eq;
-        u.filters = hi.prototype = u.pseudos;
-        u.setFilters = new hi;
+        u.filters = ni.prototype = u.pseudos;
+        u.setFilters = new ni;
         r.attr = i.attr;
         i.find = r;
         i.expr = r.selectors;
@@ -4202,11 +3789,11 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         i.isXMLDoc = r.isXML;
         i.contains = r.contains
     }(n);
-    var bf = /Until$/
-      , kf = /^(?:parents|prev(?:Until|All))/
-      , df = /^.[^:#\[\.,]*$/
-      , gi = i.expr.match.needsContext
-      , gf = {
+    var re = /Until$/
+      , ue = /^(?:parents|prev(?:Until|All))/
+      , fe = /^.[^:#\[\.,]*$/
+      , br = i.expr.match.needsContext
+      , ee = {
         children: !0,
         contents: !0,
         next: !0,
@@ -4245,16 +3832,16 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             })
         },
         not: function(n) {
-            return this.pushStack(tr(this, n, !1), "not", n)
+            return this.pushStack(ei(this, n, !1), "not", n)
         },
         filter: function(n) {
-            return this.pushStack(tr(this, n, !0), "filter", n)
+            return this.pushStack(ei(this, n, !0), "filter", n)
         },
         is: function(n) {
-            return !!n && (typeof n == "string" ? gi.test(n) ? i(n, this.context).index(this[0]) >= 0 : i.filter(n, this).length > 0 : this.filter(n).length > 0)
+            return !!n && (typeof n == "string" ? br.test(n) ? i(n, this.context).index(this[0]) >= 0 : i.filter(n, this).length > 0 : this.filter(n).length > 0)
         },
         closest: function(n, t) {
-            for (var r, f = 0, o = this.length, u = [], e = gi.test(n) || typeof n != "string" ? i(n, t || this.context) : 0; f < o; f++)
+            for (var r, f = 0, o = this.length, u = [], e = br.test(n) || typeof n != "string" ? i(n, t || this.context) : 0; f < o; f++)
                 for (r = this[f]; r && r.ownerDocument && r !== t && r.nodeType !== 11; ) {
                     if (e ? e.index(r) > -1 : i.find.matchesSelector(r, n)) {
                         u.push(r);
@@ -4290,10 +3877,10 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return i.dir(n, "parentNode", r)
         },
         next: function(n) {
-            return nr(n, "nextSibling")
+            return fi(n, "nextSibling")
         },
         prev: function(n) {
-            return nr(n, "previousSibling")
+            return fi(n, "previousSibling")
         },
         nextAll: function(n) {
             return i.dir(n, "nextSibling")
@@ -4319,10 +3906,10 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     }, function(n, t) {
         i.fn[n] = function(r, u) {
             var f = i.map(this, t, r);
-            return bf.test(n) || (u = r),
+            return re.test(n) || (u = r),
             u && typeof u == "string" && (f = i.filter(u, f)),
-            f = this.length > 1 && !gf[n] ? i.unique(f) : f,
-            this.length > 1 && kf.test(n) && (f = f.reverse()),
+            f = this.length > 1 && !ee[n] ? i.unique(f) : f,
+            this.length > 1 && ue.test(n) && (f = f.reverse()),
             this.pushStack(f, n, o.call(arguments).join(","))
         }
     });
@@ -4343,20 +3930,20 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return i
         }
     });
-    var rr = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video"
-      , ne = / jQuery\d+="(?:null|\d+)"/g
-      , bt = /^\s+/
-      , ur = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi
-      , fr = /<([\w:]+)/
-      , te = /<tbody/i
-      , ie = /<|&#?\w+;/
-      , re = /<(?:script|style|link)/i
-      , ue = /<(?:script|object|embed|option|style)/i
-      , kt = new RegExp("<(?:" + rr + ")[\\s/>]","i")
-      , er = /^(?:checkbox|radio)$/
-      , or = /checked\s*(?:[^=]|=\s*.checked.)/i
-      , fe = /\/(java|ecma)script/i
-      , ee = /^\s*<!(?:\[CDATA\[|\-\-)|[\]\-]{2}>\s*$/g
+    var kr = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video"
+      , oe = / jQuery\d+="(?:null|\d+)"/g
+      , kt = /^\s+/
+      , dr = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi
+      , gr = /<([\w:]+)/
+      , se = /<tbody/i
+      , he = /<|&#?\w+;/
+      , ce = /<(?:script|style|link)/i
+      , le = /<(?:script|object|embed|option|style)/i
+      , dt = new RegExp("<(?:" + kr + ")[\\s/>]","i")
+      , nu = /^(?:checkbox|radio)$/
+      , tu = /checked\s*(?:[^=]|=\s*.checked.)/i
+      , ae = /\/(java|ecma)script/i
+      , ve = /^\s*<!(?:\[CDATA\[|\-\-)|[\]\-]{2}>\s*$/g
       , e = {
         option: [1, "<select multiple='multiple'>", "<\/select>"],
         legend: [1, "<fieldset>", "<\/fieldset>"],
@@ -4367,8 +3954,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         area: [1, "<map>", "<\/map>"],
         _default: [0, "", ""]
     }
-      , sr = ir(r)
-      , dt = sr.appendChild(r.createElement("div"));
+      , iu = oi(r)
+      , gt = iu.appendChild(r.createElement("div"));
     e.optgroup = e.option;
     e.tbody = e.tfoot = e.colgroup = e.caption = e.thead;
     e.th = e.td;
@@ -4471,9 +4058,9 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                   , u = 0
                   , f = this.length;
                 if (n === t)
-                    return r.nodeType === 1 ? r.innerHTML.replace(ne, "") : t;
-                if (typeof n == "string" && !re.test(n) && (i.support.htmlSerialize || !kt.test(n)) && (i.support.leadingWhitespace || !bt.test(n)) && !e[(fr.exec(n) || ["", ""])[1].toLowerCase()]) {
-                    n = n.replace(ur, "<$1><\/$2>");
+                    return r.nodeType === 1 ? r.innerHTML.replace(oe, "") : t;
+                if (typeof n == "string" && !ce.test(n) && (i.support.htmlSerialize || !dt.test(n)) && (i.support.leadingWhitespace || !kt.test(n)) && !e[(gr.exec(n) || ["", ""])[1].toLowerCase()]) {
+                    n = n.replace(dr, "<$1><\/$2>");
                     try {
                         for (; u < f; u++)
                             r = this[u] || {},
@@ -4504,7 +4091,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         domManip: function(n, r, u) {
             n = [].concat.apply([], n);
             var h, o, f, a, e = 0, s = n[0], c = [], l = this.length;
-            if (!i.support.checkClone && l > 1 && typeof s == "string" && or.test(s))
+            if (!i.support.checkClone && l > 1 && typeof s == "string" && tu.test(s))
                 return this.each(function() {
                     i(this).domManip(n, r, u)
                 });
@@ -4522,7 +4109,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 o)
                     for (r = r && i.nodeName(o, "tr"),
                     a = h.cacheable || l - 1; e < l; e++)
-                        u.call(r && i.nodeName(this[e], "table") ? oe(this[e], "tbody") : this[e], e === a ? f : i.clone(f, !0, !0));
+                        u.call(r && i.nodeName(this[e], "table") ? pu(this[e], "tbody") : this[e], e === a ? f : i.clone(f, !0, !0));
                 f = o = null;
                 c.length && i.each(c, function(n, t) {
                     t.src ? i.ajax ? i.ajax({
@@ -4532,7 +4119,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                         async: !1,
                         global: !1,
                         throws: !0
-                    }) : i.error("no ajax") : i.globalEval((t.text || t.textContent || t.innerHTML || "").replace(ee, ""));
+                    }) : i.error("no ajax") : i.globalEval((t.text || t.textContent || t.innerHTML || "").replace(ve, ""));
                     t.parentNode && t.parentNode.removeChild(t)
                 })
             }
@@ -4544,7 +4131,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         return u = u || r,
         u = !u.nodeType && u[0] || u,
         u = u.ownerDocument || u,
-        n.length === 1 && typeof e == "string" && e.length < 512 && u === r && e.charAt(0) === "<" && !ue.test(e) && (i.support.checkClone || !or.test(e)) && (i.support.html5Clone || !kt.test(e)) && (s = !0,
+        n.length === 1 && typeof e == "string" && e.length < 512 && u === r && e.charAt(0) === "<" && !le.test(e) && (i.support.checkClone || !tu.test(e)) && (i.support.html5Clone || !dt.test(e)) && (s = !0,
         o = i.fragments[e],
         h = o !== t),
         o || (o = u.createDocumentFragment(),
@@ -4579,46 +4166,46 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     i.extend({
         clone: function(n, t, r) {
             var f, o, u, e;
-            if (i.support.html5Clone || i.isXMLDoc(n) || !kt.test("<" + n.nodeName + ">") ? e = n.cloneNode(!0) : (dt.innerHTML = n.outerHTML,
-            dt.removeChild(e = dt.firstChild)),
+            if (i.support.html5Clone || i.isXMLDoc(n) || !dt.test("<" + n.nodeName + ">") ? e = n.cloneNode(!0) : (gt.innerHTML = n.outerHTML,
+            gt.removeChild(e = gt.firstChild)),
             (!i.support.noCloneEvent || !i.support.noCloneChecked) && (n.nodeType === 1 || n.nodeType === 11) && !i.isXMLDoc(n))
-                for (cr(n, e),
-                f = rt(n),
-                o = rt(e),
+                for (hi(n, e),
+                f = nt(n),
+                o = nt(e),
                 u = 0; f[u]; ++u)
-                    o[u] && cr(f[u], o[u]);
-            if (t && (hr(n, e),
+                    o[u] && hi(f[u], o[u]);
+            if (t && (si(n, e),
             r))
-                for (f = rt(n),
-                o = rt(e),
+                for (f = nt(n),
+                o = nt(e),
                 u = 0; f[u]; ++u)
-                    hr(f[u], o[u]);
+                    si(f[u], o[u]);
             return f = o = null,
             e
         },
         clean: function(n, t, u, f) {
-            var h, c, o, p, v, d, s, w, a, b, k, y = t === r && sr, l = [];
+            var h, c, o, p, v, d, s, w, a, b, k, y = t === r && iu, l = [];
             for (t && typeof t.createDocumentFragment != "undefined" || (t = r),
             h = 0; (o = n[h]) != null; h++)
                 if (typeof o == "number" && (o += ""),
                 o) {
                     if (typeof o == "string")
-                        if (ie.test(o)) {
-                            for (y = y || ir(t),
+                        if (he.test(o)) {
+                            for (y = y || oi(t),
                             s = t.createElement("div"),
                             y.appendChild(s),
-                            o = o.replace(ur, "<$1><\/$2>"),
-                            p = (fr.exec(o) || ["", ""])[1].toLowerCase(),
+                            o = o.replace(dr, "<$1><\/$2>"),
+                            p = (gr.exec(o) || ["", ""])[1].toLowerCase(),
                             v = e[p] || e._default,
                             d = v[0],
                             s.innerHTML = v[1] + o + v[2]; d--; )
                                 s = s.lastChild;
                             if (!i.support.tbody)
-                                for (w = te.test(o),
+                                for (w = se.test(o),
                                 a = p === "table" && !w ? s.firstChild && s.firstChild.childNodes : v[1] === "<table>" && !w ? s.childNodes : [],
                                 c = a.length - 1; c >= 0; --c)
                                     i.nodeName(a[c], "tbody") && !a[c].childNodes.length && a[c].parentNode.removeChild(a[c]);
-                            !i.support.leadingWhitespace && bt.test(o) && s.insertBefore(t.createTextNode(bt.exec(o)[0]), s.firstChild);
+                            !i.support.leadingWhitespace && kt.test(o) && s.insertBefore(t.createTextNode(kt.exec(o)[0]), s.firstChild);
                             o = s.childNodes;
                             s.parentNode.removeChild(s)
                         } else
@@ -4628,10 +4215,10 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             if (s && (o = s = y = null),
             !i.support.appendChecked)
                 for (h = 0; (o = l[h]) != null; h++)
-                    i.nodeName(o, "input") ? lr(o) : typeof o.getElementsByTagName != "undefined" && i.grep(o.getElementsByTagName("input"), lr);
+                    i.nodeName(o, "input") ? ci(o) : typeof o.getElementsByTagName != "undefined" && i.grep(o.getElementsByTagName("input"), ci);
             if (u)
                 for (b = function(n) {
-                    if (!n.type || fe.test(n.type))
+                    if (!n.type || ae.test(n.type))
                         return f ? f.push(n.parentNode ? n.parentNode.removeChild(n) : n) : u.appendChild(n)
                 }
                 ,
@@ -4667,7 +4254,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }
         }
         ;
-        t = i.uaMatch(pu.userAgent);
+        t = i.uaMatch(rf.userAgent);
         n = {};
         t.browser && (n[t.browser] = !0,
         n.version = t.version);
@@ -4692,16 +4279,16 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return n
         }
     }();
-    var u, y, p, gt = /alpha\([^)]*\)/i, se = /opacity=([^)]*)/, he = /^(top|right|bottom|left)$/, ce = /^(none|table(?!-c[ea]).+)/, ar = /^margin/, le = new RegExp("^(" + nt + ")(.*)$","i"), ut = new RegExp("^(" + nt + ")(?!px)[a-z%]+$","i"), ae = new RegExp("^([-+])=(" + nt + ")","i"), ni = {
+    var u, y, p, ni = /alpha\([^)]*\)/i, ye = /opacity=([^)]*)/, pe = /^(top|right|bottom|left)$/, we = /^(none|table(?!-c[ea]).+)/, ru = /^margin/, be = new RegExp("^(" + ft + ")(.*)$","i"), ot = new RegExp("^(" + ft + ")(?!px)[a-z%]+$","i"), ke = new RegExp("^([-+])=(" + ft + ")","i"), ti = {
         BODY: "block"
-    }, ve = {
+    }, de = {
         position: "absolute",
         visibility: "hidden",
         display: "block"
-    }, vr = {
+    }, uu = {
         letterSpacing: 0,
         fontWeight: 400
-    }, c = ["Top", "Right", "Bottom", "Left"], yr = ["Webkit", "O", "Moz", "ms"], ye = i.fn.toggle;
+    }, c = ["Top", "Right", "Bottom", "Left"], fu = ["Webkit", "O", "Moz", "ms"], ge = i.fn.toggle;
     i.fn.extend({
         css: function(n, r) {
             return i.access(this, function(n, r, u) {
@@ -4709,15 +4296,15 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }, n, r, arguments.length > 1)
         },
         show: function() {
-            return wr(this, !0)
+            return ai(this, !0)
         },
         hide: function() {
-            return wr(this)
+            return ai(this)
         },
         toggle: function(n, t) {
             var r = typeof n == "boolean";
-            return i.isFunction(n) && i.isFunction(t) ? ye.apply(this, arguments) : this.each(function() {
-                (r ? n : ft(this)) ? i(this).show() : i(this).hide()
+            return i.isFunction(n) && i.isFunction(t) ? ge.apply(this, arguments) : this.each(function() {
+                (r ? n : tt(this)) ? i(this).show() : i(this).hide()
             })
         }
     });
@@ -4748,31 +4335,28 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         style: function(n, r, u, f) {
             if (n && n.nodeType !== 3 && n.nodeType !== 8 && n.style) {
                 var o, s, e, h = i.camelCase(r), c = n.style;
-                if (r = i.cssProps[h] || (i.cssProps[h] = pr(c, h)),
+                if (r = i.cssProps[h] || (i.cssProps[h] = li(c, h)),
                 e = i.cssHooks[r] || i.cssHooks[h],
-                u !== t) {
-                    if (s = typeof u,
-                    s === "string" && (o = ae.exec(u)) && (u = (o[1] + 1) * o[2] + parseFloat(i.css(n, r)),
-                    s = "number"),
-                    u == null || s === "number" && isNaN(u))
-                        return;
-                    if (s !== "number" || i.cssNumber[h] || (u += "px"),
-                    !e || !("set"in e) || (u = e.set(n, u, f)) !== t)
-                        try {
-                            c[r] = u
-                        } catch (l) {}
-                } else
-                    return e && "get"in e && (o = e.get(n, !1, f)) !== t ? o : c[r]
+                u === t)
+                    return e && "get"in e && (o = e.get(n, !1, f)) !== t ? o : c[r];
+                if ((s = typeof u,
+                s === "string" && (o = ke.exec(u)) && (u = (o[1] + 1) * o[2] + parseFloat(i.css(n, r)),
+                s = "number"),
+                u != null && (s !== "number" || !isNaN(u))) && (s !== "number" || i.cssNumber[h] || (u += "px"),
+                !e || !("set"in e) || (u = e.set(n, u, f)) !== t))
+                    try {
+                        c[r] = u
+                    } catch (l) {}
             }
         },
         css: function(n, r, f, e) {
             var o, c, s, h = i.camelCase(r);
-            return (r = i.cssProps[h] || (i.cssProps[h] = pr(n.style, h)),
+            return r = i.cssProps[h] || (i.cssProps[h] = li(n.style, h)),
             s = i.cssHooks[r] || i.cssHooks[h],
             s && "get"in s && (o = s.get(n, !0, e)),
             o === t && (o = u(n, r)),
-            o === "normal" && r in vr && (o = vr[r]),
-            f || e !== t) ? (c = parseFloat(o),
+            o === "normal" && r in uu && (o = uu[r]),
+            f || e !== t ? (c = parseFloat(o),
             f || i.isNumeric(c) ? c || 0 : o) : o
         },
         swap: function(n, t, i) {
@@ -4789,8 +4373,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     n.getComputedStyle ? u = function(t, r) {
         var f, o, s, h, e = n.getComputedStyle(t, null), u = t.style;
         return e && (f = e.getPropertyValue(r) || e[r],
-        f !== "" || i.contains(t.ownerDocument, t) || (f = i.style(t, r)),
-        ut.test(f) && ar.test(r) && (o = u.width,
+        f === "" && !i.contains(t.ownerDocument, t) && (f = i.style(t, r)),
+        ot.test(f) && ru.test(r) && (o = u.width,
         s = u.minWidth,
         h = u.maxWidth,
         u.minWidth = u.maxWidth = u.width = f,
@@ -4803,7 +4387,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     : r.documentElement.currentStyle && (u = function(n, t) {
         var f, u, i = n.currentStyle && n.currentStyle[t], r = n.style;
         return i == null && r && r[t] && (i = r[t]),
-        ut.test(i) && !he.test(t) && (f = r.left,
+        ot.test(i) && !pe.test(t) && (f = r.left,
         u = n.runtimeStyle && n.runtimeStyle.left,
         u && (n.runtimeStyle.left = n.currentStyle.left),
         r.left = t === "fontSize" ? "1em" : i,
@@ -4817,18 +4401,18 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         i.cssHooks[t] = {
             get: function(n, r, f) {
                 if (r)
-                    return n.offsetWidth === 0 && ce.test(u(n, "display")) ? i.swap(n, ve, function() {
-                        return dr(n, t, f)
-                    }) : dr(n, t, f)
+                    return n.offsetWidth === 0 && we.test(u(n, "display")) ? i.swap(n, de, function() {
+                        return pi(n, t, f)
+                    }) : pi(n, t, f)
             },
             set: function(n, r, u) {
-                return br(n, r, u ? kr(n, t, u, i.support.boxSizing && i.css(n, "boxSizing") === "border-box") : 0)
+                return vi(n, r, u ? yi(n, t, u, i.support.boxSizing && i.css(n, "boxSizing") === "border-box") : 0)
             }
         }
     });
     i.support.opacity || (i.cssHooks.opacity = {
         get: function(n, t) {
-            return se.test((t && n.currentStyle ? n.currentStyle.filter : n.style.filter) || "") ? .01 * parseFloat(RegExp.$1) + "" : t ? "1" : ""
+            return ye.test((t && n.currentStyle ? n.currentStyle.filter : n.style.filter) || "") ? .01 * parseFloat(RegExp.$1) + "" : t ? "1" : ""
         },
         set: function(n, t) {
             var r = n.style
@@ -4836,8 +4420,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
               , e = i.isNumeric(t) ? "alpha(opacity=" + t * 100 + ")" : ""
               , f = u && u.filter || r.filter || "";
             (r.zoom = 1,
-            t >= 1 && i.trim(f.replace(gt, "")) === "" && r.removeAttribute && (r.removeAttribute("filter"),
-            u && !u.filter)) || (r.filter = gt.test(f) ? f.replace(gt, e) : f + " " + e)
+            t >= 1 && i.trim(f.replace(ni, "")) === "" && r.removeAttribute && (r.removeAttribute("filter"),
+            u && !u.filter)) || (r.filter = ni.test(f) ? f.replace(ni, e) : f + " " + e)
         }
     });
     i(function() {
@@ -4856,7 +4440,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 get: function(n, r) {
                     if (r) {
                         var f = u(n, t);
-                        return ut.test(f) ? i(n).position()[t] + "px" : f
+                        return ot.test(f) ? i(n).position()[t] + "px" : f
                     }
                 }
             }
@@ -4882,13 +4466,13 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 return f
             }
         };
-        ar.test(n) || (i.cssHooks[n + t].set = br)
+        ru.test(n) || (i.cssHooks[n + t].set = vi)
     });
-    var pe = /%20/g
-      , we = /\[\]$/
-      , nu = /\r?\n/g
-      , be = /^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i
-      , ke = /^(?:select|textarea)/i;
+    var no = /%20/g
+      , to = /\[\]$/
+      , eu = /\r?\n/g
+      , io = /^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i
+      , ro = /^(?:select|textarea)/i;
     i.fn.extend({
         serialize: function() {
             return i.param(this.serializeArray())
@@ -4897,17 +4481,17 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return this.map(function() {
                 return this.elements ? i.makeArray(this.elements) : this
             }).filter(function() {
-                return this.name && !this.disabled && (this.checked || ke.test(this.nodeName) || be.test(this.type))
+                return this.name && !this.disabled && (this.checked || ro.test(this.nodeName) || io.test(this.type))
             }).map(function(n, t) {
                 var r = i(this).val();
                 return r == null ? null : i.isArray(r) ? i.map(r, function(n) {
                     return {
                         name: t.name,
-                        value: n.replace(nu, "\r\n")
+                        value: n.replace(eu, "\r\n")
                     }
                 }) : {
                     name: t.name,
-                    value: r.replace(nu, "\r\n")
+                    value: r.replace(eu, "\r\n")
                 }
             }).get()
         }
@@ -4924,22 +4508,22 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             });
         else
             for (u in n)
-                ti(u, n[u], r, e);
-        return f.join("&").replace(pe, "+")
+                vt(u, n[u], r, e);
+        return f.join("&").replace(no, "+")
     }
     ;
-    var l, a, de = /#.*$/, ge = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg, no = /^(?:GET|HEAD)$/, to = /^\/\//, tu = /\?/, io = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, ro = /([?&])_=[^&]*/, iu = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/, ru = i.fn.load, ii = {}, uu = {}, fu = ["*/"] + ["*"];
+    var l, a, uo = /#.*$/, fo = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg, eo = /^(?:GET|HEAD)$/, oo = /^\/\//, ou = /\?/, so = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, ho = /([?&])_=[^&]*/, su = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/, hu = i.fn.load, ii = {}, cu = {}, lu = ["*/"] + ["*"];
     try {
-        a = yu.href
+        a = tf.href
     } catch (po) {
         a = r.createElement("a");
         a.href = "";
         a = a.href
     }
-    l = iu.exec(a.toLowerCase()) || [];
+    l = su.exec(a.toLowerCase()) || [];
     i.fn.load = function(n, r, u) {
-        if (typeof n != "string" && ru)
-            return ru.apply(this, arguments);
+        if (typeof n != "string" && hu)
+            return hu.apply(this, arguments);
         if (!this.length)
             return this;
         var f, o, s, h = this, e = n.indexOf(" ");
@@ -4957,7 +4541,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }
         }).done(function(n) {
             s = arguments;
-            h.html(f ? i("<div>").append(n.replace(io, "")).find(f) : n)
+            h.html(f ? i("<div>").append(n.replace(so, "")).find(f) : n)
         }),
         this
     }
@@ -4989,9 +4573,9 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             return i.get(n, t, r, "json")
         },
         ajaxSetup: function(n, t) {
-            return t ? ou(n, i.ajaxSettings) : (t = n,
+            return t ? ki(n, i.ajaxSettings) : (t = n,
             n = i.ajaxSettings),
-            ou(n, t),
+            ki(n, t),
             n
         },
         ajaxSettings: {
@@ -5007,7 +4591,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 html: "text/html",
                 text: "text/plain",
                 json: "application/json, text/javascript",
-                "*": fu
+                "*": lu
             },
             contents: {
                 xml: /xml/,
@@ -5029,50 +4613,50 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 url: !0
             }
         },
-        ajaxPrefilter: eu(ii),
-        ajaxTransport: eu(uu),
+        ajaxPrefilter: bi(ii),
+        ajaxTransport: bi(cu),
         ajax: function(n, r) {
-            function b(n, r, h, l) {
-                var a, tt, b, it, p, v = r;
+            function p(n, r, h, l) {
+                var a, tt, w, it, p, v = r;
                 e !== 2 && (e = 2,
                 d && clearTimeout(d),
                 c = t,
                 k = l || "",
                 f.readyState = n > 0 ? 4 : 0,
-                h && (it = uo(u, f, h)),
+                h && (it = wu(u, f, h)),
                 n >= 200 && n < 300 || n === 304 ? (u.ifModified && (p = f.getResponseHeader("Last-Modified"),
                 p && (i.lastModified[o] = p),
                 p = f.getResponseHeader("Etag"),
                 p && (i.etag[o] = p)),
                 n === 304 ? (v = "notmodified",
-                a = !0) : (a = fo(u, it),
+                a = !0) : (a = bu(u, it),
                 v = a.state,
                 tt = a.data,
-                b = a.error,
-                a = !b)) : (b = v,
+                w = a.error,
+                a = !w)) : (w = v,
                 (!v || n) && (v = "error",
                 n < 0 && (n = 0))),
                 f.status = n,
                 f.statusText = (r || v) + "",
-                a ? nt.resolveWith(s, [tt, v, f]) : nt.rejectWith(s, [f, v, b]),
-                f.statusCode(w),
-                w = t,
-                y && g.trigger("ajax" + (a ? "Success" : "Error"), [f, u, a ? tt : b]),
-                rt.fireWith(s, [f, v]),
+                a ? nt.resolveWith(s, [tt, v, f]) : nt.rejectWith(s, [f, v, w]),
+                f.statusCode(b),
+                b = t,
+                y && g.trigger("ajax" + (a ? "Success" : "Error"), [f, u, a ? tt : w]),
+                ut.fireWith(s, [f, v]),
                 y && (g.trigger("ajaxComplete", [f, u]),
                 --i.active || i.event.trigger("ajaxStop")))
             }
-            var tt, it;
+            var tt, rt;
             typeof n == "object" && (r = n,
             n = t);
             r = r || {};
-            var o, k, p, c, d, a, y, v, u = i.ajaxSetup({}, r), s = u.context || u, g = s !== u && (s.nodeType || s instanceof i) ? i(s) : i.event, nt = i.Deferred(), rt = i.Callbacks("once memory"), w = u.statusCode || {}, ut = {}, ft = {}, e = 0, ot = "canceled", f = {
+            var o, k, w, c, d, a, y, v, u = i.ajaxSetup({}, r), s = u.context || u, g = s !== u && (s.nodeType || s instanceof i) ? i(s) : i.event, nt = i.Deferred(), ut = i.Callbacks("once memory"), b = u.statusCode || {}, ft = {}, et = {}, e = 0, ot = "canceled", f = {
                 readyState: 0,
                 setRequestHeader: function(n, t) {
                     if (!e) {
                         var i = n.toLowerCase();
-                        n = ft[i] = ft[i] || n;
-                        ut[n] = t
+                        n = et[i] = et[i] || n;
+                        ft[n] = t
                     }
                     return this
                 },
@@ -5082,10 +4666,10 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 getResponseHeader: function(n) {
                     var i;
                     if (e === 2) {
-                        if (!p)
-                            for (p = {}; i = ge.exec(k); )
-                                p[i[1].toLowerCase()] = i[2];
-                        i = p[n.toLowerCase()]
+                        if (!w)
+                            for (w = {}; i = fo.exec(k); )
+                                w[i[1].toLowerCase()] = i[2];
+                        i = w[n.toLowerCase()]
                     }
                     return i === t ? null : i
                 },
@@ -5096,20 +4680,20 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 abort: function(n) {
                     return n = n || ot,
                     c && c.abort(n),
-                    b(0, n),
+                    p(0, n),
                     this
                 }
             };
             if (nt.promise(f),
             f.success = f.done,
             f.error = f.fail,
-            f.complete = rt.add,
+            f.complete = ut.add,
             f.statusCode = function(n) {
                 if (n) {
                     var t;
                     if (e < 2)
                         for (t in n)
-                            w[t] = [w[t], n[t]];
+                            b[t] = [b[t], n[t]];
                     else
                         t = n[f.status],
                         f.always(t)
@@ -5117,82 +4701,82 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 return this
             }
             ,
-            u.url = ((n || u.url) + "").replace(de, "").replace(to, l[1] + "//"),
+            u.url = ((n || u.url) + "").replace(uo, "").replace(oo, l[1] + "//"),
             u.dataTypes = i.trim(u.dataType || "*").toLowerCase().split(h),
-            u.crossDomain == null && (a = iu.exec(u.url.toLowerCase()),
-            u.crossDomain = !!(a && (a[1] !== l[1] || a[2] !== l[2] || (a[3] || (a[1] === "http:" ? 80 : 443)) != (l[3] || (l[1] === "http:" ? 80 : 443))))),
+            u.crossDomain == null && (a = su.exec(u.url.toLowerCase()),
+            u.crossDomain = !(!a || a[1] === l[1] && a[2] === l[2] && (a[3] || (a[1] === "http:" ? 80 : 443)) == (l[3] || (l[1] === "http:" ? 80 : 443)))),
             u.data && u.processData && typeof u.data != "string" && (u.data = i.param(u.data, u.traditional)),
-            et(ii, u, r, f),
+            it(ii, u, r, f),
             e === 2)
                 return f;
             y = u.global;
             u.type = u.type.toUpperCase();
-            u.hasContent = !no.test(u.type);
+            u.hasContent = !eo.test(u.type);
             y && i.active++ == 0 && i.event.trigger("ajaxStart");
-            u.hasContent || (u.data && (u.url += (tu.test(u.url) ? "&" : "?") + u.data,
+            u.hasContent || (u.data && (u.url += (ou.test(u.url) ? "&" : "?") + u.data,
             delete u.data),
             o = u.url,
             u.cache === !1 && (tt = i.now(),
-            it = u.url.replace(ro, "$1_=" + tt),
-            u.url = it + (it === u.url ? (tu.test(u.url) ? "&" : "?") + "_=" + tt : "")));
+            rt = u.url.replace(ho, "$1_=" + tt),
+            u.url = rt + (rt === u.url ? (ou.test(u.url) ? "&" : "?") + "_=" + tt : "")));
             (u.data && u.hasContent && u.contentType !== !1 || r.contentType) && f.setRequestHeader("Content-Type", u.contentType);
             u.ifModified && (o = o || u.url,
             i.lastModified[o] && f.setRequestHeader("If-Modified-Since", i.lastModified[o]),
             i.etag[o] && f.setRequestHeader("If-None-Match", i.etag[o]));
-            f.setRequestHeader("Accept", u.dataTypes[0] && u.accepts[u.dataTypes[0]] ? u.accepts[u.dataTypes[0]] + (u.dataTypes[0] !== "*" ? ", " + fu + "; q=0.01" : "") : u.accepts["*"]);
+            f.setRequestHeader("Accept", u.dataTypes[0] && u.accepts[u.dataTypes[0]] ? u.accepts[u.dataTypes[0]] + (u.dataTypes[0] !== "*" ? ", " + lu + "; q=0.01" : "") : u.accepts["*"]);
             for (v in u.headers)
                 f.setRequestHeader(v, u.headers[v]);
-            if (u.beforeSend && (u.beforeSend.call(s, f, u) === !1 || e === 2))
-                return f.abort();
-            ot = "abort";
-            for (v in {
-                success: 1,
-                error: 1,
-                complete: 1
-            })
-                f[v](u[v]);
-            if (c = et(uu, u, r, f),
-            c) {
-                f.readyState = 1;
-                y && g.trigger("ajaxSend", [f, u]);
-                u.async && u.timeout > 0 && (d = setTimeout(function() {
-                    f.abort("timeout")
-                }, u.timeout));
-                try {
-                    e = 1;
-                    c.send(ut, b)
-                } catch (st) {
-                    if (e < 2)
-                        b(-1, st);
-                    else
-                        throw st;
-                }
-            } else
-                b(-1, "No Transport");
-            return f
+            if (!u.beforeSend || u.beforeSend.call(s, f, u) !== !1 && e !== 2) {
+                ot = "abort";
+                for (v in {
+                    success: 1,
+                    error: 1,
+                    complete: 1
+                })
+                    f[v](u[v]);
+                if (c = it(cu, u, r, f),
+                c) {
+                    f.readyState = 1;
+                    y && g.trigger("ajaxSend", [f, u]);
+                    u.async && u.timeout > 0 && (d = setTimeout(function() {
+                        f.abort("timeout")
+                    }, u.timeout));
+                    try {
+                        e = 1;
+                        c.send(ft, p)
+                    } catch (st) {
+                        if (!(e < 2))
+                            throw st;
+                        p(-1, st)
+                    }
+                } else
+                    p(-1, "No Transport");
+                return f
+            }
+            return f.abort()
         },
         active: 0,
         lastModified: {},
         etag: {}
     });
-    var su = []
-      , eo = /\?/
-      , ot = /(=)\?(?=&|$)|\?\?/
-      , oo = i.now();
+    var au = []
+      , co = /\?/
+      , st = /(=)\?(?=&|$)|\?\?/
+      , lo = i.now();
     i.ajaxSetup({
         jsonp: "callback",
         jsonpCallback: function() {
-            var n = su.pop() || i.expando + "_" + oo++;
+            var n = au.pop() || i.expando + "_" + lo++;
             return this[n] = !0,
             n
         }
     });
     i.ajaxPrefilter("json jsonp", function(r, u, f) {
-        var e, s, o, h = r.data, c = r.url, l = r.jsonp !== !1, a = l && ot.test(c), v = l && !a && typeof h == "string" && !(r.contentType || "").indexOf("application/x-www-form-urlencoded") && ot.test(h);
+        var e, s, o, h = r.data, c = r.url, l = r.jsonp !== !1, a = l && st.test(c), v = l && !a && typeof h == "string" && !(r.contentType || "").indexOf("application/x-www-form-urlencoded") && st.test(h);
         if (r.dataTypes[0] === "jsonp" || a || v)
             return e = r.jsonpCallback = i.isFunction(r.jsonpCallback) ? r.jsonpCallback() : r.jsonpCallback,
             s = n[e],
-            a ? r.url = c.replace(ot, "$1" + e) : v ? r.data = h.replace(ot, "$1" + e) : l && (r.url += (eo.test(c) ? "&" : "?") + r.jsonp + "=" + e),
+            a ? r.url = c.replace(st, "$1" + e) : v ? r.data = h.replace(st, "$1" + e) : l && (r.url += (co.test(c) ? "&" : "?") + r.jsonp + "=" + e),
             r.converters["script json"] = function() {
                 return o || i.error(e + " was not called"),
                 o[0]
@@ -5206,7 +4790,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             f.always(function() {
                 n[e] = s;
                 r[e] && (r.jsonpCallback = u.jsonpCallback,
-                su.push(e));
+                au.push(e));
                 o && i.isFunction(s) && s(o[0]);
                 o = s = t
             }),
@@ -5250,22 +4834,21 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     u.insertBefore(i, u.firstChild)
                 },
                 abort: function() {
-                    if (i)
-                        i.onload(0, 1)
+                    i && i.onload(0, 1)
                 }
             }
         }
     });
-    st = n.ActiveXObject ? function() {
+    ht = n.ActiveXObject ? function() {
         for (var n in w)
             w[n](0, 1)
     }
     : !1;
-    hu = 0;
+    vu = 0;
     i.ajaxSettings.xhr = n.ActiveXObject ? function() {
-        return !this.isLocal && cu() || so()
+        return !this.isLocal && di() || ku()
     }
-    : cu,
+    : di,
     function(n) {
         i.extend(i.support, {
             ajax: !!n,
@@ -5295,7 +4878,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                             if (u && (f || o.readyState === 4))
                                 if (u = t,
                                 h && (o.onreadystatechange = i.noop,
-                                st && delete w[h]),
+                                ht && delete w[h]),
                                 f)
                                     o.readyState !== 4 && o.abort();
                                 else {
@@ -5312,7 +4895,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                                     } catch (p) {
                                         a = ""
                                     }
-                                    s || !r.isLocal || r.crossDomain ? s === 1223 && (s = 204) : s = c.text ? 200 : 404
+                                    !s && r.isLocal && !r.crossDomain ? s = c.text ? 200 : 404 : s === 1223 && (s = 204)
                                 }
                         } catch (y) {
                             f || e(-1, y)
@@ -5320,9 +4903,9 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                         c && e(s, a, c, v)
                     }
                     ;
-                    r.async ? o.readyState === 4 ? setTimeout(u, 0) : (h = ++hu,
-                    st && (w || (w = {},
-                    i(n).unload(st)),
+                    r.async ? o.readyState === 4 ? setTimeout(u, 0) : (h = ++vu,
+                    ht && (w || (w = {},
+                    i(n).unload(ht)),
                     w[h] = u),
                     o.onreadystatechange = u) : u()
                 },
@@ -5332,9 +4915,9 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             }
         }
     });
-    var b, ht, ho = /^(?:toggle|show|hide)$/, co = new RegExp("^(?:([-+])=|)(" + nt + ")([a-z%]*)$","i"), lo = /queueHooks$/, ct = [yo], d = {
+    var b, ct, ao = /^(?:toggle|show|hide)$/, vo = new RegExp("^(?:([-+])=|)(" + ft + ")([a-z%]*)$","i"), yo = /queueHooks$/, lt = [nf], d = {
         "*": [function(n, t) {
-            var o, s, r = this.createTween(n, t), e = co.exec(t), h = r.cur(), u = +h || 0, f = 1, c = 20;
+            var o, s, r = this.createTween(n, t), e = vo.exec(t), h = r.cur(), u = +h || 0, f = 1, c = 20;
             if (e) {
                 if (o = +e[2],
                 s = e[3] || (i.cssNumber[n] ? "" : "px"),
@@ -5342,7 +4925,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     u = i.css(r.elem, n, !0) || o || 1;
                     do
                         f = f || ".5",
-                        u = u / f,
+                        u /= f,
                         i.style(r.elem, n, u + s);
                     while (f !== (f = r.cur() / h) && f !== 1 && --c)
                 }
@@ -5354,7 +4937,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         }
         ]
     };
-    i.Animation = i.extend(au, {
+    i.Animation = i.extend(nr, {
         tweener: function(n, t) {
             i.isFunction(n) ? (t = n,
             n = ["*"]) : n = n.split(" ");
@@ -5364,7 +4947,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                 d[r].unshift(t)
         },
         prefilter: function(n, t) {
-            t ? ct.unshift(n) : ct.push(n)
+            t ? lt.unshift(n) : lt.push(n)
         }
     });
     i.Tween = f;
@@ -5397,8 +4980,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         _default: {
             get: function(n) {
                 var t;
-                return n.elem[n.prop] != null && (!n.elem.style || n.elem.style[n.prop] == null) ? n.elem[n.prop] : (t = i.css(n.elem, n.prop, !1, ""),
-                !t || t === "auto" ? 0 : t)
+                return n.elem[n.prop] == null || !!n.elem.style && n.elem.style[n.prop] != null ? (t = i.css(n.elem, n.prop, !1, ""),
+                !t || t === "auto" ? 0 : t) : n.elem[n.prop]
             },
             set: function(n) {
                 i.fx.step[n.prop] ? i.fx.step[n.prop](n) : n.elem.style && (n.elem.style[i.cssProps[n.prop]] != null || i.cssHooks[n.prop]) ? i.style(n.elem, n.prop, n.now + n.unit) : n.elem[n.prop] = n.now
@@ -5413,12 +4996,12 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     i.each(["toggle", "show", "hide"], function(n, t) {
         var r = i.fn[t];
         i.fn[t] = function(u, f, e) {
-            return u == null || typeof u == "boolean" || !n && i.isFunction(u) && i.isFunction(f) ? r.apply(this, arguments) : this.animate(lt(t, !0), u, f, e)
+            return u == null || typeof u == "boolean" || !n && i.isFunction(u) && i.isFunction(f) ? r.apply(this, arguments) : this.animate(rt(t, !0), u, f, e)
         }
     });
     i.fn.extend({
         fadeTo: function(n, t, i, r) {
-            return this.filter(ft).css("opacity", 0).show().end().animate({
+            return this.filter(tt).css("opacity", 0).show().end().animate({
                 opacity: t
             }, n, i, r)
         },
@@ -5426,7 +5009,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             var e = i.isEmptyObject(n)
               , f = i.speed(t, r, u)
               , o = function() {
-                var t = au(this, i.extend({}, n), f);
+                var t = nr(this, i.extend({}, n), f);
                 e && t.stop(!0)
             };
             return e || f.queue === !1 ? this.each(o) : this.queue(f.queue, o)
@@ -5450,7 +5033,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
                     r[t] && r[t].stop && f(r[t]);
                 else
                     for (t in r)
-                        r[t] && r[t].stop && lo.test(t) && f(r[t]);
+                        r[t] && r[t].stop && yo.test(t) && f(r[t]);
                 for (t = e.length; t--; )
                     e[t].elem === this && (n == null || e[t].queue === n) && (e[t].anim.stop(u),
                     o = !1,
@@ -5460,9 +5043,9 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         }
     });
     i.each({
-        slideDown: lt("show"),
-        slideUp: lt("hide"),
-        slideToggle: lt("toggle"),
+        slideDown: rt("show"),
+        slideUp: rt("hide"),
+        slideToggle: rt("toggle"),
         fadeIn: {
             opacity: "show"
         },
@@ -5514,13 +5097,13 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
     }
     ;
     i.fx.timer = function(n) {
-        n() && i.timers.push(n) && !ht && (ht = setInterval(i.fx.tick, i.fx.interval))
+        n() && i.timers.push(n) && !ct && (ct = setInterval(i.fx.tick, i.fx.interval))
     }
     ;
     i.fx.interval = 13;
     i.fx.stop = function() {
-        clearInterval(ht);
-        ht = null
+        clearInterval(ct);
+        ct = null
     }
     ;
     i.fx.speeds = {
@@ -5547,8 +5130,8 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         }, r = this[0], e = r && r.ownerDocument;
         if (e)
             return (o = e.body) === r ? i.offset.bodyOffset(r) : (u = e.documentElement,
-            !i.contains(u, r)) ? f : (typeof r.getBoundingClientRect != "undefined" && (f = r.getBoundingClientRect()),
-            s = vu(e),
+            i.contains(u, r) ? (typeof r.getBoundingClientRect != "undefined" && (f = r.getBoundingClientRect()),
+            s = tr(e),
             h = u.clientTop || o.clientTop || 0,
             c = u.clientLeft || o.clientLeft || 0,
             l = s.pageYOffset || u.scrollTop,
@@ -5556,7 +5139,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
             {
                 top: f.top + l - h,
                 left: f.left + a - c
-            })
+            }) : f)
     }
     ;
     i.offset = {
@@ -5619,7 +5202,7 @@ var lastSuggest, timmer, gl_fLoadChat, gl_ifcH, gl_prevScore, gl_sendRating, gl_
         var u = /Y/.test(r);
         i.fn[n] = function(f) {
             return i.access(this, function(n, f, e) {
-                var o = vu(n);
+                var o = tr(n);
                 if (e === t)
                     return o ? r in o ? o[r] : o.document.documentElement[f] : n[f];
                 o ? o.scrollTo(u ? i(o).scrollLeft() : e, u ? e : i(o).scrollTop()) : n[f] = e
@@ -5671,1398 +5254,1173 @@ $("#back-top a").click(function() {
     }, 800),
     !1
 });
-gl_fLoadChat = !1;
-!function(n) {
-    "use strict";
-    n.matchMedia = n.matchMedia || function(n) {
-        var u, i = n.documentElement, f = i.firstElementChild || i.firstChild, r = n.createElement("body"), t = n.createElement("div");
-        return t.id = "mq-test-1",
-        t.style.cssText = "position:absolute;top:-100em",
-        r.style.background = "none",
-        r.appendChild(t),
-        function(n) {
-            return t.innerHTML = '&shy;<style media="' + n + '"> #mq-test-1 { width: 42px; }<\/style>',
-            i.insertBefore(r, f),
-            u = 42 === t.offsetWidth,
-            i.removeChild(r),
-            {
-                matches: u,
-                media: n
-            }
-        }
-    }(n.document)
-}(this),
+gl_fLoadChat = !1,
 function(n) {
-    "use strict";
-    function p() {
-        y(!0)
-    }
-    var t = {};
-    n.respond = t;
-    t.update = function() {}
-    ;
-    var f = []
-      , tt = function() {
-        var t = !1;
-        try {
-            t = new n.XMLHttpRequest
-        } catch (i) {
-            t = new n.ActiveXObject("Microsoft.XMLHTTP")
-        }
-        return function() {
-            return t
-        }
-    }()
-      , w = function(n, t) {
-        var i = tt();
-        i && (i.open("GET", n, !0),
-        i.onreadystatechange = function() {
-            4 !== i.readyState || 200 !== i.status && 304 !== i.status || t(i.responseText)
-        }
-        ,
-        4 !== i.readyState && i.send(null))
-    };
-    if (t.ajax = w,
-    t.queue = f,
-    t.regex = {
-        media: /@media[^\{]+\{([^\{\}]*\{[^\}\{]*\})+/gi,
-        keyframes: /@(?:\-(?:o|moz|webkit)\-)?keyframes[^\{]+\{(?:[^\{\}]*\{[^\}\{]*\})+[^\}]*\}/gi,
-        urls: /(url\()['"]?([^\/\)'"][^:\)'"]+)['"]?(\))/g,
-        findStyles: /@media *([^\{]+)\{([\S\s]+?)$/,
-        only: /(only\s+)?([a-zA-Z]+)\s?/,
-        minw: /\([\s]*min\-width\s*:[\s]*([\s]*[0-9\.]+)(px|em)[\s]*\)/,
-        maxw: /\([\s]*max\-width\s*:[\s]*([\s]*[0-9\.]+)(px|em)[\s]*\)/
-    },
-    t.mediaQueriesSupported = n.matchMedia && null !== n.matchMedia("only all") && n.matchMedia("only all").matches,
-    !t.mediaQueriesSupported) {
-        var c, b, l, i = n.document, r = i.documentElement, e = [], o = [], u = [], a = {}, k = 30, s = i.getElementsByTagName("head")[0] || r, it = i.getElementsByTagName("base")[0], h = s.getElementsByTagName("link"), v = function() {
-            var u, t = i.createElement("div"), n = i.body, o = r.style.fontSize, e = n && n.style.fontSize, f = !1;
-            return t.style.cssText = "position:absolute;font-size:1em;width:1em",
-            n || (n = f = i.createElement("body"),
-            n.style.background = "none"),
-            r.style.fontSize = "100%",
-            n.style.fontSize = "100%",
-            n.appendChild(t),
-            f && r.insertBefore(n, r.firstChild),
-            u = t.offsetWidth,
-            f ? r.removeChild(n) : n.removeChild(t),
-            r.style.fontSize = o,
-            e && (n.style.fontSize = e),
-            u = l = parseFloat(u)
-        }, y = function(t) {
-            var rt = "clientWidth", ut = r[rt], ft = "CSS1Compat" === i.compatMode && ut || i.body[rt] || ut, p = {}, ct = h[h.length - 1], et = (new Date).getTime(), tt, g, nt, f, it;
-            if (t && c && k > et - c)
-                return n.clearTimeout(b),
-                b = n.setTimeout(y, k),
-                void 0;
-            c = et;
-            for (tt in e)
-                if (e.hasOwnProperty(tt)) {
-                    var a = e[tt]
-                      , w = a.minw
-                      , d = a.maxw
-                      , ot = null === w
-                      , st = null === d
-                      , ht = "em";
-                    w && (w = parseFloat(w) * (w.indexOf(ht) > -1 ? l || v() : 1));
-                    d && (d = parseFloat(d) * (d.indexOf(ht) > -1 ? l || v() : 1));
-                    a.hasquery && (ot && st || !(ot || ft >= w) || !(st || d >= ft)) || (p[a.media] || (p[a.media] = []),
-                    p[a.media].push(o[a.rules]))
-                }
-            for (g in u)
-                u.hasOwnProperty(g) && u[g] && u[g].parentNode === s && s.removeChild(u[g]);
-            u.length = 0;
-            for (nt in p)
-                p.hasOwnProperty(nt) && (f = i.createElement("style"),
-                it = p[nt].join("\n"),
-                f.type = "text/css",
-                f.media = nt,
-                s.insertBefore(f, ct.nextSibling),
-                f.styleSheet ? f.styleSheet.cssText = it : f.appendChild(i.createTextNode(it)),
-                u.push(f))
-        }, d = function(n, i, r) {
-            var h = n.replace(t.regex.keyframes, "").match(t.regex.media), c = h && h.length || 0, l, a, f, v, u, p, w, s;
-            for (i = i.substring(0, i.lastIndexOf("/")),
-            l = function(n) {
-                return n.replace(t.regex.urls, "$1" + i + "$2$3")
+    typeof define == "function" && define.amd ? define(["jquery"], n) : n(jQuery)
+}(function(n) {
+    n.extend(n.fn, {
+        validate: function(t) {
+            if (!this.length) {
+                t && t.debug && window.console && console.warn("Nothing selected, can't validate, returning nothing.");
+                return
             }
-            ,
-            a = !c && r,
-            i.length && (i += "/"),
-            a && (c = 1),
-            f = 0; c > f; f++)
-                for (a ? (v = r,
-                o.push(l(n))) : (v = h[f].match(t.regex.findStyles) && RegExp.$1,
-                o.push(RegExp.$2 && l(RegExp.$2))),
-                p = v.split(","),
-                w = p.length,
-                s = 0; w > s; s++)
-                    u = p[s],
-                    e.push({
-                        media: u.split("(")[0].match(t.regex.only) && RegExp.$2 || "all",
-                        rules: o.length - 1,
-                        hasquery: u.indexOf("(") > -1,
-                        minw: u.match(t.regex.minw) && parseFloat(RegExp.$1) + (RegExp.$2 || ""),
-                        maxw: u.match(t.regex.maxw) && parseFloat(RegExp.$1) + (RegExp.$2 || "")
-                    });
-            y()
-        }, g = function() {
-            if (f.length) {
-                var t = f.shift();
-                w(t.href, function(i) {
-                    d(i, t.href, t.media);
-                    a[t.href] = !0;
-                    n.setTimeout(function() {
-                        g()
-                    }, 0)
+            var i = n.data(this[0], "validator");
+            if (i)
+                return i;
+            if (this.attr("novalidate", "novalidate"),
+            i = new n.validator(t,this[0]),
+            n.data(this[0], "validator", i),
+            i.settings.onsubmit) {
+                this.on("click.validate", ":submit", function(t) {
+                    i.settings.submitHandler && (i.submitButton = t.target);
+                    n(this).hasClass("cancel") && (i.cancelSubmit = !0);
+                    n(this).attr("formnovalidate") !== undefined && (i.cancelSubmit = !0)
+                });
+                this.on("submit.validate", function(t) {
+                    function r() {
+                        var u, r;
+                        return i.settings.submitHandler ? (i.submitButton && (u = n("<input type='hidden'/>").attr("name", i.submitButton.name).val(n(i.submitButton).val()).appendTo(i.currentForm)),
+                        r = i.settings.submitHandler.call(i, i.currentForm, t),
+                        i.submitButton && u.remove(),
+                        r !== undefined) ? r : !1 : !0
+                    }
+                    return (i.settings.debug && t.preventDefault(),
+                    i.cancelSubmit) ? (i.cancelSubmit = !1,
+                    r()) : i.form() ? i.pendingRequest ? (i.formSubmitted = !0,
+                    !1) : r() : (i.focusInvalid(),
+                    !1)
                 })
             }
-        }, nt = function() {
-            for (var r = 0; r < h.length; r++) {
-                var i = h[r]
-                  , t = i.href
-                  , u = i.media
-                  , e = i.rel && "stylesheet" === i.rel.toLowerCase();
-                t && e && !a[t] && (i.styleSheet && i.styleSheet.rawCssText ? (d(i.styleSheet.rawCssText, t, u),
-                a[t] = !0) : (!/^([a-zA-Z:]*\/\/)/.test(t) && !it || t.replace(RegExp.$1, "").split("/")[0] === n.location.host) && ("//" === t.substring(0, 2) && (t = n.location.protocol + t),
-                f.push({
-                    href: t,
-                    media: u
-                })))
-            }
-            g()
-        };
-        nt();
-        t.update = nt;
-        t.getEmValue = v;
-        n.addEventListener ? n.addEventListener("resize", p, !1) : n.attachEvent && n.attachEvent("onresize", p)
-    }
-}(this),
-function(n, t) {
-    function s() {
-        var n = r.elements;
-        return "string" == typeof n ? n.split(" ") : n
-    }
-    function u(n) {
-        var t = a[n[l]];
-        return t || (t = {},
-        o++,
-        n[l] = o,
-        a[o] = t),
-        t
-    }
-    function h(n, r, f) {
-        return (r || (r = t),
-        i) ? r.createElement(n) : (f || (f = u(r)),
-        r = f.cache[n] ? f.cache[n].cloneNode() : p.test(n) ? (f.cache[n] = f.createElem(n)).cloneNode() : f.createElem(n),
-        r.canHaveChildren && !y.test(n) ? f.frag.appendChild(r) : r)
-    }
-    function v(n, t) {
-        t.cache || (t.cache = {},
-        t.createElem = n.createElement,
-        t.createFrag = n.createDocumentFragment,
-        t.frag = t.createFrag());
-        n.createElement = function(i) {
-            return r.shivMethods ? h(i, n, t) : t.createElem(i)
-        }
-        ;
-        n.createDocumentFragment = Function("h,f", "return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&(" + s().join().replace(/[\w\-]+/g, function(n) {
-            return t.createElem(n),
-            t.frag.createElement(n),
-            'c("' + n + '")'
-        }) + ");return n}")(r, t.frag)
-    }
-    function c(n) {
-        var s, o, f;
-        return n || (n = t),
-        s = u(n),
-        !r.shivCSS || e || s.hasCSS || (f = n,
-        o = f.createElement("p"),
-        f = f.getElementsByTagName("head")[0] || f.documentElement,
-        o.innerHTML = "x<style>article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}<\/style>",
-        o = f.insertBefore(o.lastChild, f.firstChild),
-        s.hasCSS = !!o),
-        i || v(n, s),
-        n
-    }
-    var f = n.html5 || {}, y = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i, p = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i, e, l = "_html5shiv", o = 0, a = {}, i, r;
-    (function() {
-        var n, u, r;
-        try {
-            n = t.createElement("a");
-            n.innerHTML = "<xyz><\/xyz>";
-            e = "hidden"in n;
-            (u = 1 == n.childNodes.length) || (t.createElement("a"),
-            r = t.createDocumentFragment(),
-            u = "undefined" == typeof r.cloneNode || "undefined" == typeof r.createDocumentFragment || "undefined" == typeof r.createElement);
-            i = u
-        } catch (f) {
-            i = e = !0
-        }
-    }
-    )();
-    r = {
-        elements: f.elements || "abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video",
-        version: "3.7.0",
-        shivCSS: !1 !== f.shivCSS,
-        supportsUnknownElements: i,
-        shivMethods: !1 !== f.shivMethods,
-        type: "default",
-        shivDocument: c,
-        createElement: h,
-        createDocumentFragment: function(n, r) {
-            if (n || (n = t),
-            i)
-                return n.createDocumentFragment();
-            for (var r = r || u(n), e = r.frag.cloneNode(), f = 0, o = s(), h = o.length; f < h; f++)
-                e.createElement(o[f]);
-            return e
-        }
-    };
-    n.html5 = r;
-    c(t)
-}(this, document);
-"function" != typeof Object.create && (Object.create = function(n) {
-    function t() {}
-    return t.prototype = n,
-    new t
-}
-),
-function(n, t, i) {
-    var r = {
-        init: function(t, i) {
-            this.$elem = n(i);
-            this.options = n.extend({}, n.fn.owlCarousel.options, this.$elem.data(), t);
-            this.userOptions = t;
-            this.loadContent()
+            return i
         },
-        loadContent: function() {
-            function r(n) {
-                var i, r = "";
-                if ("function" == typeof t.options.jsonSuccess)
-                    t.options.jsonSuccess.apply(this, [n]);
-                else {
-                    for (i in n.owl)
-                        n.owl.hasOwnProperty(i) && (r += n.owl[i].item);
-                    t.$elem.html(r)
+        valid: function() {
+            var t, i, r;
+            return n(this[0]).is("form") ? t = this.validate().form() : (r = [],
+            t = !0,
+            i = n(this[0].form).validate(),
+            this.each(function() {
+                t = i.element(this) && t;
+                r = r.concat(i.errorList)
+            }),
+            i.errorList = r),
+            t
+        },
+        rules: function(t, i) {
+            var r = this[0], e, s, f, u, o, h;
+            if (t) {
+                e = n.data(r.form, "validator").settings;
+                s = e.rules;
+                f = n.validator.staticRules(r);
+                switch (t) {
+                case "add":
+                    n.extend(f, n.validator.normalizeRule(i));
+                    delete f.messages;
+                    s[r.name] = f;
+                    i.messages && (e.messages[r.name] = n.extend(e.messages[r.name], i.messages));
+                    break;
+                case "remove":
+                    return i ? (h = {},
+                    n.each(i.split(/\s/), function(t, i) {
+                        h[i] = f[i];
+                        delete f[i];
+                        i === "required" && n(r).removeAttr("aria-required")
+                    }),
+                    h) : (delete s[r.name],
+                    f)
                 }
-                t.logIn()
             }
-            var t = this, i;
-            "function" == typeof t.options.beforeInit && t.options.beforeInit.apply(this, [t.$elem]);
-            "string" == typeof t.options.jsonPath ? (i = t.options.jsonPath,
-            n.getJSON(i, r)) : t.logIn()
+            return u = n.validator.normalizeRules(n.extend({}, n.validator.classRules(r), n.validator.attributeRules(r), n.validator.dataRules(r), n.validator.staticRules(r)), r),
+            u.required && (o = u.required,
+            delete u.required,
+            u = n.extend({
+                required: o
+            }, u),
+            n(r).attr("aria-required", "true")),
+            u.remote && (o = u.remote,
+            delete u.remote,
+            u = n.extend(u, {
+                remote: o
+            })),
+            u
+        }
+    });
+    n.extend(n.expr[":"], {
+        blank: function(t) {
+            return !n.trim("" + n(t).val())
         },
-        logIn: function() {
-            this.$elem.data("owl-originalStyles", this.$elem.attr("style"));
-            this.$elem.data("owl-originalClasses", this.$elem.attr("class"));
-            this.$elem.css({
-                opacity: 0
-            });
-            this.orignalItems = this.options.items;
-            this.checkBrowser();
-            this.wrapperWidth = 0;
-            this.checkVisible = null;
-            this.setVars()
+        filled: function(t) {
+            return !!n.trim("" + n(t).val())
         },
-        setVars: function() {
-            if (0 === this.$elem.children().length)
-                return !1;
-            this.baseClass();
-            this.eventTypes();
-            this.$userItems = this.$elem.children();
-            this.itemsAmount = this.$userItems.length;
-            this.wrapItems();
-            this.$owlItems = this.$elem.find(".owl-item");
-            this.$owlWrapper = this.$elem.find(".owl-wrapper");
-            this.playDirection = "next";
-            this.prevItem = 0;
-            this.prevArr = [0];
-            this.currentItem = 0;
-            this.customEvents();
-            this.onStartup()
-        },
-        onStartup: function() {
-            this.updateItems();
-            this.calculateAll();
-            this.buildControls();
-            this.updateControls();
-            this.response();
-            this.moveEvents();
-            this.stopOnHover();
-            this.owlStatus();
-            !1 !== this.options.transitionStyle && this.transitionTypes(this.options.transitionStyle);
-            !0 === this.options.autoPlay && (this.options.autoPlay = 5e3);
-            this.play();
-            this.$elem.find(".owl-wrapper").css("display", "block");
-            this.$elem.is(":visible") ? this.$elem.css("opacity", 1) : this.watchVisibility();
-            this.onstartup = !1;
-            this.eachMoveUpdate();
-            "function" == typeof this.options.afterInit && this.options.afterInit.apply(this, [this.$elem])
-        },
-        eachMoveUpdate: function() {
-            !0 === this.options.lazyLoad && this.lazyLoad();
-            !0 === this.options.autoHeight && this.autoHeight();
-            this.onVisibleItems();
-            "function" == typeof this.options.afterAction && this.options.afterAction.apply(this, [this.$elem])
-        },
-        updateVars: function() {
-            "function" == typeof this.options.beforeUpdate && this.options.beforeUpdate.apply(this, [this.$elem]);
-            this.watchVisibility();
-            this.updateItems();
-            this.calculateAll();
-            this.updatePosition();
-            this.updateControls();
-            this.eachMoveUpdate();
-            "function" == typeof this.options.afterUpdate && this.options.afterUpdate.apply(this, [this.$elem])
-        },
-        reload: function() {
-            var n = this;
-            t.setTimeout(function() {
-                n.updateVars()
-            }, 0)
-        },
-        watchVisibility: function() {
-            var n = this;
-            if (!1 === n.$elem.is(":visible"))
-                n.$elem.css({
-                    opacity: 0
-                }),
-                t.clearInterval(n.autoPlayInterval),
-                t.clearInterval(n.checkVisible);
-            else
-                return !1;
-            n.checkVisible = t.setInterval(function() {
-                n.$elem.is(":visible") && (n.reload(),
-                n.$elem.animate({
-                    opacity: 1
-                }, 200),
-                t.clearInterval(n.checkVisible))
-            }, 500)
-        },
-        wrapItems: function() {
-            this.$userItems.wrapAll('<div class="owl-wrapper">').wrap('<div class="owl-item"><\/div>');
-            this.$elem.find(".owl-wrapper").wrap('<div class="owl-wrapper-outer">');
-            this.wrapperOuter = this.$elem.find(".owl-wrapper-outer");
-            this.$elem.css("display", "block")
-        },
-        baseClass: function() {
-            var n = this.$elem.hasClass(this.options.baseClass)
-              , t = this.$elem.hasClass(this.options.theme);
-            n || this.$elem.addClass(this.options.baseClass);
-            t || this.$elem.addClass(this.options.theme)
-        },
-        updateItems: function() {
-            var t, i;
-            if (!1 === this.options.responsive)
-                return !1;
-            if (!0 === this.options.singleItem)
-                return this.options.items = this.orignalItems = 1,
-                this.options.itemsCustom = !1,
-                this.options.itemsDesktop = !1,
-                this.options.itemsDesktopSmall = !1,
-                this.options.itemsTablet = !1,
-                this.options.itemsTabletSmall = !1,
-                this.options.itemsMobile = !1;
-            if (t = n(this.options.responsiveBaseWidth).width(),
-            t > (this.options.itemsDesktop[0] || this.orignalItems) && (this.options.items = this.orignalItems),
-            !1 !== this.options.itemsCustom)
-                for (this.options.itemsCustom.sort(function(n, t) {
-                    return n[0] - t[0]
-                }),
-                i = 0; i < this.options.itemsCustom.length; i += 1)
-                    this.options.itemsCustom[i][0] <= t && (this.options.items = this.options.itemsCustom[i][1]);
-            else
-                t <= this.options.itemsDesktop[0] && !1 !== this.options.itemsDesktop && (this.options.items = this.options.itemsDesktop[1]),
-                t <= this.options.itemsDesktopSmall[0] && !1 !== this.options.itemsDesktopSmall && (this.options.items = this.options.itemsDesktopSmall[1]),
-                t <= this.options.itemsTablet[0] && !1 !== this.options.itemsTablet && (this.options.items = this.options.itemsTablet[1]),
-                t <= this.options.itemsTabletSmall[0] && !1 !== this.options.itemsTabletSmall && (this.options.items = this.options.itemsTabletSmall[1]),
-                t <= this.options.itemsMobile[0] && !1 !== this.options.itemsMobile && (this.options.items = this.options.itemsMobile[1]);
-            this.options.items > this.itemsAmount && !0 === this.options.itemsScaleUp && (this.options.items = this.itemsAmount)
-        },
-        response: function() {
-            var i = this, u, r;
-            if (!0 !== i.options.responsive)
-                return !1;
-            r = n(t).width();
-            i.resizer = function() {
-                n(t).width() !== r && (!1 !== i.options.autoPlay && t.clearInterval(i.autoPlayInterval),
-                t.clearTimeout(u),
-                u = t.setTimeout(function() {
-                    r = n(t).width();
-                    i.updateVars()
-                }, i.options.responsiveRefreshRate))
-            }
-            ;
-            n(t).resize(i.resizer)
-        },
-        updatePosition: function() {
-            this.jumpTo(this.currentItem);
-            !1 !== this.options.autoPlay && this.checkAp()
-        },
-        appendItemsSizes: function() {
-            var t = this
-              , i = 0
-              , r = t.itemsAmount - t.options.items;
-            t.$owlItems.each(function(u) {
-                var f = n(this);
-                f.css({
-                    width: t.itemWidth
-                }).data("owl-item", Number(u));
-                (0 == u % t.options.items || u === r) && (u > r || (i += 1));
-                f.data("owl-roundPages", i)
+        unchecked: function(t) {
+            return !n(t).prop("checked")
+        }
+    });
+    n.validator = function(t, i) {
+        this.settings = n.extend(!0, {}, n.validator.defaults, t);
+        this.currentForm = i;
+        this.init()
+    }
+    ;
+    n.validator.format = function(t, i) {
+        return arguments.length === 1 ? function() {
+            var i = n.makeArray(arguments);
+            return i.unshift(t),
+            n.validator.format.apply(this, i)
+        }
+        : (arguments.length > 2 && i.constructor !== Array && (i = n.makeArray(arguments).slice(1)),
+        i.constructor !== Array && (i = [i]),
+        n.each(i, function(n, i) {
+            t = t.replace(new RegExp("\\{" + n + "\\}","g"), function() {
+                return i
             })
+        }),
+        t)
+    }
+    ;
+    n.extend(n.validator, {
+        defaults: {
+            messages: {},
+            groups: {},
+            rules: {},
+            errorClass: "error",
+            validClass: "valid",
+            errorElement: "label",
+            focusCleanup: !1,
+            focusInvalid: !0,
+            errorContainer: n([]),
+            errorLabelContainer: n([]),
+            onsubmit: !0,
+            ignore: ":hidden",
+            ignoreTitle: !1,
+            onfocusin: function(n) {
+                this.lastActive = n;
+                this.settings.focusCleanup && (this.settings.unhighlight && this.settings.unhighlight.call(this, n, this.settings.errorClass, this.settings.validClass),
+                this.hideThese(this.errorsFor(n)))
+            },
+            onfocusout: function(n) {
+                !this.checkable(n) && (n.name in this.submitted || !this.optional(n)) && this.element(n)
+            },
+            onkeyup: function(t, i) {
+                (i.which !== 9 || this.elementValue(t) !== "") && n.inArray(i.keyCode, [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144, 225]) === -1 && (t.name in this.submitted || t === this.lastElement) && this.element(t)
+            },
+            onclick: function(n) {
+                n.name in this.submitted ? this.element(n) : n.parentNode.name in this.submitted && this.element(n.parentNode)
+            },
+            highlight: function(t, i, r) {
+                t.type === "radio" ? this.findByName(t.name).addClass(i).removeClass(r) : n(t).addClass(i).removeClass(r)
+            },
+            unhighlight: function(t, i, r) {
+                t.type === "radio" ? this.findByName(t.name).removeClass(i).addClass(r) : n(t).removeClass(i).addClass(r)
+            }
         },
-        appendWrapperSizes: function() {
-            this.$owlWrapper.css({
-                width: this.$owlItems.length * this.itemWidth * 2,
-                left: 0
-            });
-            this.appendItemsSizes()
+        setDefaults: function(t) {
+            n.extend(n.validator.defaults, t)
         },
-        calculateAll: function() {
-            this.calculateWidth();
-            this.appendWrapperSizes();
-            this.loops();
-            this.max()
+        messages: {
+            required: "This field is required.",
+            remote: "Please fix this field.",
+            email: "Please enter a valid email address.",
+            url: "Please enter a valid URL.",
+            date: "Please enter a valid date.",
+            dateISO: "Please enter a valid date ( ISO ).",
+            number: "Please enter a valid number.",
+            digits: "Please enter only digits.",
+            creditcard: "Please enter a valid credit card number.",
+            equalTo: "Please enter the same value again.",
+            maxlength: n.validator.format("Please enter no more than {0} characters."),
+            minlength: n.validator.format("Please enter at least {0} characters."),
+            rangelength: n.validator.format("Please enter a value between {0} and {1} characters long."),
+            range: n.validator.format("Please enter a value between {0} and {1}."),
+            max: n.validator.format("Please enter a value less than or equal to {0}."),
+            min: n.validator.format("Please enter a value greater than or equal to {0}.")
         },
-        calculateWidth: function() {
-            this.itemWidth = Math.round(this.$elem.width() / this.options.items)
+        autoCreateRanges: !1,
+        prototype: {
+            init: function() {
+                function i(t) {
+                    var r = n.data(this.form, "validator")
+                      , u = "on" + t.type.replace(/^validate/, "")
+                      , i = r.settings;
+                    i[u] && !n(this).is(i.ignore) && i[u].call(r, this, t)
+                }
+                this.labelContainer = n(this.settings.errorLabelContainer);
+                this.errorContext = this.labelContainer.length && this.labelContainer || n(this.currentForm);
+                this.containers = n(this.settings.errorContainer).add(this.settings.errorLabelContainer);
+                this.submitted = {};
+                this.valueCache = {};
+                this.pendingRequest = 0;
+                this.pending = {};
+                this.invalid = {};
+                this.reset();
+                var r = this.groups = {}, t;
+                n.each(this.settings.groups, function(t, i) {
+                    typeof i == "string" && (i = i.split(/\s/));
+                    n.each(i, function(n, i) {
+                        r[i] = t
+                    })
+                });
+                t = this.settings.rules;
+                n.each(t, function(i, r) {
+                    t[i] = n.validator.normalizeRule(r)
+                });
+                n(this.currentForm).on("focusin.validate focusout.validate keyup.validate", ":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], [type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], [type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], [type='radio'], [type='checkbox']", i).on("click.validate", "select, option, [type='radio'], [type='checkbox']", i);
+                if (this.settings.invalidHandler)
+                    n(this.currentForm).on("invalid-form.validate", this.settings.invalidHandler);
+                n(this.currentForm).find("[required], [data-rule-required], .required").attr("aria-required", "true")
+            },
+            form: function() {
+                return this.checkForm(),
+                n.extend(this.submitted, this.errorMap),
+                this.invalid = n.extend({}, this.errorMap),
+                this.valid() || n(this.currentForm).triggerHandler("invalid-form", [this]),
+                this.showErrors(),
+                this.valid()
+            },
+            checkForm: function() {
+                this.prepareForm();
+                for (var n = 0, t = this.currentElements = this.elements(); t[n]; n++)
+                    this.check(t[n]);
+                return this.valid()
+            },
+            element: function(t) {
+                var u = this.clean(t)
+                  , i = this.validationTargetFor(u)
+                  , r = !0;
+                return this.lastElement = i,
+                i === undefined ? delete this.invalid[u.name] : (this.prepareElement(i),
+                this.currentElements = n(i),
+                r = this.check(i) !== !1,
+                r ? delete this.invalid[i.name] : this.invalid[i.name] = !0),
+                n(t).attr("aria-invalid", !r),
+                this.numberOfInvalids() || (this.toHide = this.toHide.add(this.containers)),
+                this.showErrors(),
+                r
+            },
+            showErrors: function(t) {
+                if (t) {
+                    n.extend(this.errorMap, t);
+                    this.errorList = [];
+                    for (var i in t)
+                        this.errorList.push({
+                            message: t[i],
+                            element: this.findByName(i)[0]
+                        });
+                    this.successList = n.grep(this.successList, function(n) {
+                        return !(n.name in t)
+                    })
+                }
+                this.settings.showErrors ? this.settings.showErrors.call(this, this.errorMap, this.errorList) : this.defaultShowErrors()
+            },
+            resetForm: function() {
+                n.fn.resetForm && n(this.currentForm).resetForm();
+                this.submitted = {};
+                this.lastElement = null;
+                this.prepareForm();
+                this.hideErrors();
+                var t, i = this.elements().removeData("previousValue").removeAttr("aria-invalid");
+                if (this.settings.unhighlight)
+                    for (t = 0; i[t]; t++)
+                        this.settings.unhighlight.call(this, i[t], this.settings.errorClass, "");
+                else
+                    i.removeClass(this.settings.errorClass)
+            },
+            numberOfInvalids: function() {
+                return this.objectLength(this.invalid)
+            },
+            objectLength: function(n) {
+                var t = 0;
+                for (var i in n)
+                    t++;
+                return t
+            },
+            hideErrors: function() {
+                this.hideThese(this.toHide)
+            },
+            hideThese: function(n) {
+                n.not(this.containers).text("");
+                this.addWrapper(n).hide()
+            },
+            valid: function() {
+                return this.size() === 0
+            },
+            size: function() {
+                return this.errorList.length
+            },
+            focusInvalid: function() {
+                if (this.settings.focusInvalid)
+                    try {
+                        n(this.findLastActive() || this.errorList.length && this.errorList[0].element || []).filter(":visible").focus().trigger("focusin")
+                    } catch (t) {}
+            },
+            findLastActive: function() {
+                var t = this.lastActive;
+                return t && n.grep(this.errorList, function(n) {
+                    return n.element.name === t.name
+                }).length === 1 && t
+            },
+            elements: function() {
+                var t = this
+                  , i = {};
+                return n(this.currentForm).find("input, select, textarea").not(":submit, :reset, :image, :disabled").not(this.settings.ignore).filter(function() {
+                    return (!this.name && t.settings.debug && window.console && console.error("%o has no name assigned", this),
+                    this.name in i || !t.objectLength(n(this).rules())) ? !1 : (i[this.name] = !0,
+                    !0)
+                })
+            },
+            clean: function(t) {
+                return n(t)[0]
+            },
+            errors: function() {
+                var t = this.settings.errorClass.split(" ").join(".");
+                return n(this.settings.errorElement + "." + t, this.errorContext)
+            },
+            reset: function() {
+                this.successList = [];
+                this.errorList = [];
+                this.errorMap = {};
+                this.toShow = n([]);
+                this.toHide = n([]);
+                this.currentElements = n([])
+            },
+            prepareForm: function() {
+                this.reset();
+                this.toHide = this.errors().add(this.containers)
+            },
+            prepareElement: function(n) {
+                this.reset();
+                this.toHide = this.errorsFor(n)
+            },
+            elementValue: function(t) {
+                var i, u = n(t), r = t.type;
+                return r === "radio" || r === "checkbox" ? this.findByName(t.name).filter(":checked").val() : r === "number" && typeof t.validity != "undefined" ? t.validity.badInput ? !1 : u.val() : (i = u.val(),
+                typeof i == "string") ? i.replace(/\r/g, "") : i
+            },
+            check: function(t) {
+                t = this.validationTargetFor(this.clean(t));
+                var r = n(t).rules(), s = n.map(r, function(n, t) {
+                    return t
+                }).length, o = !1, h = this.elementValue(t), u, f, i;
+                for (f in r) {
+                    i = {
+                        method: f,
+                        parameters: r[f]
+                    };
+                    try {
+                        if (u = n.validator.methods[f].call(this, h, t, i.parameters),
+                        u === "dependency-mismatch" && s === 1) {
+                            o = !0;
+                            continue
+                        }
+                        if (o = !1,
+                        u === "pending") {
+                            this.toHide = this.toHide.not(this.errorsFor(t));
+                            return
+                        }
+                        if (!u)
+                            return this.formatAndAdd(t, i),
+                            !1
+                    } catch (e) {
+                        this.settings.debug && window.console && console.log("Exception occurred when checking element " + t.id + ", check the '" + i.method + "' method.", e);
+                        e instanceof TypeError && (e.message += ".  Exception occurred when checking element " + t.id + ", check the '" + i.method + "' method.");
+                        throw e;
+                    }
+                }
+                if (!o)
+                    return this.objectLength(r) && this.successList.push(t),
+                    !0
+            },
+            customDataMessage: function(t, i) {
+                return n(t).data("msg" + i.charAt(0).toUpperCase() + i.substring(1).toLowerCase()) || n(t).data("msg")
+            },
+            customMessage: function(n, t) {
+                var i = this.settings.messages[n];
+                return i && (i.constructor === String ? i : i[t])
+            },
+            findDefined: function() {
+                for (var n = 0; n < arguments.length; n++)
+                    if (arguments[n] !== undefined)
+                        return arguments[n];
+                return undefined
+            },
+            defaultMessage: function(t, i) {
+                return this.findDefined(this.customMessage(t.name, i), this.customDataMessage(t, i), !this.settings.ignoreTitle && t.title || undefined, n.validator.messages[i], "<strong>Warning: No message defined for " + t.name + "<\/strong>")
+            },
+            formatAndAdd: function(t, i) {
+                var r = this.defaultMessage(t, i.method)
+                  , u = /\$?\{(\d+)\}/g;
+                typeof r == "function" ? r = r.call(this, i.parameters, t) : u.test(r) && (r = n.validator.format(r.replace(u, "{$1}"), i.parameters));
+                this.errorList.push({
+                    message: r,
+                    element: t,
+                    method: i.method
+                });
+                this.errorMap[t.name] = r;
+                this.submitted[t.name] = r
+            },
+            addWrapper: function(n) {
+                return this.settings.wrapper && (n = n.add(n.parent(this.settings.wrapper))),
+                n
+            },
+            defaultShowErrors: function() {
+                for (var i, t, n = 0; this.errorList[n]; n++)
+                    t = this.errorList[n],
+                    this.settings.highlight && this.settings.highlight.call(this, t.element, this.settings.errorClass, this.settings.validClass),
+                    this.showLabel(t.element, t.message);
+                if (this.errorList.length && (this.toShow = this.toShow.add(this.containers)),
+                this.settings.success)
+                    for (n = 0; this.successList[n]; n++)
+                        this.showLabel(this.successList[n]);
+                if (this.settings.unhighlight)
+                    for (n = 0,
+                    i = this.validElements(); i[n]; n++)
+                        this.settings.unhighlight.call(this, i[n], this.settings.errorClass, this.settings.validClass);
+                this.toHide = this.toHide.not(this.toShow);
+                this.hideErrors();
+                this.addWrapper(this.toShow).show()
+            },
+            validElements: function() {
+                return this.currentElements.not(this.invalidElements())
+            },
+            invalidElements: function() {
+                return n(this.errorList).map(function() {
+                    return this.element
+                })
+            },
+            showLabel: function(t, i) {
+                var u, o, e, r = this.errorsFor(t), s = this.idOrName(t), f = n(t).attr("aria-describedby");
+                r.length ? (r.removeClass(this.settings.validClass).addClass(this.settings.errorClass),
+                r.html(i)) : (r = n("<" + this.settings.errorElement + ">").attr("id", s + "-error").addClass(this.settings.errorClass).html(i || ""),
+                u = r,
+                this.settings.wrapper && (u = r.hide().show().wrap("<" + this.settings.wrapper + "/>").parent()),
+                this.labelContainer.length ? this.labelContainer.append(u) : this.settings.errorPlacement ? this.settings.errorPlacement(u, n(t)) : u.insertAfter(t),
+                r.is("label") ? r.attr("for", s) : r.parents("label[for='" + s + "']").length === 0 && (e = r.attr("id").replace(/(:|\.|\[|\]|\$)/g, "\\$1"),
+                f ? f.match(new RegExp("\\b" + e + "\\b")) || (f += " " + e) : f = e,
+                n(t).attr("aria-describedby", f),
+                o = this.groups[t.name],
+                o && n.each(this.groups, function(t, i) {
+                    i === o && n("[name='" + t + "']", this.currentForm).attr("aria-describedby", r.attr("id"))
+                })));
+                !i && this.settings.success && (r.text(""),
+                typeof this.settings.success == "string" ? r.addClass(this.settings.success) : this.settings.success(r, t));
+                this.toShow = this.toShow.add(r)
+            },
+            errorsFor: function(t) {
+                var r = this.idOrName(t)
+                  , u = n(t).attr("aria-describedby")
+                  , i = "label[for='" + r + "'], label[for='" + r + "'] *";
+                return u && (i = i + ", #" + u.replace(/\s+/g, ", #")),
+                this.errors().filter(i)
+            },
+            idOrName: function(n) {
+                return this.groups[n.name] || (this.checkable(n) ? n.name : n.id || n.name)
+            },
+            validationTargetFor: function(t) {
+                return this.checkable(t) && (t = this.findByName(t.name)),
+                n(t).not(this.settings.ignore)[0]
+            },
+            checkable: function(n) {
+                return /radio|checkbox/i.test(n.type)
+            },
+            findByName: function(t) {
+                return n(this.currentForm).find("[name='" + t + "']")
+            },
+            getLength: function(t, i) {
+                switch (i.nodeName.toLowerCase()) {
+                case "select":
+                    return n("option:selected", i).length;
+                case "input":
+                    if (this.checkable(i))
+                        return this.findByName(i.name).filter(":checked").length
+                }
+                return t.length
+            },
+            depend: function(n, t) {
+                return this.dependTypes[typeof n] ? this.dependTypes[typeof n](n, t) : !0
+            },
+            dependTypes: {
+                boolean: function(n) {
+                    return n
+                },
+                string: function(t, i) {
+                    return !!n(t, i.form).length
+                },
+                "function": function(n, t) {
+                    return n(t)
+                }
+            },
+            optional: function(t) {
+                var i = this.elementValue(t);
+                return !n.validator.methods.required.call(this, i, t) && "dependency-mismatch"
+            },
+            startRequest: function(n) {
+                this.pending[n.name] || (this.pendingRequest++,
+                this.pending[n.name] = !0)
+            },
+            stopRequest: function(t, i) {
+                this.pendingRequest--;
+                this.pendingRequest < 0 && (this.pendingRequest = 0);
+                delete this.pending[t.name];
+                i && this.pendingRequest === 0 && this.formSubmitted && this.form() ? (n(this.currentForm).submit(),
+                this.formSubmitted = !1) : !i && this.pendingRequest === 0 && this.formSubmitted && (n(this.currentForm).triggerHandler("invalid-form", [this]),
+                this.formSubmitted = !1)
+            },
+            previousValue: function(t) {
+                return n.data(t, "previousValue") || n.data(t, "previousValue", {
+                    old: null,
+                    valid: !0,
+                    message: this.defaultMessage(t, "remote")
+                })
+            },
+            destroy: function() {
+                this.resetForm();
+                n(this.currentForm).off(".validate").removeData("validator")
+            }
         },
-        max: function() {
-            var n = -1 * (this.itemsAmount * this.itemWidth - this.options.items * this.itemWidth);
-            return this.options.items > this.itemsAmount ? this.maximumPixels = n = this.maximumItem = 0 : (this.maximumItem = this.itemsAmount - this.options.items,
-            this.maximumPixels = n),
-            n
+        classRuleSettings: {
+            required: {
+                required: !0
+            },
+            email: {
+                email: !0
+            },
+            url: {
+                url: !0
+            },
+            date: {
+                date: !0
+            },
+            dateISO: {
+                dateISO: !0
+            },
+            number: {
+                number: !0
+            },
+            digits: {
+                digits: !0
+            },
+            creditcard: {
+                creditcard: !0
+            }
         },
-        min: function() {
+        addClassRules: function(t, i) {
+            t.constructor === String ? this.classRuleSettings[t] = i : n.extend(this.classRuleSettings, t)
+        },
+        classRules: function(t) {
+            var i = {}
+              , r = n(t).attr("class");
+            return r && n.each(r.split(" "), function() {
+                this in n.validator.classRuleSettings && n.extend(i, n.validator.classRuleSettings[this])
+            }),
+            i
+        },
+        normalizeAttributeRule: function(n, t, i, r) {
+            /min|max/.test(i) && (t === null || /number|range|text/.test(t)) && (r = Number(r),
+            isNaN(r) && (r = undefined));
+            r || r === 0 ? n[i] = r : t === i && t !== "range" && (n[i] = !0)
+        },
+        attributeRules: function(t) {
+            var r = {}, f = n(t), e = t.getAttribute("type"), u, i;
+            for (u in n.validator.methods)
+                u === "required" ? (i = t.getAttribute(u),
+                i === "" && (i = !0),
+                i = !!i) : i = f.attr(u),
+                this.normalizeAttributeRule(r, e, u, i);
+            return r.maxlength && /-1|2147483647|524288/.test(r.maxlength) && delete r.maxlength,
+            r
+        },
+        dataRules: function(t) {
+            var r = {}, f = n(t), e = t.getAttribute("type"), i, u;
+            for (i in n.validator.methods)
+                u = f.data("rule" + i.charAt(0).toUpperCase() + i.substring(1).toLowerCase()),
+                this.normalizeAttributeRule(r, e, i, u);
+            return r
+        },
+        staticRules: function(t) {
+            var i = {}
+              , r = n.data(t.form, "validator");
+            return r.settings.rules && (i = n.validator.normalizeRule(r.settings.rules[t.name]) || {}),
+            i
+        },
+        normalizeRules: function(t, i) {
+            return n.each(t, function(r, u) {
+                if (u === !1) {
+                    delete t[r];
+                    return
+                }
+                if (u.param || u.depends) {
+                    var f = !0;
+                    switch (typeof u.depends) {
+                    case "string":
+                        f = !!n(u.depends, i.form).length;
+                        break;
+                    case "function":
+                        f = u.depends.call(i, i)
+                    }
+                    f ? t[r] = u.param !== undefined ? u.param : !0 : delete t[r]
+                }
+            }),
+            n.each(t, function(r, u) {
+                t[r] = n.isFunction(u) ? u(i) : u
+            }),
+            n.each(["minlength", "maxlength"], function() {
+                t[this] && (t[this] = Number(t[this]))
+            }),
+            n.each(["rangelength", "range"], function() {
+                var i;
+                t[this] && (n.isArray(t[this]) ? t[this] = [Number(t[this][0]), Number(t[this][1])] : typeof t[this] == "string" && (i = t[this].replace(/[\[\]]/g, "").split(/[\s,]+/),
+                t[this] = [Number(i[0]), Number(i[1])]))
+            }),
+            n.validator.autoCreateRanges && (t.min != null && t.max != null && (t.range = [t.min, t.max],
+            delete t.min,
+            delete t.max),
+            t.minlength != null && t.maxlength != null && (t.rangelength = [t.minlength, t.maxlength],
+            delete t.minlength,
+            delete t.maxlength)),
+            t
+        },
+        normalizeRule: function(t) {
+            if (typeof t == "string") {
+                var i = {};
+                n.each(t.split(/\s/), function() {
+                    i[this] = !0
+                });
+                t = i
+            }
+            return t
+        },
+        addMethod: function(t, i, r) {
+            n.validator.methods[t] = i;
+            n.validator.messages[t] = r !== undefined ? r : n.validator.messages[t];
+            i.length < 3 && n.validator.addClassRules(t, n.validator.normalizeRule(t))
+        },
+        methods: {
+            required: function(t, i, r) {
+                if (!this.depend(r, i))
+                    return "dependency-mismatch";
+                if (i.nodeName.toLowerCase() === "select") {
+                    var u = n(i).val();
+                    return u && u.length > 0
+                }
+                return this.checkable(i) ? this.getLength(t, i) > 0 : t.length > 0
+            },
+            email: function(n, t) {
+                return this.optional(t) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(n)
+            },
+            url: function(n, t) {
+                return this.optional(t) || /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})).?)(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(n)
+            },
+            date: function(n, t) {
+                return this.optional(t) || !/Invalid|NaN/.test(new Date(n).toString())
+            },
+            dateISO: function(n, t) {
+                return this.optional(t) || /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(n)
+            },
+            number: function(n, t) {
+                return this.optional(t) || /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(n)
+            },
+            digits: function(n, t) {
+                return this.optional(t) || /^\d+$/.test(n)
+            },
+            creditcard: function(n, t) {
+                if (this.optional(t))
+                    return "dependency-mismatch";
+                if (/[^0-9 \-]+/.test(n))
+                    return !1;
+                var f = 0, i = 0, u = !1, r, e;
+                if (n = n.replace(/\D/g, ""),
+                n.length < 13 || n.length > 19)
+                    return !1;
+                for (r = n.length - 1; r >= 0; r--)
+                    e = n.charAt(r),
+                    i = parseInt(e, 10),
+                    u && (i *= 2) > 9 && (i -= 9),
+                    f += i,
+                    u = !u;
+                return f % 10 == 0
+            },
+            minlength: function(t, i, r) {
+                var u = n.isArray(t) ? t.length : this.getLength(t, i);
+                return this.optional(i) || u >= r
+            },
+            maxlength: function(t, i, r) {
+                var u = n.isArray(t) ? t.length : this.getLength(t, i);
+                return this.optional(i) || u <= r
+            },
+            rangelength: function(t, i, r) {
+                var u = n.isArray(t) ? t.length : this.getLength(t, i);
+                return this.optional(i) || u >= r[0] && u <= r[1]
+            },
+            min: function(n, t, i) {
+                return this.optional(t) || n >= i
+            },
+            max: function(n, t, i) {
+                return this.optional(t) || n <= i
+            },
+            range: function(n, t, i) {
+                return this.optional(t) || n >= i[0] && n <= i[1]
+            },
+            equalTo: function(t, i, r) {
+                var u = n(r);
+                if (this.settings.onfocusout)
+                    u.off(".validate-equalTo").on("blur.validate-equalTo", function() {
+                        n(i).valid()
+                    });
+                return t === u.val()
+            },
+            remote: function(t, i, r) {
+                if (this.optional(i))
+                    return "dependency-mismatch";
+                var f = this.previousValue(i), u, e;
+                return (this.settings.messages[i.name] || (this.settings.messages[i.name] = {}),
+                f.originalMessage = this.settings.messages[i.name].remote,
+                this.settings.messages[i.name].remote = f.message,
+                r = typeof r == "string" && {
+                    url: r
+                } || r,
+                f.old === t) ? f.valid : (f.old = t,
+                u = this,
+                this.startRequest(i),
+                e = {},
+                e[i.name] = t,
+                n.ajax(n.extend(!0, {
+                    mode: "abort",
+                    port: "validate" + i.name,
+                    dataType: "json",
+                    data: e,
+                    context: u.currentForm,
+                    success: function(r) {
+                        var o = r === !0 || r === "true", s, e, h;
+                        u.settings.messages[i.name].remote = f.originalMessage;
+                        o ? (h = u.formSubmitted,
+                        u.prepareElement(i),
+                        u.formSubmitted = h,
+                        u.successList.push(i),
+                        delete u.invalid[i.name],
+                        u.showErrors()) : (s = {},
+                        e = r || u.defaultMessage(i, "remote"),
+                        s[i.name] = f.message = n.isFunction(e) ? e(t) : e,
+                        u.invalid[i.name] = !0,
+                        u.showErrors(s));
+                        f.valid = o;
+                        u.stopRequest(i, o)
+                    }
+                }, r)),
+                "pending")
+            }
+        }
+    });
+    var t = {}, i;
+    n.ajaxPrefilter ? n.ajaxPrefilter(function(n, i, r) {
+        var u = n.port;
+        n.mode === "abort" && (t[u] && t[u].abort(),
+        t[u] = r)
+    }) : (i = n.ajax,
+    n.ajax = function(r) {
+        var f = ("mode"in r ? r : n.ajaxSettings).mode
+          , u = ("port"in r ? r : n.ajaxSettings).port;
+        return f === "abort" ? (t[u] && t[u].abort(),
+        t[u] = i.apply(this, arguments),
+        t[u]) : i.apply(this, arguments)
+    }
+    )
+});
+var domainTracking = ""
+  , eventCategory = "CartV4"
+  , eventAction = {
+    click: "click",
+    detail: "detail",
+    add: "add",
+    remove: "remove",
+    checkout: "checkout",
+    checkout_option: "checkout_option",
+    purchase: "purchase",
+    refund: "refund",
+    promo_click: "promo_click"
+}
+  , eventLabel = {
+    viewCheckout: "viewCheckout",
+    updateColor: "update color",
+    updateQuantity: "update quantity",
+    useCoupon: "use Coupon",
+    useVat: "use VAT",
+    shipatHome: "ship at home",
+    shipatHomeclickProvince: "ship at home click province ",
+    shipatHomeclickDistict: "ship at home click distict",
+    shipatHomeclickDay: "ship at home click day",
+    shipatHomeclickHour: "ship at home click hour",
+    shipatHomeclickCard: "ship at home click card",
+    shipatStore: "ship at store",
+    shipatStoreclickProvince: "ship at store click province ",
+    shipatStoreclickDistict: "ship at store click distict",
+    shipatStoreclickStore: "ship at store click store",
+    shipatStoreclickStoreMore: "ship at store click store more",
+    shipatStoreclickDay: "ship at store click day",
+    buymore: "buy more",
+    buyoffline: " buy offline",
+    buyonline: " buy online",
+    buyonlineatm: " buy online atm",
+    buyonlinevisa: " buy online visa",
+    buyonlineback: " buy online back",
+    updateUser: "update user",
+    technicalSupportShiping: "technical support shiping"
+}
+  , productga = {};
+cartConfig = {
+    colorclicksubmit: !0,
+    allclicksubmit: !1,
+    linksubmitorder: "/aj/OrderV4/CartOrderSubmit",
+    link_store_loaddistict: "/aj/OrderV4/GetDistrictStoreByProvince",
+    link_store_loadprovince: "/aj/OrderV4/GetProvinceStore",
+    link_loadstore: "/aj/OrderV4/LoadAllStoreByProductCode"
+};
+$(document).ready(function() {
+    $(".malefemale label").click(function() {
+        $(this).hasClass("choose") || ($(".malefemale label.choose").removeClass("choose"),
+        $(this).addClass("choose"),
+        $(this).hasClass("anh") ? $("#BillingAddress_iGender").val("1") : $("#BillingAddress_iGender").val("0"),
+        $("#BillingAddress_iGender-error").remove(),
+        updateInfoTmp())
+    });
+    $("input.saveinfo").on("input", function() {
+        updateInfoTmp()
+    });
+    $(".address label").click(function() {
+        (ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHome),
+        ganew_stepCart(2, "shipatHome"),
+        $(".boxCompany").show(),
+        $(this).hasClass("choose")) || ($(".area_other div label.choose").removeClass("choose"),
+        $(this).addClass("choose"),
+        ShowTabHome(),
+        $(".cathe").hasClass("check") && $(".payonline").hide(),
+        $("body,html").animate({
+            scrollTop: $(".address").position().top
+        }, 600),
+        $(".showtimeship_address .listdate span:first").click())
+    });
+    $(".supermarket label").click(function() {
+        (ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStore),
+        ganew_stepCart(2, "shipatStore"),
+        $(".boxCompany").show(),
+        $(this).hasClass("choose")) || ($(".area_other div label.choose").removeClass("choose"),
+        $(this).addClass("choose"),
+        ShowTabStore(),
+        flag_firstloadstore && LoadStore(),
+        flag_firstloadstore = !1,
+        $(".payonline").show(),
+        $("body,html").animate({
+            scrollTop: $(".supermarket").position().top
+        }, 600))
+    });
+    $(".city").click(function() {
+        $(".layer").not($(this).next()).hide();
+        $(this).next().slideToggle()
+    });
+    $(".dist").click(function() {
+        $(".layer").not($(this).next()).hide();
+        $(this).next().slideToggle()
+    });
+    $(".firstlayer").click(function() {
+        $(".layer").not($(this).next()).hide();
+        $(this).next().slideToggle()
+    });
+    $(".htkt").click(function() {
+        $(this).toggleClass("check");
+        $(this).hasClass("check") ? (ganew_sendEvent(eventCategory, eventAction.click, eventLabel.technicalSupportShiping),
+        $("#IsTechSupportShiper").val(1)) : $("#IsTechSupportShiper").val(0)
+    });
+    $(".cathe").click(function() {
+        $(this).toggleClass("check");
+        $(this).hasClass("check") ? (ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatHomeclickCard),
+        $("#PaymentMethod").val(1)) : $("#PaymentMethod").val(0);
+        $(".payonline").slideToggle()
+    });
+    $(".vat").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.useVat);
+        $(this).toggleClass("check");
+        $(".infocompany").slideToggle(function() {
+            $(".infocompany input").prop("disabled", !$(".infocompany").is(":visible"))
+        })
+    });
+    $(".payonline div").click(function() {
+        if (ganew_sendEvent(eventCategory, eventAction.click, eventLabel.buyonline),
+        $(".message").html(""),
+        parseInt($("#TotalMoneyAll").val()) > 5e7)
+            return $(".message").html("Rất tiếc, hiện tại TGDĐ chỉ hỗ trợ thanh toán trực tuyến với những đơn hàng có giá trị nhỏ hơn 50.000.000đ"),
+            !1;
+        $(".choosepayment").hide();
+        $(".onlinemethod").show();
+        $(".atm").show();
+        $(".visa").show()
+    });
+    $(".onlinemethod .rechoose").click(function() {
+        $(".choosepayment").show();
+        $(".onlinemethod").hide();
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.buyonlineback)
+    });
+    $(".onlinemethod .atm").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.buyonlineatm);
+        ganew_stepCart(4, "atm");
+        $("#PaymentMethod").val(3);
+        CheckOrderValidateNew()
+    });
+    $(".onlinemethod .visa").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.buyonlinevisa);
+        ganew_stepCart(4, "buyonlinevisa");
+        $("#PaymentMethod").val(2);
+        CheckOrderValidateNew()
+    });
+    $(".payoffline").click(function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.buyoffline);
+        ganew_stepCart(4, "buyoffline");
+        $("#PaymentMethod").val(0);
+        CheckOrderValidateNew()
+    });
+    AddEventOrderAccessory();
+    AddEventAtHome();
+    AddEventAtStore();
+    $(".searchlocal input[type=text]").live("keyup", function() {
+        var n = this.value;
+        $(this).parents(".searchlocal").next().find("a").each(function() {
+            var t = $(this).text()
+              , i = /[\-\[\]{}()*+?.,\\\^$|#\s]/g
+              , r = new RegExp(n.replace(i, "\\$&"),"gi")
+              , u = new RegExp(locdau(n).replace(i, "\\$&"),"gi");
+            t.search(r) !== -1 || locdau(t).search(r) !== -1 || locdau(t).search(u) !== -1 ? $(this).show() : $(this).hide()
+        })
+    });
+    $(".searchstore input[type=text]").live("keyup", function() {
+        var n = this.value;
+        n.length > 0 ? $(".listmarket").addClass("searchs") : $(".listmarket").removeClass("searchs");
+        $(".listmarket").find("li").each(function() {
+            var t = $(this).text()
+              , i = /[\-\[\]{}()*+?.,\\\^$|#\s]/g
+              , r = new RegExp(n.replace(i, "\\$&"),"gi")
+              , u = new RegExp(locdau(n).replace(i, "\\$&"),"gi");
+            t.search(r) !== -1 || locdau(t).search(r) !== -1 || locdau(t).search(u) !== -1 ? $(this).addClass("s") : $(this).removeClass("s")
+        })
+    });
+    $(".boxCouponCode button").live("click", function() {
+        $("#CouponCode-error").hide();
+        POSTAjax("/aj/OrderV4/CheckCouponCodeCart", {
+            CouponCode: $("#CouponCode").val()
+        }, BeforeSendAjax, function(n) {
+            if ($(n).find(".detail_cart .listorder").length == 0)
+                return window.location.href = "/gio-hang",
+                !1;
+            var t = $(n).find(".message").html();
+            t ? ($("#CouponCode-error").html(t),
+            $("#CouponCode-error").show()) : ($(".detail_cart").html($(n).find(".detail_cart").html()),
+            AddEventOrderAccessory());
+            EndSendAjax()
+        }, function() {}, !0)
+    });
+    $(".buymore").click(function() {
+        return ganew_sendEvent(eventCategory, eventAction.click, eventLabel.buymore),
+        !0
+    });
+    $(".infoold .change").click(function() {
+        $(".infoold").hide();
+        $(".infouser").show();
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.updateUser)
+    });
+    $(".boxCouponCode .textcode").live("click", function() {
+        ganew_sendEvent(eventCategory, eventAction.click, eventLabel.useCoupon);
+        $(".boxCouponCode .inputcode").show()
+    });
+    LoadAllProvinceAtHomeByProductCode();
+    addEventPromotionAcc();
+    $(".showtimeship_address .listdate span:first").click()
+});
+f_CartSubmitOrder = !1;
+url_LoadAllDistrictByProvince = "/aj/OrderV4/GetDistrictByProvinceandProductCode";
+url_LoadAllWardByDistrict = "/aj/OrderV4/GetWardByDistrict";
+flag_firstloadstore = !0;
+updateInfoTmp = function() {
+    $("#IsShipAtStore").val() === "true" && $(".area_market .EmailSecond").length > 0 && ($("#BillingAddress_Email").val($(".area_market .EmailSecond").val()),
+    $(".area_address .EmailSecond").val($(".area_market .EmailSecond").val()));
+    $("#IsShipAtHome").val() === "true" && $(".area_address .EmailSecond").length > 0 && ($("#BillingAddress_Email").val($(".area_address .EmailSecond").val()),
+    $(".area_market .EmailSecond").val($(".area_address .EmailSecond").val()));
+    $.ajax({
+        async: !0,
+        data: $("#wrap_cart form").serialize(),
+        type: "POST",
+        error: function() {
+            console.log("Close notification error")
+        },
+        success: function(n) {
+            console.log(n)
+        },
+        url: "/aj/OrderV4/UpdateInfoCart"
+    })
+}
+;
+String.prototype.trimRight = function(n) {
+    return n === undefined && (n = "s"),
+    this.replace(new RegExp("[" + n + "]+$"), "")
+}
+;
+jQuery.validator.addMethod("ShipAtHome", function(n, t) {
+    return $("#IsShipAtHome").val() != "true" ? !0 : !this.optional(t)
+}, "");
+jQuery.validator.addMethod("ShipAtStore", function(n, t) {
+    return $("#IsShipAtStore").val() != "true" ? !0 : !this.optional(t)
+}, "Bạn phải chọn siêu thị");
+jQuery.validator.addMethod("IsCompany", function(n, t) {
+    var i = $('#formtest :input[name="CompanyInfo.CompanyName"]');
+    return i.length == 0 || i.val() == "" ? !0 : !this.optional(t)
+}, "Bạn phải nhập thông tin");
+jQuery.validator.addClassRules("min1", {
+    min: 1
+});
+jQuery.validator.addClassRules("min9", {
+    minlength: 9
+});
+jQuery.validator.addMethod("groupchoose0", function() {
+    $(".message").html("");
+    var n = $(".groupchoose0").length;
+    return n == 0 ? !0 : $(".groupchoose0").val() != "-1" ? !0 : ($.validator.messages.groupchoose0 = "Vui lòng chọn khuyến mãi",
+    $(".message").html("Vui lòng chọn khuyến mãi"),
+    !1)
+}, "s");
+jQuery.validator.addMethod("groupchoose1", function() {
+    $(".message").html("");
+    var n = $(".groupchoose1").length;
+    return n == 0 ? !0 : $(".groupchoose1").val() != "-1" ? !0 : ($.validator.messages.groupchoose1 = "Vui lòng chọn khuyến mãi",
+    $(".message").html("Vui lòng chọn khuyến mãi"),
+    !1)
+}, "s");
+jQuery.validator.addMethod("groupchoose2", function() {
+    $(".message").html("");
+    var n = $(".groupchoose2").length;
+    return n == 0 ? !0 : $(".groupchoose2").val() != "-1" ? !0 : ($.validator.messages.groupchoose2 = "Vui lòng chọn khuyến mãi",
+    $(".message").html("Vui lòng chọn khuyến mãi"),
+    !1)
+}, "s");
+jQuery.validator.addMethod("validatePhoneNumber", function() {
+    var t = $('#formtest :input[name="BillingAddress.PhoneNumber"]'), r = {
+        PhoneNumber: t.val()
+    }, i, n;
+    return t.is("input[type='hidden']") ? !0 : (i = $.ajax({
+        type: "POST",
+        url: "/aj/OrderV2/CheckValidatePhone",
+        dataType: "json",
+        async: !1,
+        data: r,
+        success: function() {
             return 0
         },
-        loops: function() {
-            var r = 0, u = 0, t, i;
-            for (this.positionsInArray = [0],
-            this.pagesInArray = [],
-            t = 0; t < this.itemsAmount; t += 1)
-                u += this.itemWidth,
-                this.positionsInArray.push(-u),
-                !0 === this.options.scrollPerPage && (i = n(this.$owlItems[t]),
-                i = i.data("owl-roundPages"),
-                i !== r && (this.pagesInArray[r] = this.positionsInArray[t],
-                r = i))
-        },
-        buildControls: function() {
-            (!0 === this.options.navigation || !0 === this.options.pagination) && (this.owlControls = n('<div class="owl-controls"/>').toggleClass("clickable", !this.browser.isTouch).appendTo(this.$elem));
-            !0 === this.options.pagination && this.buildPagination();
-            !0 === this.options.navigation && this.buildButtons()
-        },
-        buildButtons: function() {
-            var t = this
-              , i = n('<div class="owl-buttons"/>');
-            t.owlControls.append(i);
-            t.buttonPrev = n("<div/>", {
-                "class": "owl-prev",
-                html: t.options.navigationText[0] || ""
-            });
-            t.buttonNext = n("<div/>", {
-                "class": "owl-next",
-                html: t.options.navigationText[1] || ""
-            });
-            i.append(t.buttonPrev).append(t.buttonNext);
-            i.on("touchstart.owlControls mousedown.owlControls", 'div[class^="owl"]', function(n) {
-                n.preventDefault()
-            });
-            i.on("touchend.owlControls mouseup.owlControls", 'div[class^="owl"]', function(i) {
-                i.preventDefault();
-                n(this).hasClass("owl-next") ? t.next() : t.prev()
-            })
-        },
-        buildPagination: function() {
-            var t = this;
-            t.paginationWrapper = n('<div class="owl-pagination"/>');
-            t.owlControls.append(t.paginationWrapper);
-            t.paginationWrapper.on("touchend.owlControls mouseup.owlControls", ".owl-page", function(i) {
-                i.preventDefault();
-                Number(n(this).data("owl-page")) !== t.currentItem && t.goTo(Number(n(this).data("owl-page")), !0)
-            })
-        },
-        updatePagination: function() {
-            var r, u, f, t, i, e;
-            if (!1 === this.options.pagination)
-                return !1;
-            for (this.paginationWrapper.html(""),
-            r = 0,
-            u = this.itemsAmount - this.itemsAmount % this.options.items,
-            t = 0; t < this.itemsAmount; t += 1)
-                0 == t % this.options.items && (r += 1,
-                u === t && (f = this.itemsAmount - this.options.items),
-                i = n("<div/>", {
-                    "class": "owl-page"
-                }),
-                e = n("<span><\/span>", {
-                    text: !0 === this.options.paginationNumbers ? r : "",
-                    "class": !0 === this.options.paginationNumbers ? "owl-numbers" : ""
-                }),
-                i.append(e),
-                i.data("owl-page", u === t ? f : t),
-                i.data("owl-roundPages", r),
-                this.paginationWrapper.append(i));
-            this.checkPagination()
-        },
-        checkPagination: function() {
-            var t = this;
-            if (!1 === t.options.pagination)
-                return !1;
-            t.paginationWrapper.find(".owl-page").each(function() {
-                n(this).data("owl-roundPages") === n(t.$owlItems[t.currentItem]).data("owl-roundPages") && (t.paginationWrapper.find(".owl-page").removeClass("active"),
-                n(this).addClass("active"))
-            })
-        },
-        checkNavigation: function() {
-            if (!1 === this.options.navigation)
-                return !1;
-            !1 === this.options.rewindNav && (0 === this.currentItem && 0 === this.maximumItem ? (this.buttonPrev.addClass("disabled"),
-            this.buttonNext.addClass("disabled")) : 0 === this.currentItem && 0 !== this.maximumItem ? (this.buttonPrev.addClass("disabled"),
-            this.buttonNext.removeClass("disabled")) : this.currentItem === this.maximumItem ? (this.buttonPrev.removeClass("disabled"),
-            this.buttonNext.addClass("disabled")) : 0 !== this.currentItem && this.currentItem !== this.maximumItem && (this.buttonPrev.removeClass("disabled"),
-            this.buttonNext.removeClass("disabled")))
-        },
-        updateControls: function() {
-            this.updatePagination();
-            this.checkNavigation();
-            this.owlControls && (this.options.items >= this.itemsAmount ? this.owlControls.hide() : this.owlControls.show())
-        },
-        destroyControls: function() {
-            this.owlControls && this.owlControls.remove()
-        },
-        next: function(n) {
-            if (this.isTransition)
-                return !1;
-            if (this.currentItem += !0 === this.options.scrollPerPage ? this.options.items : 1,
-            this.currentItem > this.maximumItem + (!0 === this.options.scrollPerPage ? this.options.items - 1 : 0))
-                if (!0 === this.options.rewindNav)
-                    this.currentItem = 0,
-                    n = "rewind";
-                else
-                    return this.currentItem = this.maximumItem,
-                    !1;
-            this.goTo(this.currentItem, n)
-        },
-        prev: function(n) {
-            if (this.isTransition)
-                return !1;
-            if (this.currentItem = !0 === this.options.scrollPerPage && 0 < this.currentItem && this.currentItem < this.options.items ? 0 : this.currentItem - (!0 === this.options.scrollPerPage ? this.options.items : 1),
-            0 > this.currentItem)
-                if (!0 === this.options.rewindNav)
-                    this.currentItem = this.maximumItem,
-                    n = "rewind";
-                else
-                    return this.currentItem = 0,
-                    !1;
-            this.goTo(this.currentItem, n)
-        },
-        goTo: function(n, i, r) {
-            var u = this;
-            if (u.isTransition)
-                return !1;
-            if ("function" == typeof u.options.beforeMove && u.options.beforeMove.apply(this, [u.$elem]),
-            n >= u.maximumItem ? n = u.maximumItem : 0 >= n && (n = 0),
-            u.currentItem = u.owl.currentItem = n,
-            !1 !== u.options.transitionStyle && "drag" !== r && 1 === u.options.items && !0 === u.browser.support3d)
-                return u.swapSpeed(0),
-                !0 === u.browser.support3d ? u.transition3d(u.positionsInArray[n]) : u.css2slide(u.positionsInArray[n], 1),
-                u.afterGo(),
-                u.singleItemTransition(),
-                !1;
-            n = u.positionsInArray[n];
-            !0 === u.browser.support3d ? (u.isCss3Finish = !1,
-            !0 === i ? (u.swapSpeed("paginationSpeed"),
-            t.setTimeout(function() {
-                u.isCss3Finish = !0
-            }, u.options.paginationSpeed)) : "rewind" === i ? (u.swapSpeed(u.options.rewindSpeed),
-            t.setTimeout(function() {
-                u.isCss3Finish = !0
-            }, u.options.rewindSpeed)) : (u.swapSpeed("slideSpeed"),
-            t.setTimeout(function() {
-                u.isCss3Finish = !0
-            }, u.options.slideSpeed)),
-            u.transition3d(n)) : !0 === i ? u.css2slide(n, u.options.paginationSpeed) : "rewind" === i ? u.css2slide(n, u.options.rewindSpeed) : u.css2slide(n, u.options.slideSpeed);
-            u.afterGo()
-        },
-        jumpTo: function(n) {
-            "function" == typeof this.options.beforeMove && this.options.beforeMove.apply(this, [this.$elem]);
-            n >= this.maximumItem || -1 === n ? n = this.maximumItem : 0 >= n && (n = 0);
-            this.swapSpeed(0);
-            !0 === this.browser.support3d ? this.transition3d(this.positionsInArray[n]) : this.css2slide(this.positionsInArray[n], 1);
-            this.currentItem = this.owl.currentItem = n;
-            this.afterGo()
-        },
-        afterGo: function() {
-            this.prevArr.push(this.currentItem);
-            this.prevItem = this.owl.prevItem = this.prevArr[this.prevArr.length - 2];
-            this.prevArr.shift(0);
-            this.prevItem !== this.currentItem && (this.checkPagination(),
-            this.checkNavigation(),
-            this.eachMoveUpdate(),
-            !1 !== this.options.autoPlay && this.checkAp());
-            "function" == typeof this.options.afterMove && this.prevItem !== this.currentItem && this.options.afterMove.apply(this, [this.$elem])
-        },
-        stop: function() {
-            this.apStatus = "stop";
-            t.clearInterval(this.autoPlayInterval)
-        },
-        checkAp: function() {
-            "stop" !== this.apStatus && this.play()
-        },
-        play: function() {
-            var n = this;
-            if (n.apStatus = "play",
-            !1 === n.options.autoPlay)
-                return !1;
-            t.clearInterval(n.autoPlayInterval);
-            n.autoPlayInterval = t.setInterval(function() {
-                n.next(!0)
-            }, n.options.autoPlay)
-        },
-        swapSpeed: function(n) {
-            "slideSpeed" === n ? this.$owlWrapper.css(this.addCssSpeed(this.options.slideSpeed)) : "paginationSpeed" === n ? this.$owlWrapper.css(this.addCssSpeed(this.options.paginationSpeed)) : "string" != typeof n && this.$owlWrapper.css(this.addCssSpeed(n))
-        },
-        addCssSpeed: function(n) {
-            return {
-                "-webkit-transition": "all " + n + "ms ease",
-                "-moz-transition": "all " + n + "ms ease",
-                "-o-transition": "all " + n + "ms ease",
-                transition: "all " + n + "ms ease"
-            }
-        },
-        removeTransition: function() {
-            return {
-                "-webkit-transition": "",
-                "-moz-transition": "",
-                "-o-transition": "",
-                transition: ""
-            }
-        },
-        doTranslate: function(n) {
-            return {
-                "-webkit-transform": "translate3d(" + n + "px, 0px, 0px)",
-                "-moz-transform": "translate3d(" + n + "px, 0px, 0px)",
-                "-o-transform": "translate3d(" + n + "px, 0px, 0px)",
-                "-ms-transform": "translate3d(" + n + "px, 0px, 0px)",
-                transform: "translate3d(" + n + "px, 0px,0px)"
-            }
-        },
-        transition3d: function(n) {
-            this.$owlWrapper.css(this.doTranslate(n))
-        },
-        css2move: function(n) {
-            this.$owlWrapper.css({
-                left: n
-            })
-        },
-        css2slide: function(n, t) {
-            var i = this;
-            i.isCssFinish = !1;
-            i.$owlWrapper.stop(!0, !0).animate({
-                left: n
-            }, {
-                duration: t || i.options.slideSpeed,
-                complete: function() {
-                    i.isCssFinish = !0
-                }
-            })
-        },
-        checkBrowser: function() {
-            var n = i.createElement("div");
-            n.style.cssText = "  -moz-transform:translate3d(0px, 0px, 0px); -ms-transform:translate3d(0px, 0px, 0px); -o-transform:translate3d(0px, 0px, 0px); -webkit-transform:translate3d(0px, 0px, 0px); transform:translate3d(0px, 0px, 0px)";
-            n = n.style.cssText.match(/translate3d\(0px, 0px, 0px\)/g);
-            this.browser = {
-                support3d: null !== n && 1 === n.length,
-                isTouch: "ontouchstart"in t || t.navigator.msMaxTouchPoints
-            }
-        },
-        moveEvents: function() {
-            (!1 !== this.options.mouseDrag || !1 !== this.options.touchDrag) && (this.gestures(),
-            this.disabledEvents())
-        },
-        eventTypes: function() {
-            var n = ["s", "e", "x"];
-            this.ev_types = {};
-            !0 === this.options.mouseDrag && !0 === this.options.touchDrag ? n = ["touchstart.owl mousedown.owl", "touchmove.owl mousemove.owl", "touchend.owl touchcancel.owl mouseup.owl"] : !1 === this.options.mouseDrag && !0 === this.options.touchDrag ? n = ["touchstart.owl", "touchmove.owl", "touchend.owl touchcancel.owl"] : !0 === this.options.mouseDrag && !1 === this.options.touchDrag && (n = ["mousedown.owl", "mousemove.owl", "mouseup.owl"]);
-            this.ev_types.start = n[0];
-            this.ev_types.move = n[1];
-            this.ev_types.end = n[2]
-        },
-        disabledEvents: function() {
-            this.$elem.on("dragstart.owl", function(n) {
-                n.preventDefault()
-            });
-            this.$elem.on("mousedown.disableTextSelect", function(t) {
-                return n(t.target).is("input, textarea, select, option")
-            })
-        },
-        gestures: function() {
-            function f(n) {
-                if (void 0 !== n.touches)
-                    return {
-                        x: n.touches[0].pageX,
-                        y: n.touches[0].pageY
-                    };
-                if (void 0 === n.touches) {
-                    if (void 0 !== n.pageX)
-                        return {
-                            x: n.pageX,
-                            y: n.pageY
-                        };
-                    if (void 0 === n.pageX)
-                        return {
-                            x: n.clientX,
-                            y: n.clientY
-                        }
-                }
-            }
-            function e(t) {
-                "on" === t ? (n(i).on(r.ev_types.move, o),
-                n(i).on(r.ev_types.end, s)) : "off" === t && (n(i).off(r.ev_types.move),
-                n(i).off(r.ev_types.end))
-            }
-            function o(e) {
-                e = e.originalEvent || e || t.event;
-                r.newPosX = f(e).x - u.offsetX;
-                r.newPosY = f(e).y - u.offsetY;
-                r.newRelativeX = r.newPosX - u.relativePos;
-                "function" == typeof r.options.startDragging && !0 !== u.dragging && 0 !== r.newRelativeX && (u.dragging = !0,
-                r.options.startDragging.apply(r, [r.$elem]));
-                (8 < r.newRelativeX || -8 > r.newRelativeX) && !0 === r.browser.isTouch && (void 0 !== e.preventDefault ? e.preventDefault() : e.returnValue = !1,
-                u.sliding = !0);
-                (10 < r.newPosY || -10 > r.newPosY) && !1 === u.sliding && n(i).off("touchmove.owl");
-                r.newPosX = Math.max(Math.min(r.newPosX, r.newRelativeX / 5), r.maximumPixels + r.newRelativeX / 5);
-                !0 === r.browser.support3d ? r.transition3d(r.newPosX) : r.css2move(r.newPosX)
-            }
-            function s(i) {
-                i = i.originalEvent || i || t.event;
-                var f;
-                i.target = i.target || i.srcElement;
-                u.dragging = !1;
-                !0 !== r.browser.isTouch && r.$owlWrapper.removeClass("grabbing");
-                r.dragDirection = r.owl.dragDirection = 0 > r.newRelativeX ? "left" : "right";
-                0 !== r.newRelativeX && (f = r.getNewPosition(),
-                r.goTo(f, !1, "drag"),
-                u.targetElement === i.target && !0 !== r.browser.isTouch && (n(i.target).on("click.disable", function(t) {
-                    t.stopImmediatePropagation();
-                    t.stopPropagation();
-                    t.preventDefault();
-                    n(t.target).off("click.disable")
-                }),
-                i = n._data(i.target, "events").click,
-                f = i.pop(),
-                i.splice(0, 0, f)));
-                e("off")
-            }
-            var r = this
-              , u = {
-                offsetX: 0,
-                offsetY: 0,
-                baseElWidth: 0,
-                relativePos: 0,
-                position: null,
-                minSwipe: null,
-                maxSwipe: null,
-                sliding: null,
-                dargging: null,
-                targetElement: null
-            };
-            r.isCssFinish = !0;
-            r.$elem.on(r.ev_types.start, ".owl-wrapper", function(i) {
-                i = i.originalEvent || i || t.event;
-                var o;
-                if (3 === i.which)
-                    return !1;
-                if (!(r.itemsAmount <= r.options.items)) {
-                    if (!1 === r.isCssFinish && !r.options.dragBeforeAnimFinish || !1 === r.isCss3Finish && !r.options.dragBeforeAnimFinish)
-                        return !1;
-                    !1 !== r.options.autoPlay && t.clearInterval(r.autoPlayInterval);
-                    !0 === r.browser.isTouch || r.$owlWrapper.hasClass("grabbing") || r.$owlWrapper.addClass("grabbing");
-                    r.newPosX = 0;
-                    r.newRelativeX = 0;
-                    n(this).css(r.removeTransition());
-                    o = n(this).position();
-                    u.relativePos = o.left;
-                    u.offsetX = f(i).x - o.left;
-                    u.offsetY = f(i).y - o.top;
-                    e("on");
-                    u.sliding = !1;
-                    u.targetElement = i.target || i.srcElement
-                }
-            })
-        },
-        getNewPosition: function() {
-            var n = this.closestItem();
-            return n > this.maximumItem ? n = this.currentItem = this.maximumItem : 0 <= this.newPosX && (this.currentItem = n = 0),
-            n
-        },
-        closestItem: function() {
-            var t = this
-              , i = !0 === t.options.scrollPerPage ? t.pagesInArray : t.positionsInArray
-              , u = t.newPosX
-              , r = null;
-            return n.each(i, function(f, e) {
-                u - t.itemWidth / 20 > i[f + 1] && u - t.itemWidth / 20 < e && "left" === t.moveDirection() ? (r = e,
-                t.currentItem = !0 === t.options.scrollPerPage ? n.inArray(r, t.positionsInArray) : f) : u + t.itemWidth / 20 < e && u + t.itemWidth / 20 > (i[f + 1] || i[f] - t.itemWidth) && "right" === t.moveDirection() && (!0 === t.options.scrollPerPage ? (r = i[f + 1] || i[i.length - 1],
-                t.currentItem = n.inArray(r, t.positionsInArray)) : (r = i[f + 1],
-                t.currentItem = f + 1))
-            }),
-            t.currentItem
-        },
-        moveDirection: function() {
-            var n;
-            return 0 > this.newRelativeX ? (n = "right",
-            this.playDirection = "next") : (n = "left",
-            this.playDirection = "prev"),
-            n
-        },
-        customEvents: function() {
-            var n = this;
-            n.$elem.on("owl.next", function() {
-                n.next()
-            });
-            n.$elem.on("owl.prev", function() {
-                n.prev()
-            });
-            n.$elem.on("owl.play", function(t, i) {
-                n.options.autoPlay = i;
-                n.play();
-                n.hoverStatus = "play"
-            });
-            n.$elem.on("owl.stop", function() {
-                n.stop();
-                n.hoverStatus = "stop"
-            });
-            n.$elem.on("owl.goTo", function(t, i) {
-                n.goTo(i)
-            });
-            n.$elem.on("owl.jumpTo", function(t, i) {
-                n.jumpTo(i)
-            })
-        },
-        stopOnHover: function() {
-            var n = this;
-            !0 === n.options.stopOnHover && !0 !== n.browser.isTouch && !1 !== n.options.autoPlay && (n.$elem.on("mouseover", function() {
-                n.stop()
-            }),
-            n.$elem.on("mouseout", function() {
-                "stop" !== n.hoverStatus && n.play()
-            }))
-        },
-        lazyLoad: function() {
-            var r, t, u, i, f;
-            if (!1 === this.options.lazyLoad)
-                return !1;
-            for (r = 0; r < this.itemsAmount; r += 1)
-                t = n(this.$owlItems[r]),
-                "loaded" !== t.data("owl-loaded") && (u = t.data("owl-item"),
-                i = t.find(".lazyOwl"),
-                "string" != typeof i.data("src") ? t.data("owl-loaded", "loaded") : (void 0 === t.data("owl-loaded") && (i.hide(),
-                t.addClass("loading").data("owl-loaded", "checked")),
-                (f = !0 === this.options.lazyFollow ? u >= this.currentItem : !0) && u < this.currentItem + this.options.items && i.length && this.lazyPreload(t, i)))
-        },
-        lazyPreload: function(n, i) {
-            function u() {
-                n.data("owl-loaded", "loaded").removeClass("loading");
-                i.removeAttr("data-src");
-                "fade" === r.options.lazyEffect ? i.fadeIn(400) : i.show();
-                "function" == typeof r.options.afterLazyLoad && r.options.afterLazyLoad.apply(this, [r.$elem])
-            }
-            function f() {
-                e += 1;
-                r.completeImg(i.get(0)) || !0 === o ? u() : 100 >= e ? t.setTimeout(f, 100) : u()
-            }
-            var r = this, e = 0, o;
-            "DIV" === i.prop("tagName") ? (i.css("background-image", "url(" + i.data("src") + ")"),
-            o = !0) : i[0].src = i.data("src");
-            f()
-        },
-        autoHeight: function() {
-            function u() {
-                var r = n(i.$owlItems[i.currentItem]).height();
-                i.wrapperOuter.css("height", r + "px");
-                i.wrapperOuter.hasClass("autoHeight") || t.setTimeout(function() {
-                    i.wrapperOuter.addClass("autoHeight")
-                }, 0)
-            }
-            function f() {
-                r += 1;
-                i.completeImg(e.get(0)) ? u() : 100 >= r ? t.setTimeout(f, 100) : i.wrapperOuter.css("height", "")
-            }
-            var i = this, e = n(i.$owlItems[i.currentItem]).find("img"), r;
-            void 0 !== e.get(0) ? (r = 0,
-            f()) : u()
-        },
-        completeImg: function(n) {
-            return !n.complete || "undefined" != typeof n.naturalWidth && 0 === n.naturalWidth ? !1 : !0
-        },
-        onVisibleItems: function() {
-            var t;
-            for (!0 === this.options.addClassActive && this.$owlItems.removeClass("active"),
-            this.visibleItems = [],
-            t = this.currentItem; t < this.currentItem + this.options.items; t += 1)
-                this.visibleItems.push(t),
-                !0 === this.options.addClassActive && n(this.$owlItems[t]).addClass("active");
-            this.owl.visibleItems = this.visibleItems
-        },
-        transitionTypes: function(n) {
-            this.outClass = "owl-" + n + "-out";
-            this.inClass = "owl-" + n + "-in"
-        },
-        singleItemTransition: function() {
-            var n = this
-              , u = n.outClass
-              , f = n.inClass
-              , t = n.$owlItems.eq(n.currentItem)
-              , i = n.$owlItems.eq(n.prevItem)
-              , e = Math.abs(n.positionsInArray[n.currentItem]) + n.positionsInArray[n.prevItem]
-              , r = Math.abs(n.positionsInArray[n.currentItem]) + n.itemWidth / 2;
-            n.isTransition = !0;
-            n.$owlWrapper.addClass("owl-origin").css({
-                "-webkit-transform-origin": r + "px",
-                "-moz-perspective-origin": r + "px",
-                "perspective-origin": r + "px"
-            });
-            i.css({
-                position: "relative",
-                left: e + "px"
-            }).addClass(u).on("webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend", function() {
-                n.endPrev = !0;
-                i.off("webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend");
-                n.clearTransStyle(i, u)
-            });
-            t.addClass(f).on("webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend", function() {
-                n.endCurrent = !0;
-                t.off("webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend");
-                n.clearTransStyle(t, f)
-            })
-        },
-        clearTransStyle: function(n, t) {
-            n.css({
-                position: "",
-                left: ""
-            }).removeClass(t);
-            this.endPrev && this.endCurrent && (this.$owlWrapper.removeClass("owl-origin"),
-            this.isTransition = this.endCurrent = this.endPrev = !1)
-        },
-        owlStatus: function() {
-            this.owl = {
-                userOptions: this.userOptions,
-                baseElement: this.$elem,
-                userItems: this.$userItems,
-                owlItems: this.$owlItems,
-                currentItem: this.currentItem,
-                prevItem: this.prevItem,
-                visibleItems: this.visibleItems,
-                isTouch: this.browser.isTouch,
-                browser: this.browser,
-                dragDirection: this.dragDirection
-            }
-        },
-        clearEvents: function() {
-            this.$elem.off(".owl owl mousedown.disableTextSelect");
-            n(i).off(".owl owl");
-            n(t).off("resize", this.resizer)
-        },
-        unWrap: function() {
-            0 !== this.$elem.children().length && (this.$owlWrapper.unwrap(),
-            this.$userItems.unwrap().unwrap(),
-            this.owlControls && this.owlControls.remove());
-            this.clearEvents();
-            this.$elem.attr("style", this.$elem.data("owl-originalStyles") || "").attr("class", this.$elem.data("owl-originalClasses"))
-        },
-        destroy: function() {
-            this.stop();
-            t.clearInterval(this.checkVisible);
-            this.unWrap();
-            this.$elem.removeData()
-        },
-        reinit: function(t) {
-            t = n.extend({}, this.userOptions, t);
-            this.unWrap();
-            this.init(t, this.$elem)
-        },
-        addItem: function(n, t) {
-            var i;
-            if (!n)
-                return !1;
-            if (0 === this.$elem.children().length)
-                return this.$elem.append(n),
-                this.setVars(),
-                !1;
-            this.unWrap();
-            i = void 0 === t || -1 === t ? -1 : t;
-            i >= this.$userItems.length || -1 === i ? this.$userItems.eq(-1).after(n) : this.$userItems.eq(i).before(n);
-            this.setVars()
-        },
-        removeItem: function(n) {
-            if (0 === this.$elem.children().length)
-                return !1;
-            n = void 0 === n || -1 === n ? -1 : n;
-            this.unWrap();
-            this.$userItems.eq(n).remove();
-            this.setVars()
+        error: function() {
+            return alert("ajax loading error... ... " + url + query),
+            0
         }
-    };
-    n.fn.owlCarousel = function(t) {
-        return this.each(function() {
-            if (!0 === n(this).data("owl-init"))
-                return !1;
-            n(this).data("owl-init", !0);
-            var i = Object.create(r);
-            i.init(t, this);
-            n.data(this, "owlCarousel", i)
-        })
-    }
-    ;
-    n.fn.owlCarousel.options = {
-        items: 5,
-        itemsCustom: !1,
-        itemsDesktop: [1199, 4],
-        itemsDesktopSmall: [979, 3],
-        itemsTablet: [768, 2],
-        itemsTabletSmall: !1,
-        itemsMobile: [479, 1],
-        singleItem: !1,
-        itemsScaleUp: !1,
-        slideSpeed: 200,
-        paginationSpeed: 800,
-        rewindSpeed: 1e3,
-        autoPlay: !1,
-        stopOnHover: !1,
-        navigation: !1,
-        navigationText: ["‹", "›"],
-        rewindNav: !0,
-        scrollPerPage: !1,
-        pagination: !0,
-        paginationNumbers: !1,
-        responsive: !0,
-        responsiveRefreshRate: 200,
-        responsiveBaseWidth: t,
-        baseClass: "owl-carousel",
-        theme: "owl-theme",
-        lazyLoad: !1,
-        lazyFollow: !0,
-        lazyEffect: "fade",
-        autoHeight: !1,
-        jsonPath: !1,
-        jsonSuccess: !1,
-        dragBeforeAnimFinish: !0,
-        mouseDrag: !0,
-        touchDrag: !0,
-        addClassActive: !1,
-        transitionStyle: !1,
-        beforeUpdate: !1,
-        afterUpdate: !1,
-        beforeInit: !1,
-        afterInit: !1,
-        beforeMove: !1,
-        afterMove: !1,
-        afterAction: !1,
-        startDragging: !1,
-        afterLazyLoad: !1
-    }
-}(jQuery, window, document),
-function(n, t, i, r) {
-    var u = n(t);
-    n.fn.lazyload = function(f) {
-        function s() {
-            var t = 0;
-            o.each(function() {
-                var i = n(this);
-                if ((!e.skip_invisible || i.is(":visible")) && !n.abovethetop(this, e))
-                    if (n.belowthefold(this, e)) {
-                        if (++t > e.failure_limit)
-                            return !1
-                    } else
-                        i.trigger("appear"),
-                        t = 0
-            })
+    }).responseText,
+    n = JSON.parse(i),
+    $.validator.messages.validatePhoneNumber = n.errors,
+    n.success)
+}, "s");
+jQuery.validator.addMethod("validateCompanyTaxno", function() {
+    var n = $('#formtest :input[name="CompanyInfo.CompanyTaxno"]'), i, t;
+    return n.length == 0 || n.val() == "" ? !0 : (data = {
+        CompanyTaxno: n.val()
+    },
+    i = $.ajax({
+        type: "POST",
+        url: "/aj/OrderV2/CheckValidateCompanyTaxno",
+        dataType: "json",
+        async: !1,
+        data: data,
+        success: function() {
+            return 0
+        },
+        error: function() {
+            return alert("ajax loading error... ... " + url + query),
+            0
         }
-        var o = this, h, e = {
-            threshold: 0,
-            failure_limit: 0,
-            event: "scroll",
-            effect: "show",
-            container: t,
-            data_attribute: "original",
-            skip_invisible: !0,
-            appear: null,
-            load: null,
-            placeholder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
-        };
-        return f && (r !== f.failurelimit && (f.failure_limit = f.failurelimit,
-        delete f.failurelimit),
-        r !== f.effectspeed && (f.effect_speed = f.effectspeed,
-        delete f.effectspeed),
-        n.extend(e, f)),
-        h = e.container === r || e.container === t ? u : n(e.container),
-        0 === e.event.indexOf("scroll") && h.bind(e.event, function() {
-            return s()
-        }),
-        this.each(function() {
-            var i = this
-              , t = n(i);
-            i.loaded = !1;
-            (t.attr("src") === r || t.attr("src") === !1) && t.is("img") && t.attr("src", e.placeholder);
-            t.one("appear", function() {
-                if (!this.loaded) {
-                    if (e.appear) {
-                        var r = o.length;
-                        e.appear.call(i, r, e)
-                    }
-                    n("<img />").bind("load", function() {
-                        var r = t.attr("data-" + e.data_attribute), u, f;
-                        t.hide();
-                        t.is("img") ? t.attr("src", r) : t.css("background-image", "url('" + r + "')");
-                        t[e.effect](e.effect_speed);
-                        i.loaded = !0;
-                        u = n.grep(o, function(n) {
-                            return !n.loaded
-                        });
-                        o = n(u);
-                        e.load && (f = o.length,
-                        e.load.call(i, f, e))
-                    }).attr("src", t.attr("data-" + e.data_attribute))
-                }
-            });
-            0 !== e.event.indexOf("scroll") && t.bind(e.event, function() {
-                i.loaded || t.trigger("appear")
-            })
-        }),
-        u.bind("resize", function() {
-            s()
-        }),
-        /(?:iphone|ipod|ipad).*os 5/gi.test(navigator.appVersion) && u.bind("pageshow", function(t) {
-            t.originalEvent && t.originalEvent.persisted && o.each(function() {
-                n(this).trigger("appear")
-            })
-        }),
-        n(i).ready(function() {
-            s()
-        }),
-        this
-    }
-    ;
-    n.belowthefold = function(i, f) {
-        var e;
-        return e = f.container === r || f.container === t ? (t.innerHeight ? t.innerHeight : u.height()) + u.scrollTop() : n(f.container).offset().top + n(f.container).height(),
-        e <= n(i).offset().top - f.threshold
-    }
-    ;
-    n.abovethetop = function(i, f) {
-        var e;
-        return e = f.container === r || f.container === t ? u.scrollTop() : n(f.container).offset().top,
-        e >= n(i).offset().top + f.threshold + n(i).height()
-    }
-    ;
-    n.inviewport = function(t, i) {
-        return !n.belowthefold(t, i) && !n.abovethetop(t, i)
-    }
-    ;
-    n.extend(n.expr[":"], {
-        "below-the-fold": function(t) {
-            return n.belowthefold(t, {
-                threshold: 0
-            })
+    }).responseText,
+    t = JSON.parse(i),
+    $.validator.messages.validateCompanyTaxno = t.errors,
+    t.success)
+}, "");
+jQuery.validator.addMethod("validateiGender", function() {
+    var t = $('#formtest :input[name="BillingAddress.iGender"]'), i, n;
+    return t.val() == "1" || t.val() == "0" ? !0 : (i = '{"success":false,"errors":"Mời quý khách chọn danh xưng"}',
+    n = JSON.parse(i),
+    $.validator.messages.validateiGender = n.errors,
+    n.success)
+}, "");
+jQuery.validator.addMethod("validateCaptcha", function() {
+    var i = $('#formtest :input[name="Captcha"]'), t, n;
+    return !$(".captcha").is(":visible") || i.val().length > 0 ? !0 : (t = '{"success":false,"errors":"Nhập mã bảo mật"}',
+    n = JSON.parse(t),
+    $.validator.messages.validateCaptcha = n.errors,
+    n.success)
+}, "");
+form = $("#formtest");
+form.validate({
+    ignore: "",
+    onkeyup: !1,
+    debug: !0,
+    rules: {
+        "BillingAddress.iGender": {
+            validateiGender: !0
         },
-        "above-the-top": function(t) {
-            return !n.belowthefold(t, {
-                threshold: 0
-            })
+        "BillingAddress.FullName": "required",
+        "BillingAddress.PhoneNumber": {
+            required: !0,
+            minlength: 10,
+            validatePhoneNumber: !0
         },
-        "in-viewport": function(t) {
-            return n.inviewport(t, {
-                threshold: 0
-            })
+        "CompanyInfo.CompanyTaxno": {
+            validateCompanyTaxno: !0
         },
-        "above-the-fold": function(t) {
-            return !n.belowthefold(t, {
-                threshold: 0
-            })
+        "BillingAddress.Email": "email",
+        EmailSecondHome: "email",
+        EmailSecondStore: "email",
+        ProductCode: "required",
+        Captcha: {
+            validateCaptcha: !0
         }
-    })
-}(jQuery, window, document);
-$(document).ready(function() {
-    initRating();
-    initRatingArticle()
-});
-gl_ifcH = !1;
-gl_prevScore = 0;
-gl_sendRating = !1;
-gl_rtCurStar = 0;
-gl_lFT = !1;
-gl_isFeedbackLoad = !1;
-isSendFback = !1;
-var gl_TypeImg = 1
-  , gl_CurrColor = 0
-  , clearcache = window.location.search.indexOf("clearcache=1") != -1 ? 1 : 0
-  , CHAT_ENABLED = 1
-  , trackAlsoBuy = 0;
-$(document).ready(function() {
-    initPage();
-    InitScroll();
-    initLazy();
-    loadFeatureSlide();
-    loadSpec();
-    loadArticle();
-    loadGallery();
-    checkHashTag();
-    initAcc();
-    CallImageTracking();
-    $(".alsobuytrack").length > 0 && (trackAlsoBuy = 1)
-});
-isTrigLazy = !1;
-gl_cprImg = !1;
-flsc = !1;
-gl_lFT = !1;
-f_sttk = !1;
-$(document).ready(function() {
-    $("#txtPro").keyup(function() {
-        var n = this.value;
-        $(".checkexist .listcity .scroll a").each(function() {
-            var t = $(this).text()
-              , i = /[\-\[\]{}()*+?.,\\\^$|#\s]/g
-              , r = new RegExp(n.replace(i, "\\$&"),"gi")
-              , u = new RegExp(locdau(n).replace(i, "\\$&"),"gi");
-            t.search(r) !== -1 || locdau(t).search(r) !== -1 || locdau(t).search(u) !== -1 ? $(this).show() : $(this).hide()
-        })
-    });
-    $("#txtDis").keyup(function() {
-        var n = this.value;
-        $(".checkexist .listdist .scroll a").each(function() {
-            var t = $(this).text()
-              , i = /[\-\[\]{}()*+?.,\\\^$|#\s]/g
-              , r = new RegExp(n.replace(i, "\\$&"),"gi")
-              , u = new RegExp(locdau(n).replace(i, "\\$&"),"gi");
-            t.search(r) !== -1 || locdau(t).search(r) !== -1 || locdau(t).search(u) !== -1 ? $(this).show() : $(this).hide()
-        })
-    });
-    $(".checkexist .city").click(function() {
-        $(".listcity").slideToggle();
-        $(".listdist").hide();
-        $(".listcolor").hide()
-    });
-    $(".checkexist .dist").click(function() {
-        $(".listdist").slideToggle();
-        $(".listcity").hide();
-        $(".listcolor").hide()
-    });
-    ClickDis();
-    $(".checkexist .listcity .scroll a").click(function() {
-        $(".checkexist .listcity").hide();
-        $(".checkexist .city").html($(this).text());
-        $("#ProvinceId").val($(this).attr("data-value"));
-        $("#DistricId").val("-1");
-        $(".checkexist .dist span").html("Chọn quận, huyện");
-        POSTAjax("/aj/OrderV4/GetDistrictStoreByProvince", {
-            iProvince: $(this).attr("data-value")
-        }, BeforeSendAjax, function(n) {
-            $(".checkexist .listdist .scroll").html(n);
-            ClickDis();
-            $(".checkexist .dist").click();
-            CheckStockLoadStore();
-            EndSendAjax()
-        }, ErrorAjax, !0)
-    });
-    $(".checkexist .choosecolor span").click(function() {
-        $(".listcolor").slideToggle();
-        $(".listcolor img.lazy").lazyload({
-            event: "sporty"
-        });
-        $(".listcity").hide();
-        $(".listdist").hide()
-    });
-    $(".checkexist .listcolor a").click(function() {
-        $("#ProductCode").val($(this).attr("data-value"));
-        $(".checkexist .listcolor a").removeClass("choosed");
-        $(this).addClass("choosed");
-        $(".listcolor").hide();
-        $(".checkexist .choosecolor span").html("Màu: " + $(this).text());
-        CheckStockLoadStore()
-    });
-    $(".checkexist .listcolor a").length == 1 && CheckStockLoadStore()
-});
-$(document).ready(function() {
-    $(".option-repay").click(function(n) {
-        n.preventDefault();
-        $(this).hasClass("active") ? ($(this).removeClass("active"),
-        $(".notapply").removeClass("opacity01"),
-        $(".notechoose").removeClass("opacity01"),
-        $(".pro-title").removeClass("opacity01"),
-        $(".not-repay").removeClass("opacity01"),
-        BuyChoose()) : ($(this).addClass("active"),
-        $(".notapply").addClass("opacity01"),
-        $(".notechoose").addClass("opacity01"),
-        $(".pro-chosse:not(.notapply)").length == 0 && ($(".pro-title").addClass("opacity01"),
-        $(".not-repay").addClass("opacity01")),
-        $(".buy_now").unbind("click"),
-        $(".buy_now").click(function() {
-            return window.location.href = $(".buy_ins").attr("href"),
-            !1
-        }))
-    })
-});
-$(document).ready(function() {
-    $(".option-shiper").click(function(n) {
-        n.preventDefault();
-        $(this).hasClass("active") ? $(this).removeClass("active") : $(this).addClass("active");
-        BuyChoose()
-    })
+    },
+    messages: {
+        "BillingAddress.FullName": "Quý khách cần điền tên",
+        "BillingAddress.PhoneNumber": {
+            required: "Quý khách cần điền số điện thoại",
+            minlength: "Số điện thoại ít nhất là 10 số"
+        },
+        "BillingAddress.Email": {
+            email: "Email chưa đúng định dạng"
+        },
+        EmailSecondHome: {
+            email: "Email chưa đúng định dạng"
+        },
+        EmailSecondStore: {
+            email: "Email chưa đúng định dạng"
+        },
+        ProductCode: "Quý khách vui lòng chọn màu",
+        "BillingAddress.Address": "Quý khách vui lòng điền số nhà, tên đường, phường / xã",
+        "CompanyInfo.CompanyAddress": "Quý khách cần điền địa chỉ công ty",
+        "CompanyInfo.CompanyTaxno": {
+            required: "Quý khách cần điền mã số thuế"
+        },
+        "BillingAddress.StoreId": {
+            min: "Quý khách vui lòng chọn siêu thị để nhận hàng"
+        },
+        "BillingAddress.DistictId": {
+            min: "Quý khách vui lòng chọn quận huyện"
+        },
+        "BillingAddress.WardId": {
+            min: "Quý khách vui lòng chọn phường xã"
+        },
+        "BillingAddress.CMND": {
+            minlength: "Số CMND chỉ từ 9 đến 12 số"
+        }
+    }
 });
 /*
-//# sourceMappingURL=detail.min.js.map
+//# sourceMappingURL=vnn_cart.min.js.map
 */
 
 
-$(document).on('click','.buy_repay',function(){ 
-    var _this = this
-    var form = $('form#order_sp')
-    var formData = form.serialize();
-    $.ajax({
-        url: '/add-cart-aj.html',
-        type: form.attr("method"),
-        cache: false,
-        data: formData,
-        success: function(data){
-            if(data.status == true){                
-                move_product_to_cart(_this, data.count)                
-            }
-        },
-        error: function(){
-
-        }
-    })
-})
-
-
-function move_product_to_cart(_this, count){
-     var _this = $(_this), top = _this.offset().top, left = _this.offset().left;
-      _this.removeClass('buy_repay').addClass('buy_repay_clone');
-      var cart = $('.shopping-cart');
-      var cart_top = cart[0].getBoundingClientRect().top
-      var cart_left = cart[0].getBoundingClientRect().left
-
-      var imgtodrag = $('aside.picture>img');
-      var a = imgtodrag.clone().appendTo($('#clone'));
-
-      a.offset({
-          top: top - 50,
-          left: left
-      })
-      .animate({
-          'top': cart_top + 0,
-          'left': cart_left + 0,
-          'width': 20,
-          'height': 20,
-      }, 1000)
-      .fadeOut(300, function(){
-          $(this).remove()
-          $('.shopping-cart a').html('Giỏ hàng ('+count+')')
-          _this.addClass('buy_repay')
-      });
-}
+$(document).on('change','.cart_e',function(){        
+    u_cart();
+});

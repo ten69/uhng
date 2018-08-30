@@ -95,7 +95,8 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 </style>
 <div id="drop-back" class="hide"></div>
 
- <script defer="defer" async="async" src="<?= $assetsPrefix?>/js/home.min.v201806050250.js"></script>
+<!-- <script defer="defer" async="async" src="<?= $assetsPrefix?>/js/home.min.v201806050250.js"></script> -->
+<script defer="defer" async="async" src="<?= $assetsPrefix?>/js/cart.min.v201805300950.js"></script>
         
 
 <?php $this->endBody() ?>

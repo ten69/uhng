@@ -1154,7 +1154,7 @@
             .listorder li {
                 display: block;
                 overflow: visible;
-                border-bottom: 1px solid #f5f5f5;
+                border-bottom: 1px solid #ddd;
                 margin: 10px 30px;
                 padding-bottom: 10px;
                 min-height: 110px
@@ -1172,7 +1172,10 @@
             .listorder li img {
                 display: inline-block;
                 width: 75px;
-                margin: 5px 0 10px
+                margin: 5px 0 0 0;
+            }
+            .listorder li a {                
+                margin: 0 0 20px 0;
             }
 
             .listorder li .colimg {
@@ -1192,6 +1195,9 @@
                 background: #fff;
                 margin: auto;
                 cursor: pointer
+            }
+            .listorder li .colimg button:hover {
+                color: #E00;
             }
 
             .listorder li .colimg button span {
@@ -1506,6 +1512,8 @@
                 margin: 5px 0 5px 0
             }
 
+
+
             .abate {
                 float: left;
                 border-right: 1px solid #dfdfdf;
@@ -1638,7 +1646,7 @@
 
             .area_total div.total strong {
                 float: right;
-                font-size: 16px;
+                font-size: 20px;
                 color: #c10017
             }
 
@@ -3120,7 +3128,12 @@
 
     .total-price {
     float: right;
-    padding: 15px 0 0 0;
+    padding: 2px 0 0 0;
     border-top: 1px solid #eee;
 }
+    .total-price p{
+        text-align: right;
+    padding: 0 0 5px 0;
+    font-size: 12px;
+    }
 </style>
