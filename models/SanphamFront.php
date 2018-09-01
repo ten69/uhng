@@ -61,6 +61,8 @@ class SanphamFront extends Model
     }
 
     public function update(){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+
         $this->sp_conhang_label = Tuyen::_show_conhang($this->sp_conhang);
         $this->sp_gia_label = Tuyen::_show_gia($this->sp_gia);
         $this->sp_album = json_decode($this->sp_album,true);
@@ -101,8 +103,23 @@ class SanphamFront extends Model
             $chinhsach = array_merge($chinhsach, $dm['dm_chinhsach']);
         }
         
-        $khuyenmai = array_merge($khuyenmai, $this->sp_khuyenmai);  
-        $this->sp_khuyenmai = $khuyenmai;
+        $khuyenmai = array_merge($khuyenmai, $this->sp_khuyenmai);
+
+        //Lọc khuyenmai hết hạn
+        $khuyenmai_filter = [];
+        foreach ($khuyenmai as $k_km => $id_km) {
+            $km = Tuyen::_dulieu('khuyenmai',$id_km);
+            if($km){
+                if(empty($km['cs_ngayketthuc'])){
+                    $khuyenmai_filter[] = $id_km;
+                }
+                elseif(strtotime($km['cs_ngayketthuc']) > time()){
+                    $khuyenmai_filter[] = $id_km;
+                }
+            }
+        }
+        $this->sp_khuyenmai = $khuyenmai_filter;
+        
 
         $chinhsach = array_merge($chinhsach, $this->sp_chinhsach);  
         $this->sp_chinhsach = $chinhsach;
