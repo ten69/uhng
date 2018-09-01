@@ -160,11 +160,24 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     								<div class="promotion  webnote">
     	                            <?php foreach ($sp->sp_khuyenmai as $idkm) { 
     	                            	$km = Tuyen::_dulieu('khuyenmai', $idkm);
-    	                            	if($km){
-    	                            		if(is_numeric($total_price)) $total_price -= (int)$km['cs_tylechietkhau'];
+    	                            	if($km){    	                            		
     	                            ?>
     	                                <span class=""><?= $km['cs_ten']?></span>
-    	                                <div class="discout"><?= Tuyen::_show_gia_discount($km['cs_tylechietkhau'],'-')?></div>
+    	                                <div class="discout">
+                                            <?php
+                                                if($km['cs_typetyle'] == 1){
+                                                    if(is_numeric($total_price)) $total_price -= (int)$km['cs_tylechietkhau'];
+
+                                                    echo Tuyen::_show_gia_discount($km['cs_tylechietkhau'],'-');
+                                                }
+                                                elseif($km['cs_typetyle'] == 2){
+                                                    echo '('.Tuyen::_show_gia_discount($km['cs_tylechietkhau'],'-',2) .')';                                          
+                                                    $discount = (int)$km['cs_tylechietkhau'] / 100 * $sp->sp_gia;
+                                                    if(is_numeric($total_price)) $total_price -= $discount;
+                                                    echo '<div style="padding: 0 2px"></div>'.Tuyen::_show_gia_discount($discount, '-') ;
+                                                }
+                                            ?>                                                
+                                        </div>
     	                                <div style="clear: both"></div>
     								<?php } } ?>	                            
     	                            </div>

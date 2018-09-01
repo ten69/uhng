@@ -310,7 +310,7 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                             <span class="pro385621 " data-g="WebNote" data-date="8/31/2018 11:00:00 PM" data-return="">
                                 <?=  $km['cs_ten']?>
                             </span>
-                            <?= Tuyen::_show_gia_discount($km['cs_tylechietkhau'],'-')?>
+                            <?= Tuyen::_show_gia_discount($km['cs_tylechietkhau'],'-',$km['cs_typetyle'])?>
                         </div>
                     <?php    
                         }

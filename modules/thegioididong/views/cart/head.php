@@ -3017,6 +3017,7 @@
 
 <style type="text/css">
     .discout {
+        display: flex;
         float: right;
         font-size: 12px;
     }
