@@ -6706,6 +6706,12 @@
             padding: 0 10px 10px
         }
 
+        .area_price span{
+            padding: 5px 0 0 0;
+            color: #888;
+            font-size: 12px;
+        }
+
         .area_price strong {
             display: inline-block;
             overflow: hidden;

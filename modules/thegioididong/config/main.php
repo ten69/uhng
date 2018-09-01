@@ -14,6 +14,13 @@ return [
 		    // 'suffix' => '.html',
 		],
 
+		[
+		    'pattern' => 'barcode', //cart.html
+		    'route' => temp.'/barcode/index',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
 
 		[
 		    'pattern' => 'update-cart', //cart.html

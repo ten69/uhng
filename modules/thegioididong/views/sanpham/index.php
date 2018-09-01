@@ -18,7 +18,7 @@ use frontend\assets\CustomAsset;
 $bundle = CustomAsset::register($this);
 $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 
-
+// die;
 // $a = Tuyen::_dulieu('cs','all');
 
 // $csdm = Tuyen::_dulieu('cs','all');
@@ -157,7 +157,10 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                     <label class="installment">                        
                         <?= $model->sp_conhang_label ?>
                     </label>
-                    <span></span>
+                    <br/>
+                    <span style="color: #888;font-size: 12px;">
+                        <?= $model->sp_vat_label ?>
+                    </span>
                 </div>
                 <!-- <div class="cpGift cpGit cpApple type0">
                     <a href="https://www.thegioididong.com/mua-online-gia-re-hon" class="xct2">&nbsp;</a>
@@ -263,7 +266,7 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
 
 
                 <div class="area_promotion zero">
-                    <strong data-count="2">Chương trình khuyến mãi</strong>
+                    <strong data-count="2">Chương trình khuyến mại</strong>
                     <!-- <div class="pro-img">
                         <ul class="t2">
                             <li class="notapply" data-date="8/31/2018 11:00:00 PM" data-g="Tặng" data-return="1000000">
@@ -289,6 +292,11 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                         .cskm span{
                             padding: 0 0 0 25px;
                         }
+                        .down-km{
+                            color: #0d9209;
+                            font-size: 12px;
+                            display: contents;
+                        }
                     </style>
                     <?php 
                         if($model->sp_khuyenmai) foreach ($model->sp_khuyenmai as $k_km => $v_km) {
@@ -302,6 +310,7 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                             <span class="pro385621 " data-g="WebNote" data-date="8/31/2018 11:00:00 PM" data-return="">
                                 <?=  $km['cs_ten']?>
                             </span>
+                            <?= Tuyen::_show_gia_discount($km['cs_tylechietkhau'],'-')?>
                         </div>
                     <?php    
                         }
@@ -352,23 +361,49 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
 
 
                 <style type="text/css">
-                    select{
-                            padding: 5px 8px;
+                    .area_promotion_price {
+                        display: contents;
+                    }
+                    .area_promotion select{
+                        padding: 5px 8px;
                         font-size: 14px;
                         border: 1px solid #ccc;
                         outline: none !important;
+                        margin: 0 5px 0 0;
                     }
 
-                    select:focus {
+                    .area_promotion select:focus {
                         background: #eee;
                     }
 
-                    select option {
+                    .area_promotion select option {
                         font-size: 12px;
                         background: #FFF;
                     }
+                    .up-km {
+                        color: #F00;
+                        font-size: 12px;
+                        display: contents;
+                    }
+
                 </style>
-    
+                
+                <script type="text/javascript">
+                    function change_thongso(_this)
+                    {
+                        selected = $(_this).find('option:selected')
+                        value = parseInt(selected.data('value'))
+                        area_promotion_price = $(_this).parent().find('.area_promotion_price');
+                        if(value > 0){
+                            value = value.toLocaleString();
+                            area_promotion_price.html('<div class="up-km">+'+value+'đ</div>')
+                        }
+                        else if(value < 0){
+                            value = value.toLocaleString();
+                            area_promotion_price.html('<div class="down-km">-'+value+'đ</div>')
+                        }
+                    }
+                </script>
 
                 <form id="order_sp" action="/add-cart.html" method="POST">
                 <?php if(is_array($model['sp_phienban'])){ ?>
@@ -380,13 +415,18 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                         <strong data-count="2">Tùy chọn thông số, phiên bản</strong>                        
                     <?php 
                         foreach ($model['sp_phienban'] as $k_pb => $pb) {
+                            $dem = 0;
+                            $gia = '';
                             echo '<div style="padding: 5px 20px;">';
-                            echo '<h4 style="margin: 0 0 5px 0">'.$pb['title'].'</h4>';
-                            echo '<select name="ts['.$k_pb.']">';
+                            echo '<span style="margin: 0 10px 5px 0">'.$pb['title'].'</span>';
+                            echo '<select onChange="change_thongso(this)" name="ts['.$k_pb.']">';
                             if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
-                                echo '<option value="'.$k_op.'">'.$op['name'].'</option>';
+                                if($dem == 0) $gia = $op['change'];
+                                echo '<option data-value="'.$op['change'].'" value="'.$k_op.'">'.$op['name'].'</option>';
+                                $dem += 1;
                             }
                             echo '</select>';
+                            echo '<div class="area_promotion_price">'.Tuyen::_show_gia_discount($gia).'</div>';
                             echo '</div>';
                         }
                     ?>      

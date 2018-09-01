@@ -64,34 +64,37 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         height: 240px;
                     }
                     .iconnull {
-    background-position: 0 -25px;
-    width: 70px;
-    height: 54px;
-    display: block;
-    margin: 10px auto;
-}
-.iconnoti {    
-    background-size: 80px 85px;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    display: inline-block;
-}
-.buyother {
-    display: block;
-    overflow: hidden;
-    background: #fff;
-    line-height: 40px;
-    text-align: center;
-    margin: 15px auto;
-    width: 300px;
-    font-size: 14px;
-    color: #288ad6;
-    font-weight: 600;
-    text-transform: uppercase;
-    border: 1px solid #288ad6;
-    border-radius: 4px;
-}
+                        background-position: 0 -25px;
+                        width: 70px;
+                        height: 54px;
+                        display: block;
+                        margin: 10px auto;
+                    }
+                    .iconnoti {    
+                        background-size: 80px 85px;
+                        width: 20px;
+                        height: 20px;
+                        vertical-align: middle;
+                        display: inline-block;
+                    }
+                    .buyother {
+                        display: block;
+                        overflow: hidden;
+                        background: #fff;
+                        line-height: 40px;
+                        text-align: center;
+                        margin: 15px auto;
+                        width: 300px;
+                        font-size: 14px;
+                        color: #288ad6;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        border: 1px solid #288ad6;
+                        border-radius: 4px;
+                    }
+
+
+
                 </style>
 
                 <div class="null_cart">
@@ -100,7 +103,17 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                     <a href="/" class="buyother">Về trang chủ</a>                    
                 </div>
             <?php }else{ ?>
+                
+                <style type="text/css">
+                    .vat {
+                        text-align: right;
+                        font-size: 12px;
+                    }
 
+                    .vat span{
+                        color: #c10017;
+                    }
+                </style>
                 <div class="detail_cart">   
                     <form id="order_sp" method="POST">             
                     <input id="form-token" type="hidden" name="<?= Aabc::$app->request->csrfParam?>"           value="<?= Aabc::$app->request->csrfToken?>"/>
@@ -115,8 +128,13 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                          $all_total_price = 0; 
                         if(is_array($cart)) foreach ($cart as $k => $item) {
     						$sp = Tuyen::_dulieu('sanpham', $item['sanpham']);
-    						if($sp){							
-    							$total_price = $sp->sp_gia;
+    						if($sp){
+                                $total_price = $sp->sp_gia;	
+                                $vat = 0;		
+                                if(empty($sp->sp_vat)){
+                                    $vat = (((int)$sp->sp_vat_value / 100) * $total_price) ;
+                                    $total_price += $vat;
+                                }
     					?> 
     						<li class=" justadded" data-value="106875" id="item106875" data-num="4">
                                 <input type="hidden" name="cart[<?= $k?>][sanpham]" value="<?= $sp->sp_id?>">
@@ -128,6 +146,16 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     	                        <div class="colinfo">
     	                            <strong><?= $item['gia']; ?></strong>
     	                            <a href="<?= $sp->sp_linkseo?>"><?= $sp->sp_tensp?></a>
+
+                                    <p class="vat">
+                                        <?php 
+                                            if(!empty($sp->sp_vat)){
+                                                echo $sp->sp_vat_label;
+                                            }else{
+                                                echo 'VAT '.$sp->sp_vat_value.'%: <span>+'.number_format($vat).Tuyen::_show_donvitiente().'</span>';
+                                            }
+                                        ?>                                        
+                                    </p>
 
     								<div class="promotion  webnote">
     	                            <?php foreach ($sp->sp_khuyenmai as $idkm) { 
@@ -154,7 +182,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     			                            echo '<span>'.$pb['title'].'</span>';
     			                            echo '<select class="cart_e" name="cart['.$k.'][thongso]['.$k_pb.']" style="margin: 0 0 0 10px;">';
     			                            if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
-    			                            	if($k_op == $select_pb[$k_pb]){
+    			                            	if(isset($select_pb[$k_pb]) && $k_op == $select_pb[$k_pb]){
     			                            		if(is_numeric($total_price)) $total_price += (int)$op['change'];
 
     			                            		$giamgia = $op['change'];

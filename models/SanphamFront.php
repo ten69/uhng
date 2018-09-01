@@ -24,6 +24,10 @@ class SanphamFront extends Model
     public $sp_recycle;
     public $sp_linkseo;
 
+    public $sp_vat;
+    public $sp_vat_value;
+    public $sp_vat_label;
+
     public $sp_album;
     public $sp_phienban;
     public $sp_listdm;
@@ -43,7 +47,7 @@ class SanphamFront extends Model
     public function rules()
     {
         return [            
-            [['sp_id','sp_tensp','sp_conhang','sp_images','sp_images_ts','sp_gia','sp_gia_label','sp_status','sp_recycle','sp_linkseo','sp_album','sp_listdm','sp_phienban','sp_thongso','sp_khuyenmai','sp_danhmuc','sp_chinhsach','sp_baiviet','sp_thongso_full', 'sp_gia_sort'],'safe'],   
+            [['sp_id','sp_tensp','sp_conhang','sp_images','sp_images_ts','sp_gia','sp_gia_label','sp_status','sp_recycle','sp_linkseo','sp_album','sp_listdm','sp_phienban','sp_thongso','sp_khuyenmai','sp_danhmuc','sp_chinhsach','sp_baiviet','sp_thongso_full', 'sp_gia_sort','sp_vat','sp_vat_value','sp_vat_label'],'safe'],   
 
         ];
     }
@@ -61,6 +65,8 @@ class SanphamFront extends Model
         $this->sp_gia_label = Tuyen::_show_gia($this->sp_gia);
         $this->sp_album = json_decode($this->sp_album,true);
         $this->sp_phienban = json_decode($this->sp_phienban,true);
+
+        $this->sp_vat_label = (!empty($this->sp_vat)?'Đã':'Chưa').' bao gồm VAT '.$this->sp_vat_value.'%';
 
         $this->sp_thongso = $this->sp_listdm[5]; //Array
         $this->sp_danhmuc = !empty($this->sp_listdm[1][0])?$this->sp_listdm[1][0]:''; //1 id
