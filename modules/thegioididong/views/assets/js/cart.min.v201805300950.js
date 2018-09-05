@@ -6240,18 +6240,18 @@ updateInfoTmp = function() {
     $(".area_address .EmailSecond").val($(".area_market .EmailSecond").val()));
     $("#IsShipAtHome").val() === "true" && $(".area_address .EmailSecond").length > 0 && ($("#BillingAddress_Email").val($(".area_address .EmailSecond").val()),
     $(".area_market .EmailSecond").val($(".area_address .EmailSecond").val()));
-    $.ajax({
-        async: !0,
-        data: $("#wrap_cart form").serialize(),
-        type: "POST",
-        error: function() {
-            console.log("Close notification error")
-        },
-        success: function(n) {
-            console.log(n)
-        },
-        url: "/aj/OrderV4/UpdateInfoCart"
-    })
+    // $.ajax({
+    //     async: !0,
+    //     data: $("#wrap_cart form").serialize(),
+    //     type: "POST",
+    //     error: function() {
+    //         console.log("Close notification error")
+    //     },
+    //     success: function(n) {
+    //         console.log(n)
+    //     },
+    //     url: "/aj/OrderV4/UpdateInfoCart"
+    // })
 }
 ;
 String.prototype.trimRight = function(n) {

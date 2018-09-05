@@ -21,6 +21,15 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 // echo '<pre>';
 // print_r($cart);
 // echo '</pre>';
+Tiến hành thanh toán, điền thông tin
+- Họ tên
+- Email
+- Số điện thoại
+- Địa chỉ => phi ship
+
+- Phương thức thanh toán:
+    + COD
+    + Chuyen khoan ngan hang
 
 ?>
 

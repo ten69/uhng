@@ -5,7 +5,7 @@
 <meta property="og:title" content="Thegioididong.com - Siêu thị điện thoại, Tablet, Laptop, Phụ kiện chính hãng"/>
 <meta property="og:description" content="Hệ thống bán lẻ điện thoại di động, smartphone, máy tính bảng, tablet, laptop, phụ kiện chính hãng mới nhất, giá tốt, dịch vụ khách hàng được yêu thích nhất VN"/>
 <meta content="INDEX,FOLLOW" name="robots"/>
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="copyright" content="Công ty Cổ phần Thế Giới Di Động"/>
 <meta name="author" content="Công ty Cổ phần Thế Giới Di Động"/>
 <meta http-equiv="audience" content="General"/>
