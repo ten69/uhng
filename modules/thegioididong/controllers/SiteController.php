@@ -7,9 +7,11 @@ use aabc\web\Controller;
 use aabc\helpers\Html;
 use aabc\helpers\Url; /*Them*/
 use aabc\filters\VerbFilter;
-
+use aabc\filters\AccessControl;
+use frontend\models\SignupForm;
 
 use common\components\Tuyen;
+use backend\models\Cauhinh;
 use backend\models\SanphamDanhmuc;
 
 class SiteController extends Controller
@@ -21,8 +23,36 @@ class SiteController extends Controller
    
     public function behaviors()
     {
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('asia/ho_chi_minh');   
+       
+        // $a = Tuyen::_dulieu('cauhinh',Cauhinh::cart_dangnhap);        
+        // if($a == 2){
+        //     $login = ['index'];
+        //     $not = ['signup','login'];
+        // }else{
+        //     $login = [];
+        //     $not = ['signup','login','index'];
+        // }
+        
         return [
+            //  'access' => [
+            //     'class' => AccessControl::className(),
+            //     'only' => ['index', 'signup','login'],
+            //     'rules' => [
+            //         [
+            //             'actions' => $not,
+            //             'allow' => true,
+            //             'roles' => ['?'],
+            //         ],
+            //         [
+            //             'actions' => $login,
+            //             'allow' => true,
+            //             'roles' => ['@'],
+            //         ],
+            //     ],
+            // ],
+
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [                    
@@ -33,6 +63,8 @@ class SiteController extends Controller
             ],
         ];
     }
+
+   
    
      public function beforeAction($action)
     {
@@ -72,6 +104,21 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionDangNhap()
+    {
+        $this->layout = 'thanhtoan/main';    
+        return $this->render('dang-nhap');
+    }
+
+
+    public function actionDangKy()
+    {
+        $this->layout = 'thanhtoan/main';   
+        $model = new SignupForm(); 
+        return $this->render('dang-ky',[
+            'model' => $model,
+        ]);
+    }
 
 
 

@@ -1,5 +1,9 @@
 <?php
 return [
+
+	'loginUrl' => ['dang-nhap.html'],
+
+
 	'link' => [
 		'sanpham' => 's1',
 		'danhmuc' => '1',
@@ -13,6 +17,31 @@ return [
 		    // 'defaults' => [/*'type' => 1*/],
 		    // 'suffix' => '.html',
 		],
+
+		[
+		    'pattern' => 'dang-nhap', //login
+		    'route' => temp.'/site/dang-nhap',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+		[
+		    'pattern' => 'dang-ky', //login
+		    'route' => temp.'/site/dang-ky',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+
+		[
+		    'pattern' => 'thong-tin-thanh-toan', //login
+		    'route' => temp.'/thanhtoan',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+
+
 
 		[
 		    'pattern' => 'barcode', //cart.html

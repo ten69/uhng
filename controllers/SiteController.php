@@ -46,22 +46,22 @@ class SiteController extends Controller
           //   ],
 
             
-            // 'access' => [
-            //     'class' => AccessControl::className(),
-            //     'only' => ['logout', 'signup'],
-            //     'rules' => [
-            //         [
-            //             'actions' => ['signup'],
-            //             'allow' => true,
-            //             'roles' => ['?'],
-            //         ],
-            //         [
-            //             'actions' => ['logout'],
-            //             'allow' => true,
-            //             'roles' => ['@'],
-            //         ],
-            //     ],
-            // ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['logout', 'signup'],
+                'rules' => [
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -100,7 +100,8 @@ class SiteController extends Controller
     }
     
     public function actionIndex()
-    {
+    {   
+        return 'tuyen';
         // $this->layout = 'chuyenmuc/main';        
         // $this->layout = 'site/main';       
         return $this->render('index');
