@@ -13,6 +13,8 @@ use common\components\Tuyen;
 use backend\models\Cauhinh;
 use backend\models\SanphamDanhmuc;
 
+use frontend\models\CartForm;
+
 class ThanhtoanController extends Controller
 {
     public function getControllerLabel()
@@ -88,10 +90,34 @@ class ThanhtoanController extends Controller
 
 
     public function actionIndex()
-    {
-        // $this->layout = 'chuyenmuc/main';        
-        // $this->layout = 'site/main'; 
-        return $this->render('index');
+    {        
+        $user = Aabc::$app->user->identity;
+       
+       
+        $model = new CartForm();
+        if ($model->load(Aabc::$app->request->post()) && $model->validate()) {
+            // return $this->redirect(['/']);
+            // return $this->goBack();
+
+            //Sẽ lưu vào trong session cart_info
+            // $session = Aabc::$app->session;
+            // $cart_info = $session['cart_info']; 
+            $a = $b;
+
+            return $this->goHome();
+        } else {   
+            if($user){
+                $model->hoten = $user->hoten;
+                $model->dienthoai = $user->dienthoai;
+                $model->email = $user->email;
+                $model->diachi = $user->diachi;
+                $model->gioitinh = $user->gioitinh;
+            }            
+            return $this->render('index', [
+                'model' => $model,
+            ]);
+        }
+
     }
 
    

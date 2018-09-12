@@ -9,6 +9,7 @@ use aabc\helpers\Url; /*Them*/
 use aabc\filters\VerbFilter;
 use aabc\filters\AccessControl;
 use frontend\models\SignupForm;
+use common\models\LoginForm;
 
 use common\components\Tuyen;
 use backend\models\Cauhinh;
@@ -57,6 +58,8 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [                    
                     'api' => ['POST','GET'],
+                    'dang-nhap' => ['POST','GET'],
+                    'dang-xuat' => ['POST','GET'],
                     'delete' => ['POST'],
                     'get-order' => ['GET'],
                 ],
@@ -106,8 +109,30 @@ class SiteController extends Controller
 
     public function actionDangNhap()
     {
-        $this->layout = 'thanhtoan/main';    
-        return $this->render('dang-nhap');
+        $this->layout = 'thanhtoan/main'; 
+        $model = new LoginForm();
+        if ($model->load(Aabc::$app->request->post()) && $model->login()) {
+            // return $this->redirect(['/']);
+            return $this->goBack();
+            // return $this->goHome();
+        } else {   
+            if (!Aabc::$app->user->isGuest) {
+                return $this->goHome();
+            }
+            $model = new LoginForm();
+            return $this->render('dang-nhap', [
+                'model' => $model,
+            ]);
+        }
+
+    }
+
+   
+    public function actionDangXuat()
+    {
+        Aabc::$app->user->logout();
+        return $this->redirect(['/']);
+        // return $this->goHome();
     }
 
 

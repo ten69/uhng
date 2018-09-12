@@ -688,32 +688,55 @@ function ShowTabStore() {
 function EventDistClick() {
     $(".area_market .citydis .listdist .scroll a").click(function() {
         ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickDistict);
-        $(".area_market .listdist").hide();
+        $(".area_market .listdist").removeClass('show');
         $(".area_market .citydis .dist span").attr("data-id", $(this).attr("data-value")).html($(this).text());
-        $("#BillingAddress_DistictId").val($(this).attr("data-value"));
+        
+        // $("#BillingAddress_DistictId").val($(this).attr("data-value"));
+
+        $("#cartform-huyen").val($(this).attr("data-id"));
+        $("#signupform-huyen").val($(this).attr("data-id"));
+        console.log('tuyen-92939487')
+
         LoadStore()
     })
 }
 function AddEventAtStore() {
+    console.log('Load quận/huyện 3');
+    // return false;
+
     $(".area_market .citydis .listcity a").click(function() {
         ganew_sendEvent(eventCategory, eventAction.click, eventLabel.shipatStoreclickProvince);
-        $(".area_market .listcity").hide();
+        $(".area_market .listcity").removeClass('show');
         $(".area_market .city span").attr("data-id", $(this).attr("data-value")).html($(this).text());
-        $("#BillingAddress_ProvinceId").val($(this).attr("data-value"));
-        $("#BillingAddress_DistictId").val("-1");
+
         $(".area_market .dist span").attr("data-id", "0").html("Chọn quận, huyện");
-        POSTAjax(cartConfig.link_store_loaddistict, {
-            iProvince: $("#BillingAddress_ProvinceId").val(),
-            sProCode: GetProductCode(),
-            iProductID: $("#ProductId").val()
-        }, function() {
-            $(".area_market .overlay").show()
-        }, function(n) {
-            $(".area_market .listdist .scroll").html(n);
-            EventDistClick();
-            LoadStore()
-        }, ErrorAjax, !0)
+
+        var id = $(this).data('value');
+
+        $("#cartform-tinh").val(id);
+        $("#cartform-huyen").val('');
+
+        $("#signupform-tinh").val(id);
+        $("#signupform-huyen").val('');
+
+        $('.t-show').addClass('hide');
+        $('.t-'+id).removeClass('hide').addClass('t-show');
+
+        console.log('tuyen82736');
+        // POSTAjax(cartConfig.link_store_loaddistict, {
+        //     iProvince: $("#BillingAddress_ProvinceId").val(),
+        //     sProCode: GetProductCode(),
+        //     iProductID: $("#ProductId").val()
+        // }, function() {
+        //     $(".area_market .overlay").show()
+        // }, function(n) {
+        //     $(".area_market .listdist .scroll").html(n);
+        //     EventDistClick();
+        //     LoadStore()
+        // }, ErrorAjax, !0)
     });
+
+
     EventDistClick();
     $("#BillingAddress_ProvinceId").val() != "0" && $("#buyatstore").length == 1 && LoadAllDistrictStoreByProvince();
     $(".area_market .choosetime .liday .city a:first").click();
@@ -729,6 +752,10 @@ function AddEventAtStore() {
     })
 }
 function LoadAllDistrictStoreByProvince() {
+
+    console.log('Load quận/huyện');
+    return false;
+
     POSTAjax(cartConfig.link_store_loaddistict, {
         iProvince: $("#BillingAddress_ProvinceId").val(),
         sProCode: GetProductCode(),
@@ -741,6 +768,9 @@ function LoadAllDistrictStoreByProvince() {
     }, ErrorAjax, !0)
 }
 function LoadAllProvince() {
+    console.log('Load quận/huyện 2');
+    return false;
+
     POSTAjax(cartConfig.link_store_loadprovince, {
         sProCode: GetProductCode(),
         iProductID: $("#ProductId").val()
@@ -773,6 +803,9 @@ function LoadAllProvince() {
 }
 function LoadStore() {
     $(".area_market  .listmarket").html("");
+    console.log('tuyen1111')
+    return false;
+
     POSTAjax(cartConfig.link_loadstore, {
         iProvince: $("#BillingAddress_ProvinceId").val(),
         iDistrict: $("#BillingAddress_DistictId").val(),
@@ -6112,12 +6145,16 @@ $(document).ready(function() {
         }, 600))
     });
     $(".city").click(function() {
-        $(".layer").not($(this).next()).hide();
-        $(this).next().slideToggle()
+        // $(".layer").not($(this).next()).hide();
+        // $(this).next().slideToggle()
+        $(".layer").not($(this).next()).removeClass('show');
+        $(this).next().toggleClass('show')
     });
     $(".dist").click(function() {
-        $(".layer").not($(this).next()).hide();
-        $(this).next().slideToggle()
+        // $(".layer").not($(this).next()).hide();
+        // $(this).next().slideToggle()
+        $(".layer").not($(this).next()).removeClass('show');
+        $(this).next().toggleClass('show')
     });
     $(".firstlayer").click(function() {
         $(".layer").not($(this).next()).hide();

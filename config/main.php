@@ -99,12 +99,12 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_tk_fr', 'httpOnly' => true],
             'loginUrl' => $config_main['loginUrl'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => 'ss-fr',
         ],
         'log' => [
             'traceLevel' => AABC_DEBUG ? 3 : 0,

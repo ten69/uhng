@@ -71,7 +71,7 @@ class CartController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ($_POST['ts'])?$thongso = $_POST['ts']:$thongso = '';
             self::addcart(empty($_POST['product'])?0:$_POST['product'], $thongso);            
-            return $this->redirect(['/cart.html']);
+            return $this->redirect(['/gio-hang.html']);
         }
     }
 

@@ -269,7 +269,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                 </div>
 
 
-                <div class="infouser ">
+               <!--  <div class="infouser ">
                     <div class="malefemale">
                         <label class="anh choose"><i class="iconmobile-opt"></i>&nbsp;Anh</label>
                         <label class=""><i class="iconmobile-opt"></i>&nbsp;Chị</label>
@@ -285,10 +285,10 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         <input type="text" id="BillingAddress_Email" name="BillingAddress.Email" placeholder="Email (Để theo dõi quá trình chuyển hàng)" maxlength="100" class="saveinfo" style="display:none;">
                         <input type="text" class="saveinfo" style="" id="OrderNote" name="OrderNote" placeholder="Yêu cầu khác (không bắt buộc)" maxlength="300">
                     </div>
-                </div>
+                </div> -->
 
 
-                <div class="area_other">
+               <!--  <div class="area_other">
                     <div class="textnote"><b>Để được phục vụ nhanh hơn,</b> hãy chọn thêm:</div>
                     <div class="address ">
                         <label class=""><i class="iconmobile-opt"></i>&nbsp;Địa chỉ giao hàng</label>
@@ -458,32 +458,32 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         </div>
 
                     </div>
-                </div>
+                </div> -->
               
 
-                <div class="area_secur captcha " style="display:none;">
+                <!--<div class="area_secur captcha " style="display:none;">
                     <span>Để tiếp tục đặt hàng, vui lòng nhập mã bảo mật</span>
                     <div class="capcha">
-                        <!-- <img width="130" height="40" src="/aj/orderv4/getcaptchaimage?prefix=1332519506" class="imgcaptcha">
-                        <div class="changecode" onclick="$('img.imgcaptcha').attr('src','/aj/orderv4/getcaptchaimage?prefix='+Math.random())">Đổi mã khác</div> -->
+                        <img width="130" height="40" src="/aj/orderv4/getcaptchaimage?prefix=1332519506" class="imgcaptcha">
+                        <div class="changecode" onclick="$('img.imgcaptcha').attr('src','/aj/orderv4/getcaptchaimage?prefix='+Math.random())">Đổi mã khác</div> 
                     </div>
                     <div class="entercapcha">
                         <input class="inputcode" name="Captcha" type="tel" maxlength="4" placeholder="Nhập mã bảo mật">
                     </div>
-                </div>
+                </div>-->
 
                 <div class="message"></div>
-                <div class="choosepayment">
-                    <a href="javascript:void(0)" class="payoffline">Thanh toán khi nhận hàng<span>Xem hàng trước, không mua không sao</span></a>
-                    <div class="payonline">
+                <div class="choosepayment" style="margin: 0 auto;width: 50%;">
+                    <a href="thong-tin-thanh-toan.html" class="payoffline">Thông tin thanh toán<span>Nhập thông tin thanh toán, giao hàng</span></a>
+                   <!--  <div class="payonline">
                         <div>Thanh toán online<span>Bằng thẻ ATM, Visa, Master</span></div>
-                    </div>
+                    </div> -->
                 </div>
-                <div class="onlinemethod">
+                <!-- <div class="onlinemethod">
                     <a href="javascript:void(0)" class="atm">Dùng thẻ ATM<span>Có internet Banking</span></a>
                     <a href="javascript:void(0)" class="visa">Dùng thẻ Visa, MASTER</a>
                     <a class="rechoose" href="javascript:;">Chọn lại hình thức thanh toán</a>
-                </div>
+                </div> -->
                 <div class="clr"></div>  
             <?php } ?>           
         <!-- </form> -->

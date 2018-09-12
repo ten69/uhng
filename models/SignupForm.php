@@ -22,6 +22,10 @@ class SignupForm extends Model
     public $socmnd;
     public $ngaysinh;
     public $gioitinh;
+
+    public $tinh;
+    public $huyen;
+    public $xa;
     
     
     public function rules()
@@ -35,7 +39,12 @@ class SignupForm extends Model
         if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_socmnd) == 3 ) $batbuoc[] = 'socmnd';
         if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_ngaysinh) == 3 ) $batbuoc[] = 'ngaysinh';
         if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_gioitinh) == 3 ) $batbuoc[] = 'gioitinh';
-        if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_diachi) == 3 ) $batbuoc[] = 'diachi';
+        if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_diachi) == 3 ){
+            $batbuoc[] = 'diachi';
+            $batbuoc[] = 'tinh';
+            $batbuoc[] = 'huyen';
+            $batbuoc[] = 'xa';
+        }
         if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_matkhau) == 3 ) $batbuoc[] = 'matkhau';
         if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_matkhau_nhaplai) == 3 ) $batbuoc[] = 'nhaplaimatkhau';
 
@@ -47,11 +56,9 @@ class SignupForm extends Model
 
 
             ['email', 'trim'],            
-            [$batbuoc, 'required', 'message' => 'Vui lòng nhập'],
-
+            [$batbuoc, 'required', 'message' => 'Vui lòng nhập {attribute}'],
 
             ['nhaplaimatkhau', 'compare', 'compareAttribute'=>'matkhau', 'message'=>"Mật khẩu không trùng khớp" ],
-
 
             ['email', 'email', 'message' => 'Không đúng định dạng email'],
             ['email', 'string', 'max' => 255],
@@ -59,6 +66,16 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            [['gioitinh'], 'integer'],
+            [['ngaysinh'], 'safe'],
+            [['diachi', 'fb'], 'string', 'max' => 255],            
+            [['hoten', 'skype'], 'string', 'max' => 50],
+            [['dienthoai', 'socmnd'], 'string', 'max' => 20],  
+
+            [['tinh','huyen'], 'integer'],
+            [['xa'], 'string', 'max' => 255],          
+
         ];
     }
 
@@ -75,6 +92,7 @@ class SignupForm extends Model
             'ngaysinh' => 'Ngày sinh',
             'gioitinh' => 'Giới tính',
             'socmnd' => 'Số CMND/ Thẻ căn cước',
+            'xa' => 'Số nhà',
         ];
     }
     

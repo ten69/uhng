@@ -1323,7 +1323,7 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
             $session = Aabc::$app->session;
             $cart = $session['cart'];
         ?>
-        <a href="/cart.html">Giỏ hàng (<?= sizeof($cart)?>)</a>
+        <a href="/gio-hang.html">Giỏ hàng (<?= sizeof($cart)?>)</a>
     </div>
 
 

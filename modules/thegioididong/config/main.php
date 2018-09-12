@@ -26,6 +26,13 @@ return [
 		],
 
 		[
+		    'pattern' => 'dang-xuat', //logout
+		    'route' => temp.'/site/dang-xuat',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+
+		[
 		    'pattern' => 'dang-ky', //login
 		    'route' => temp.'/site/dang-ky',
 		    'defaults' => [/*'type' => 1*/],
@@ -76,6 +83,12 @@ return [
 
 		[
 		    'pattern' => 'cart', //cart.html
+		    'route' => temp.'/cart/index',
+		    'defaults' => [/*'type' => 1*/],
+		    'suffix' => '.html',
+		],
+		[
+		    'pattern' => 'gio-hang', //cart.html
 		    'route' => temp.'/cart/index',
 		    'defaults' => [/*'type' => 1*/],
 		    'suffix' => '.html',

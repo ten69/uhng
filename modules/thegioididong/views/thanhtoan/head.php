@@ -1049,7 +1049,7 @@
 
             /* 04:24:12 21/08/2018 */
             .show {
-                display: block
+                display: block !important;
             }
 
             .none {
@@ -1795,8 +1795,10 @@
             .area_other {
                 display: block;
                 overflow: visible;
-                padding: 5px 30px 0;
-                background: #fff
+                padding: 0px 10px 0 0;
+                background: #fff;
+                position: absolute;
+                width: calc(30% - 10px);
             }
 
             .area_other .textnote {
@@ -1892,7 +1894,8 @@
                 background: #fff;
                 border-radius: 3px;
                 font-size: 14px;
-                color: #288ad6;
+                /*color: #288ad6;*/
+                color: #777;
                 padding: 10px 1.5% 6px
             }
 
@@ -1909,7 +1912,8 @@
                 content: '';
                 width: 0;
                 right: 0;
-                border-top: 6px solid #288ad6;
+                /*border-top: 6px solid #288ad6;*/
+                border-top: 6px solid #777;
                 border-left: 6px solid transparent;
                 border-right: 6px solid transparent;
                 display: inline-block;
@@ -1967,7 +1971,7 @@
                 border: 1px solid #d9d9d9;
                 border-radius: 4px;
                 background: #fff;
-                height: 34px;
+                height: 40px;
                 position: relative
             }
 
@@ -1975,7 +1979,7 @@
                 display: block;
                 border: 0;
                 background: #fff;
-                padding: 5px;
+                padding: 0px;
                 height: 24px;
                 border-radius: 4px;
                 width: 90%
@@ -2029,7 +2033,8 @@
                 background: #fff;
                 border-radius: 3px;
                 font-size: 14px;
-                color: #288ad6;
+                /*color: #288ad6;*/
+                color: #777;
                 padding: 10px 1.5% 6px
             }
 
@@ -2046,7 +2051,8 @@
                 content: '';
                 width: 0;
                 right: 0;
-                border-top: 6px solid #288ad6;
+                /*border-top: 6px solid #288ad6;*/
+                border-top: 6px solid #777;
                 border-left: 6px solid transparent;
                 border-right: 6px solid transparent;
                 display: inline-block;
@@ -2096,6 +2102,11 @@
                 cursor: pointer
             }
 
+            .area_market .scroll a {
+                width: calc(50% - 20px);
+                float: left;
+            }
+
             .checkexist .scroll {
                 display: block;
                 overflow-y: auto;
@@ -2109,19 +2120,19 @@
             }
 
             .area_market {
-                display: none;
-                overflow: visible;
+                /*display: none;*/
+                /*overflow: visible;
                 background: #f0f0f0;
                 margin-top: 15px;
                 padding: 20px;
-                position: relative
+                position: relative*/
             }
 
             .area_market.show {
-                display: block
+                display: block 
             }
 
-            .area_market:before {
+           /* .area_market:before {
                 content: '';
                 position: absolute;
                 bottom: 100%;
@@ -2131,7 +2142,7 @@
                 border-bottom: 10px solid #f0f0f0;
                 border-left: 10px solid transparent;
                 border-right: 10px solid transparent
-            }
+            }*/
 
             .area_market.onlystore {
                 display: block;
@@ -2680,8 +2691,7 @@
             .payonline div {
                 display: block;
                 overflow: hidden;
-                cursor: pointer;
-                padding: 9px 0;
+                cursor: pointer;                
                 border-radius: 4px;
                 font-size: 14px;
                 font-weight: 600;
@@ -2695,6 +2705,18 @@
                 background: -moz-linear-gradient(top,#288ad6,#0e74c2);
                 background: -ms-linear-gradient(top,#288ad6,#0e74c2);
                 background: -o-linear-gradient(top,#288ad6,#0e74c2)
+            }
+            
+            .payonline div button{
+                border: none;
+                padding: 9px 0;
+                width: 100%;
+                cursor: pointer;
+                background: transparent;
+                color: #FFF;
+                font-size: 14px;
+                font-weight: bold;
+                text-transform: uppercase;
             }
 
             .payonline span {
@@ -3136,5 +3158,23 @@
         text-align: right;
     padding: 0 0 5px 0;
     font-size: 12px;
+    }
+</style>
+
+
+
+<style type="text/css">
+    /*background fill*/
+    @-webkit-keyframes autofill {
+        to {
+            /*color: #2085d4;*/
+            color: #666;
+            background: transparent;
+        }
+    }
+
+    input:-webkit-autofill {
+        -webkit-animation-name: autofill;
+        -webkit-animation-fill-mode: both;
     }
 </style>
