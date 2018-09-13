@@ -48,7 +48,7 @@ function role_show($a = '')
                 #showonehour[value=true] ~ .area_other .area_address .onehour {
 		            display: block !important;
 		        }
-                .areainfo div.on-top span {
+                .areainfo div.left.on-top span {
                     font-size: 12px;
                     top: 5px;
                 }

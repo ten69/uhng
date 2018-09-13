@@ -43,7 +43,7 @@ class CartForm extends Model
         if(Tuyen::_dulieu('cauhinh',Cauhinh::cart_ghichu) == 3 ) $batbuoc[] = 'ngaysinh';
         
         return [
-            [$batbuoc, 'required', 'message' => 'Vui lòng nhập'],
+            [$batbuoc, 'required', 'message' => 'Vui lòng nhập {attribute}'],
 
             ['email', 'trim'],            
 

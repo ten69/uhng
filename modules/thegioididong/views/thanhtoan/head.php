@@ -1733,8 +1733,8 @@
 
             .icontgdd-opt,.iconmobile-opt {
                 background-position: -380px -30px;
-                width: 16px;
-                height: 16px;
+                width: 17px;
+                height: 17px;
                 vertical-align: sub
             }
 
@@ -1796,9 +1796,7 @@
                 display: block;
                 overflow: visible;
                 padding: 0px 10px 0 0;
-                background: #fff;
-                position: absolute;
-                width: calc(30% - 10px);
+                background: #fff;                
             }
 
             .area_other .textnote {

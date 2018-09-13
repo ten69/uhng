@@ -8954,8 +8954,8 @@
 
         i.iconmobile-opt {
             background-position: -380px -30px;
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
             display: inline-block;
             vertical-align: sub;
             margin-right: 5px
@@ -9133,8 +9133,8 @@
 
         .memory i.iconmobile-opt {
             background-position: -380px -30px;
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
             display: inline-block;
             vertical-align: sub;
             margin-right: 5px

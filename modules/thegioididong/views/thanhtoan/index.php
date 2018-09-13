@@ -42,7 +42,7 @@ function role_show($a = '')
                 #showonehour[value=true] ~ .area_other .area_address .onehour {
                     display: block !important;
                 }
-                .areainfo div.on-top span {
+                .areainfo div.left.on-top span {
                     font-size: 12px;
                     top: 5px;
                 }
@@ -112,14 +112,13 @@ function role_show($a = '')
                 .wrap_cart{
                     max-width: 1200px;
                 }
-                .infouser {
-                    width: 30%;
-                    float: left;
-                }
+                
                 .httt{
-                    width: calc(65% - 30px);
+                    width: 40%;
                     float: left;
                     padding: 0 15px 0 0;
+                    position: relative;
+                    height: 420px;
                 }
                 .httt-content {
                     border: 1px solid #ddd;
@@ -127,6 +126,63 @@ function role_show($a = '')
                 }
                 .httt-check{
                     cursor: pointer;
+                }
+
+                .infouser {
+                    width: 25%;
+                    float: left;
+                }
+                .area_other{
+                    position: absolute;
+                    width: calc(25% - 10px);
+                }
+                #httt{
+                    height: 368px;
+                    overflow: hidden;
+                }
+                .read-more{
+                    position: absolute;
+                    bottom: 0;
+                    width: calc(100% - 17px);
+                    padding: 0;
+                    text-align: center;
+                    background: #FFF;
+                    z-index: 999;
+                    cursor: pointer;
+                    color: #1a7ecb;
+                }
+                .read-more:before{
+                    height: 60px;
+                    margin-top: -60px;
+                    content: -webkit-gradient(linear,0% 100%,0% 0%,from(#fff),color-stop(.2,#fff),to(rgba(255,255,255,0)));
+                    display: block;
+                    width: 100%;
+                    color: black;
+                }
+                .read-more:after{
+                    content: '';
+                    width: 0;
+                    right: 0;
+                    border-top: 6px solid #288ad6;
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin: -2px 0 0 5px;
+                }
+
+
+                .httt.r-more {
+                    height: auto;
+                }
+
+                .r-more .read-more {
+                    display: none;
+                }
+
+                .r-more #httt {
+                    height: auto;
+                    overflow: auto;
                 }
             </style>
 
@@ -136,7 +192,7 @@ function role_show($a = '')
                 <div class="infouser">
 
                     <h1 style="font-size: 16px;text-transform: uppercase;font-weight: bold;margin: 0px 12px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
-                        Thông tin thanh toán
+                        Thông tin người mua
                     </h1>
 
                     <?php 
@@ -151,10 +207,10 @@ function role_show($a = '')
 
                     <div class="areainfo">
                         <?php if(role_show(Cauhinh::cart_gioitinh)){ ?>
-                        <div class="left" style="margin: 25px 0 0 0">
+                        <div class="left" style="margin: 5px 0 0 0">
                             <label class="gt-check choose">
                                 <i class="iconmobile-opt"></i>&nbsp;Anh
-                                <input type="hidden" <?= $model->gioitinh == 2?'disabled':''?> class="form-control" value="1" name="CartForm[gioitinh]">
+                                <input type="hidden" <?= $model->gioitinh == 1?'':'disabled'?> class="form-control" value="1" name="CartForm[gioitinh]">
                             </label>
 
                             <label class="gt-check" style="margin: 0 0 0 20px;">
@@ -166,7 +222,7 @@ function role_show($a = '')
                                 $('.gt-check').click(function(){
                                     var _this = $(this), _not_this = $('.gt-check').not(_this);
                                     _not_this.removeClass('choose')
-                                    _this.toggleClass('choose');
+                                    _this.addClass('choose');
                                     _not_this.find('>input').prop('disabled',true)
                                     _this.find('>input').prop('disabled',false)
                                 })
@@ -207,15 +263,62 @@ function role_show($a = '')
                         <?php } ?>
 
 
+
+
+                        <?php if(role_show(Cauhinh::cart_ghichu)){ ?>
+                        <div class="hide left <?= empty($model->ghichu)?'':'on-top'?>">
+                            <?php 
+                                echo $form->field($model, 'ghichu',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
+                            ?>
+                        </div> 
+                        <?php } ?>
+
+                        
+
+
                         <?php if(role_show(Cauhinh::cart_diachi)){ ?>
+
+                            <h1 style="font-size: 16px;text-transform: uppercase;font-weight: bold;margin: 0px 0px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
+                                Thông tin giao hàng
+                            </h1>
+
+                            <div class="left" style="margin: 10px 0 0 0">
+                                <label class="gh-home">
+                                    <i class="iconmobile-opt"></i>&nbsp;Giao hàng tận nhà
+                                    <input type="hidden" disabled class="form-control" value="1" name="CartForm[giaohang]">
+                                </label>
+
+                                <label class="gh-home" style="margin: 0 0 0 20px;">
+                                    <i class="iconmobile-opt"></i>&nbsp;Nhận tại cửa hàng
+                                    <input type="hidden" disabled class="form-control" value="2" name="CartForm[giaohang]">
+                                </label>
+
+                                <script type="text/javascript">
+                                    $('.gh-home').click(function(){
+                                        var _this = $(this), _not_this = $('.gh-home').not(_this);
+                                        _not_this.removeClass('choose')
+                                        _this.addClass('choose');
+                                        _not_this.find('>input').prop('disabled',true)
+                                        _this.find('>input').prop('disabled',false)
+                                        var val = _this.find('>input').val();
+                                        if(val == 1){
+                                            $('.dia-chi').removeClass('hide')
+                                        }else{
+                                            $('.dia-chi').addClass('hide')
+                                        }
+                                    })
+                                </script>                 
+                            </div>
+
+
                             <?php 
                                 echo $form->field($model, 'tinh')->hiddenInput()->label(false);
                                 echo $form->field($model, 'huyen')->hiddenInput()->label(false);
                             ?>
 
                             <div class="clearfix"></div>
-                            <p style="margin: 10px 0 10px 0;color: #aaa;"></p>
-                            <div class="area_other" style="margin: 0px 0">  
+                            <!-- <p style="margin: 10px 0 10px 0;color: #aaa;"></p> -->
+                            <div class="dia-chi hide area_other" style="margin: 0px 0">  
 
                                 <div class="area_market ">
                                     <div class="overlay">
@@ -270,7 +373,7 @@ function role_show($a = '')
                                 
                             </div>
 
-                            <div class="left <?= empty($model->diachi)?'':'on-top'?>" style="margin: 40px 0 0 0;">
+                            <div class="dia-chi hide left <?= empty($model->xa)?'':'on-top'?>" style="margin: 40px 0 0 0;">
                                 <?php 
                                     echo $form->field($model, 'xa',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                                 ?>
@@ -278,13 +381,7 @@ function role_show($a = '')
 
                         <?php } ?> 
 
-                        <?php if(role_show(Cauhinh::cart_ghichu)){ ?>
-                        <div class="left <?= empty($model->ghichu)?'':'on-top'?>">
-                            <?php 
-                                echo $form->field($model, 'ghichu',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
-                            ?>
-                        </div> 
-                        <?php } ?>
+                       
 
                                
                         <div class="clearfix"></div>
@@ -339,23 +436,32 @@ function role_show($a = '')
 
                     ?>
                     </div>
+
+                    
+                    <div class="read-more">Đọc thêm</div>
                 </div>
                 
 
                 <script type="text/javascript">
+                    $('.read-more').on('click',function(){
+                        $('.httt').addClass('r-more')
+                    })
+
+
                     $('.httt-check').on('click',function(){
-                        // var id = $(this).data('id');
+                        $('.httt').removeClass('r-more')
                         // $('.httt-check').removeClass('choose')
                         // $(this).addClass('choose')
-                        // $('.httt-content').addClass('hide')
-                        // $('.'+id).removeClass('hide')
+                        var id = $(this).data('id');
+                        $('.httt-content').addClass('hide')
+                        $('.'+id).removeClass('hide')
 
                         // $(this).parents('#httt').find('input').prop('disabled',true)
                         // $(this).find('>input').prop('disabled',false)
 
                         var _this = $(this), _not_this = $('.httt-check').not(_this);
                         _not_this.removeClass('choose')
-                        _this.toggleClass('choose');
+                        _this.addClass('choose');
                         _not_this.find('>input').prop('disabled',true)
                         _this.find('>input').prop('disabled',false)
                     })
@@ -382,6 +488,85 @@ function role_show($a = '')
                         }     
                     })
                 </script>
+
+
+                <style type="text/css">
+                    #tthoadon{
+                        float: left;
+                        margin: 0 0 0 20px;
+                        width: calc(30% - 70px);
+                    }
+                    ul.tt-sp{}
+                    ul.tt-sp li{
+                        float: left;
+                        width: 100%;
+                        margin: 0 0 5px 0;
+                        border-bottom: 1px solid #eee;
+                        padding: 0 0 5px 0;
+                    }
+                    ul.tt-sp li .img{
+                        width: 60px;
+                        float: left;
+                    }
+                    ul.tt-sp li .tieude{
+                        font-size: 13px;
+                        color: #333;
+                    }
+                    ul.tt-sp li .price{
+                        text-align: right;
+                    }
+                    ul.tt-sp li .price p{
+                        font-size: 12px;
+                    }
+                    ul.tt-sp li .price b{}
+                </style>
+                <div id="tthoadon">
+                    <h1 style="font-size: 16px;text-transform: uppercase;font-weight: bold;margin: 0px 0px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
+                        Thông tin đơn hàng
+                    </h1>
+
+                    <ul class="tt-sp">
+                        <?php
+                        $session = Aabc::$app->session;                            
+                        $cart_success = $session['cart_success'];
+
+                        if(is_array($cart_success['san_pham'])) foreach ($cart_success['san_pham'] as $k => $item) {
+                        ?> 
+                            <li class="">
+                                <div class="img">                                    
+                                    <img width="55" src="<?= $item['anh'] ?>">
+                                </div>
+                                <div class="">                                    
+                                    <a class="tieude"><?= $item['ten']?></a>
+                                    <div class="price">
+                                        <?php if(is_numeric($item['don_gia'])){ ?>
+                                            <p><?= number_format($item['don_gia']).Tuyen::_show_donvitiente()?> x <?= $item['so_luong']?> </p>
+                                        <?php } ?>
+
+                                        <?php if(is_numeric($item['don_gia'])){ ?>
+                                            <?php $total_price = $item['don_gia'] * $item['so_luong'] ?>
+                                            <b><?= number_format($total_price).Tuyen::_show_donvitiente()?></b>
+                                        <?php }else{ ?>
+                                            <b><?= $item['don_gia'] ?></b>
+                                        <?php } ?>
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                        <?php } ?>
+                            
+                            <li>
+                        <?php
+                            echo 'Tổng tiền hàng: '. number_format($cart_success['tong_gia']).Tuyen::_show_donvitiente();
+                        ?>
+                            </li>
+                    </ul>
+
+
+
+                </div>
+            
+
 
                 <div class="area_secur captcha " style="display:none;">
                     <span>Để tiếp tục đặt hàng, vui lòng nhập mã bảo mật</span>

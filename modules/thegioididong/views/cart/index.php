@@ -21,7 +21,7 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
 // echo '<pre>';
 // print_r($cart);
 // echo '</pre>';
-
+$session = Aabc::$app->session;
 ?>
 
 
@@ -124,8 +124,28 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         // echo '<pre>';
                         // print_r($cart);
                         // echo '</pre>';
+                        $cart_success = [];
+                        
 
-                         $all_total_price = 0; 
+                        // $cart_success = [
+                        //     'san_pham' => [
+                        //         0 => [
+                        //             'ten' => 'IPhone x 64GB',
+                        //             'anh' => 'http://tyahytnh.com',
+                        //             'don_gia' => '1200000',
+                        //             'so_luong' => 4,
+                        //         ],
+                        //     ],
+                        //     'tong_gia' => 12000000,
+                        // ];
+
+                        
+
+                        // echo '<pre>';
+                        // print_r($cart);
+                        // echo '</pre>';
+
+                        $all_total_price = 0; 
                         if(is_array($cart)) foreach ($cart as $k => $item) {
     						$sp = Tuyen::_dulieu('sanpham', $item['sanpham']);
     						if($sp){
@@ -140,12 +160,16 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                                 <input type="hidden" name="cart[<?= $k?>][sanpham]" value="<?= $sp->sp_id?>">
     	                        <div class="colimg">
     	                            <a href="<?= $sp->sp_linkseo?>">
-    	                                <img width="55" src="<?= $sp->sp_images_cover('75x75') ?>"></a>
+                                        <?php $hinh_anh = $sp->sp_images_cover('75x75'); ?>
+    	                                <img width="55" src="<?= $hinh_anh ?>"></a>
+                                        <?php $cart_success['san_pham'][$k]['anh'] = $hinh_anh; ?>
+
     	                            <button type="button" class="delete"><span></span>Xóa</button>
     	                        </div>
     	                        <div class="colinfo">
     	                            <strong><?= $item['gia']; ?></strong>
     	                            <a href="<?= $sp->sp_linkseo?>"><?= $sp->sp_tensp?></a>
+                                        <?php $cart_success['san_pham'][$k]['ten'] = $sp->sp_tensp; ?>
 
                                     <p class="vat">
                                         <?php 
@@ -220,6 +244,11 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
     	                                <div class="augment "></div>	                                
     	                            </div>
 
+
+                                    <?php $cart_success['san_pham'][$k]['so_luong'] = $item['soluong']; ?>
+                                    <?php $cart_success['san_pham'][$k]['don_gia'] = $total_price; ?>
+
+
     	                            <div class="total-price">
     	                            	<?php if(is_numeric($total_price)){ ?>
     	                            		<p><?= number_format($total_price).Tuyen::_show_donvitiente()?> x <?= $item['soluong']?> </p>
@@ -246,15 +275,29 @@ $assetsPrefix = $this->assetBundles[TempAsset]->baseUrl ;
                         <div>
                             <!-- <div>
                                 <span>Tổng tiền:</span>
-                                <span><?= number_format($all_total_price)?>₫</span>
+                                <span><?php // number_format($all_total_price)?>₫</span>
                             </div> -->
                             <div class="shipping_home">
                                 <div class="total">
                                     <b>Tổng tiền cần thanh toán:</b>
+
+                                    <?php 
+                                        //Update lại tổng giá theo sp đã tính vào vào cart success
+                                        $cart_success['tong_gia'] = $all_total_price;
+                                        
+                                        $session['cart_success'] = $cart_success;
+                                    ?>
+
                                     <strong><?= number_format($all_total_price).Tuyen::_show_donvitiente()?></strong>
                                 </div>
                             </div>
                         </div>
+
+                        <?php 
+                            // echo '<pre>';
+                            // print_r($cart_success);
+                            // echo '</pre>';
+                        ?>
                         <!-- <div class="boxCouponCode" style="">
                             <div class="textcode">
                                 Sử dụng mã giảm giá

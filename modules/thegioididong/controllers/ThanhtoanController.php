@@ -112,9 +112,12 @@ class ThanhtoanController extends Controller
                 $model->email = $user->email;
                 $model->diachi = $user->diachi;
                 $model->gioitinh = $user->gioitinh;
-            }            
+            }       
+            $session = Aabc::$app->session;
+            $cart = $session['cart'];         
             return $this->render('index', [
                 'model' => $model,
+                'cart' => $cart,
             ]);
         }
 
