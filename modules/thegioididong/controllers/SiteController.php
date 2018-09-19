@@ -9,11 +9,13 @@ use aabc\helpers\Url; /*Them*/
 use aabc\filters\VerbFilter;
 use aabc\filters\AccessControl;
 use frontend\models\SignupForm;
-use common\models\LoginForm;
+use frontend\models\LoginForm;
 
 use common\components\Tuyen;
 use backend\models\Cauhinh;
 use backend\models\SanphamDanhmuc;
+
+use aabc\widgets\ActiveForm;
 
 class SiteController extends Controller
 {
@@ -113,12 +115,13 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Aabc::$app->request->post()) && $model->login()) {
             // return $this->redirect(['/']);
+            // return $this->redirect(['/thong-tin-thanh-toan.html']);
             return $this->goBack();
             // return $this->goHome();
         } else {   
-            if (!Aabc::$app->user->isGuest) {
-                return $this->goHome();
-            }
+            // if (!Aabc::$app->user->isGuest) {
+            //     return $this->goHome();
+            // }
             $model = new LoginForm();
             return $this->render('dang-nhap', [
                 'model' => $model,
@@ -126,6 +129,32 @@ class SiteController extends Controller
         }
 
     }
+
+    public function actionDangKy()
+    {
+        $this->layout = 'thanhtoan/main';   
+        $model = new SignupForm(); 
+        $post = Aabc::$app->request->post();
+        if ($model->load($post)) {
+            Aabc::$app->response->format = 'json';
+            if(Aabc::$app->request->post('ajax')) return ActiveForm::validate($model);
+
+            if(Aabc::$app->user->login($model->signup(),0)){ //Tạo thành công và đăng nhập thành công
+                return $this->goBack();
+                // return $this->redirect(['/thong-tin-thanh-toan.html']);
+            }            
+        } 
+        else{
+            if (!Aabc::$app->user->isGuest) {
+                return $this->goHome();
+            }
+            $model = new SignupForm(); 
+            return $this->render('dang-ky',[
+                'model' => $model,
+            ]);
+        }
+    }
+
 
    
     public function actionDangXuat()
@@ -136,15 +165,7 @@ class SiteController extends Controller
     }
 
 
-    public function actionDangKy()
-    {
-        $this->layout = 'thanhtoan/main';   
-        $model = new SignupForm(); 
-        return $this->render('dang-ky',[
-            'model' => $model,
-        ]);
-    }
-
+   
 
 
     public function actionApi($p = '')

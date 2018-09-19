@@ -151,13 +151,13 @@ function role_show($a = '')
                        
                         <div class="left">
                             <?php 
-                                echo $form->field($model, 'username',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
+                                echo $form->field($model, 'taikhoan',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                             ?>                            
                         </div>
                        
                         <div class="left">
                             <?php 
-                                echo $form->field($model, 'password',['template' => $template_input, 'options' => ['class' => '']])->passwordInput(['maxlength' => true]);
+                                echo $form->field($model, 'matkhau',['template' => $template_input, 'options' => ['class' => '']])->passwordInput(['maxlength' => true]);
                             ?>                           
                         </div>
                  

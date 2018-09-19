@@ -184,7 +184,7 @@ function role_show($a = '')
                         <?php if(role_show(Cauhinh::dangky_tendangnhap)){ ?>
                         <div class="left">
                             <?php 
-                                echo $form->field($model, 'taikhoan',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
+                                echo $form->field($model, 'taikhoan',['enableAjaxValidation' => true, 'template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                             ?>                            
                         </div>
                         <?php } ?>
@@ -250,7 +250,7 @@ function role_show($a = '')
                         <?php if(role_show(Cauhinh::dangky_email)){ ?>
                         <div class="left">
                             <?php 
-                                echo $form->field($model, 'email',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
+                                echo $form->field($model, 'email',['enableAjaxValidation' => true, 'template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                             ?>
                         </div>  
                         <?php } ?>

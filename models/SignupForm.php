@@ -3,7 +3,7 @@ namespace frontend\models;
 
 use Aabc;
 use aabc\base\Model;
-use common\models\User;
+use frontend\models\User;
 
 use common\components\Tuyen;
 use backend\models\Cauhinh;
@@ -27,7 +27,9 @@ class SignupForm extends Model
     public $huyen;
     public $xa;
     
-    
+    public $fb;
+    public $skype;
+
     public function rules()
     {
         $batbuoc = [];
@@ -48,24 +50,24 @@ class SignupForm extends Model
         if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_matkhau) == 3 ) $batbuoc[] = 'matkhau';
         if(Tuyen::_dulieu('cauhinh',Cauhinh::dangky_matkhau_nhaplai) == 3 ) $batbuoc[] = 'nhaplaimatkhau';
 
-        return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+        return [           
 
+            [['taikhoan'], 'match', 'pattern' => '/^[a-z0-9]+$/','message' => 'Chỉ nhập chữ thường và số'],
 
-            ['email', 'trim'],            
+            ['taikhoan', 'unique', 'targetClass' => '\frontend\models\User', 'message' => 'Tài khoản này đã được sử dụng'],
+
+            [['email','taikhoan','matkhau'], 'trim'],  
+
             [$batbuoc, 'required', 'message' => 'Vui lòng nhập {attribute}'],
+
+            ['matkhau', 'string', 'min' => 6],
 
             ['nhaplaimatkhau', 'compare', 'compareAttribute'=>'matkhau', 'message'=>"Mật khẩu không trùng khớp" ],
 
             ['email', 'email', 'message' => 'Không đúng định dạng email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\frontend\models\User', 'message' => 'Email này đã được sử dụng'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
 
             [['gioitinh'], 'integer'],
             [['ngaysinh'], 'safe'],
@@ -100,18 +102,33 @@ class SignupForm extends Model
     {
         if (!$this->validate()) {
             return null;
+        }        
+        $user = new User();
+        $boqua = [
+            'nhaplaimatkhau',
+            'tinh',
+            'huyen',
+            'xa',
+        ];
+        foreach ($this->attributes as $k => $v) {
+            if(!in_array($k, $boqua)){
+                $user[$k] = $v;
+            }
+        }
+
+        $user['diachi'] = json_encode([
+            'tinh' => $this->tinh,
+            'huyen' => $this->huyen,
+            'xa' => $this->xa,
+        ]);
+
+        $user->taikhoan = $this->taikhoan;
+
+        if(!empty($this->matkhau)){
+            $user->setPassword($this->matkhau);
+            $user->generateAuthKey();
         }
         
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        //$user->save(false);
-        return $user->save() ? $user : null;
-        // $auth = \Aabc::$app->authManager;
-        // $authorRole = $auth->getRole('user');
-        // $auth->assign($authorRole, $user->getId());
-        // return $user;
+        return $user->save() ? $user : null;        
     }
 }

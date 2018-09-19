@@ -97,14 +97,20 @@ return [
 
 
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'frontend\models\User',
+            'enableAutoLogin' => false,
+            'enableSession' => true,
+            'authTimeout' => 60,  
             'identityCookie' => ['name' => '_tk_fr', 'httpOnly' => true],
             'loginUrl' => $config_main['loginUrl'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'ss-fr',
+            'class' => 'aabc\web\Session',
+            'cookieParams' => ['httponly' => true, 'lifetime' => 60],
+            'timeout' => 60, //session expire
+            'useCookies' => true,
         ],
         'log' => [
             'traceLevel' => AABC_DEBUG ? 3 : 0,

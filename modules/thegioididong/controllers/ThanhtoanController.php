@@ -92,8 +92,7 @@ class ThanhtoanController extends Controller
     public function actionIndex()
     {        
         $user = Aabc::$app->user->identity;
-       
-       
+              
         $model = new CartForm();
         if ($model->load(Aabc::$app->request->post()) && $model->validate()) {
             // return $this->redirect(['/']);
@@ -102,8 +101,7 @@ class ThanhtoanController extends Controller
             //Sẽ lưu vào trong session cart_info
             // $session = Aabc::$app->session;
             // $cart_info = $session['cart_info']; 
-            $a = $b;
-
+            
             return $this->goHome();
         } else {   
             if($user){
@@ -114,11 +112,19 @@ class ThanhtoanController extends Controller
                 $model->gioitinh = $user->gioitinh;
             }       
             $session = Aabc::$app->session;
-            $cart = $session['cart'];         
-            return $this->render('index', [
-                'model' => $model,
-                'cart' => $cart,
-            ]);
+            $cart = $session['cart'];  
+
+            if($cart){
+                return $this->render('index', [
+                    'model' => $model,
+                    'cart' => $cart,
+                ]);
+            }
+            else{
+                return $this->redirect(['/gio-hang.html']);
+            }
+
+           
         }
 
     }

@@ -3,7 +3,6 @@ namespace frontend\models;
 
 use Aabc;
 use aabc\base\Model;
-use common\models\User;
 
 use common\components\Tuyen;
 use backend\models\Cauhinh;
