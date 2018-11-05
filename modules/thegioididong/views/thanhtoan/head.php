@@ -3176,3 +3176,10 @@
         -webkit-animation-fill-mode: both;
     }
 </style>
+
+<style type="text/css">    
+    .required span:after{
+        content: " * ";
+        color: red;
+    }
+</style>

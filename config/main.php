@@ -100,7 +100,7 @@ return [
             'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => false,
             'enableSession' => true,
-            'authTimeout' => 60,  
+            'authTimeout' => 60 * 60,  
             'identityCookie' => ['name' => '_tk_fr', 'httpOnly' => true],
             'loginUrl' => $config_main['loginUrl'],
         ],
@@ -108,8 +108,8 @@ return [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'ss-fr',
             'class' => 'aabc\web\Session',
-            'cookieParams' => ['httponly' => true, 'lifetime' => 60],
-            'timeout' => 60, //session expire
+            'cookieParams' => ['httponly' => true /*'lifetime' => 10*/],
+            'timeout' => 60 * 60, //session expire
             'useCookies' => true,
         ],
         'log' => [

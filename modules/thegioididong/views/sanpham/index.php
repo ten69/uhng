@@ -402,6 +402,9 @@ $dm = Tuyen::_dulieu('danhmuc',$model->sp_danhmuc);
                             value = value.toLocaleString();
                             area_promotion_price.html('<div class="down-km">-'+value+'đ</div>')
                         }
+                        else{
+                            area_promotion_price.html('<div></div>')
+                        }
                     }
                 </script>
 

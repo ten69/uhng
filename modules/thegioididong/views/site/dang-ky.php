@@ -48,22 +48,27 @@ function role_show($a = '')
                 #showonehour[value=true] ~ .area_other .area_address .onehour {
 		            display: block !important;
 		        }
+                .areainfo {
+                    float: left;
+                    width: calc(50% - 10px);
+                }
+
                 .areainfo div.left.on-top span {
                     font-size: 12px;
                     top: 5px;
                 }
                 .areainfo>div.left {
                     position: relative;                    
-                    width: calc(100% / 2 - 10px) !important;
+                    width: calc(100%) !important;
                     margin-bottom: 10px !important;
                 }
 
                 .areainfo>div.left:nth-child(odd) {
-                    margin: 0 10px 0 0;
+                    margin: 0;
                 }
 
                 .areainfo>div.left:nth-child(even) {
-                    margin: 0 0 0 10px;
+                    margin: 0;
                 }
 
 
@@ -148,11 +153,50 @@ function role_show($a = '')
                      ?>
 
 
-                    <div class="areainfo">
+                    <div class="areainfo" style="margin: 0 10px 0 0">
+                        <?php if(role_show(Cauhinh::dangky_tendangnhap)){ ?>
+                        <div class="left">
+                            <?php 
+                                echo $form->field($model, 'taikhoan',['enableAjaxValidation' => true, 'template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
+                            ?>                            
+                        </div>
+                        <?php } ?>
+
                         
+                        <?php if(role_show(Cauhinh::dangky_matkhau)){ ?>
+                        <div class="left">
+                            <?php 
+                                echo $form->field($model, 'matkhau',['template' => $template_input, 'options' => ['class' => '']])->passwordInput(['maxlength' => true]);
+                            ?>                           
+                        </div>
+                        <?php } ?>
+
+
+                        <?php if(role_show(Cauhinh::dangky_matkhau_nhaplai)){ ?>
+                        <div class="left">
+                            <?php 
+                                echo $form->field($model, 'nhaplaimatkhau',['template' => $template_input, 'options' => ['class' => '']])->passwordInput(['maxlength' => true]);
+                            ?>
+                        </div>   
+                        <?php } ?>
+
+
+
+                        <?php if(role_show(Cauhinh::dangky_email)){ ?>
+                        <div class="left">
+                            <?php 
+                                echo $form->field($model, 'email',['enableAjaxValidation' => true, 'template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
+                            ?>
+                        </div>  
+                        <?php } ?>
+
+                    </div>
+
+                    <div class="areainfo" style="margin: 0 0 0 10px">
+
                         
                         <?php if(role_show(Cauhinh::dangky_gioitinh)){ ?>
-                        <div class="left" style="margin: 30px 10px 0 0">
+                        <div class="left" style="margin: -28px 10px 0 0">
                             <label class="gt-check choose">
                                 <i class="iconmobile-opt"></i>&nbsp;Anh
                                 <input type="hidden" <?= $model->gioitinh == 2?'disabled':''?> class="form-control" value="1" name="SignupForm[gioitinh]">
@@ -181,15 +225,6 @@ function role_show($a = '')
 
 
 
-                        <?php if(role_show(Cauhinh::dangky_tendangnhap)){ ?>
-                        <div class="left">
-                            <?php 
-                                echo $form->field($model, 'taikhoan',['enableAjaxValidation' => true, 'template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
-                            ?>                            
-                        </div>
-                        <?php } ?>
-
-
 
                         <?php if(role_show(Cauhinh::dangky_hoten)){ ?>
                          <div class="left">
@@ -202,14 +237,6 @@ function role_show($a = '')
 
                        
 
-
-                        <?php if(role_show(Cauhinh::dangky_matkhau)){ ?>
-                        <div class="left">
-                            <?php 
-                                echo $form->field($model, 'matkhau',['template' => $template_input, 'options' => ['class' => '']])->passwordInput(['maxlength' => true]);
-                            ?>                           
-                        </div>
-                        <?php } ?>
 
 
 
@@ -225,13 +252,7 @@ function role_show($a = '')
 
 
 
-                        <?php if(role_show(Cauhinh::dangky_matkhau_nhaplai)){ ?>
-                        <div class="left">
-                            <?php 
-                                echo $form->field($model, 'nhaplaimatkhau',['template' => $template_input, 'options' => ['class' => '']])->passwordInput(['maxlength' => true]);
-                            ?>
-                        </div>   
-                        <?php } ?>
+                      
 
 
 
@@ -247,13 +268,7 @@ function role_show($a = '')
 
 
 
-                        <?php if(role_show(Cauhinh::dangky_email)){ ?>
-                        <div class="left">
-                            <?php 
-                                echo $form->field($model, 'email',['enableAjaxValidation' => true, 'template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
-                            ?>
-                        </div>  
-                        <?php } ?>
+                      
 
 
 

@@ -282,7 +282,7 @@ function role_show($a = '')
                                 Thông tin giao hàng
                             </h1>
 
-                            <div class="left" style="margin: 10px 0 0 0">
+                            <div class="left" style="margin: 10px 0 0 0; display: contents;">
                                 <label class="gh-home">
                                     <i class="iconmobile-opt"></i>&nbsp;Giao hàng tận nhà
                                     <input type="hidden" disabled class="form-control" value="1" name="CartForm[giaohang]">
@@ -318,7 +318,7 @@ function role_show($a = '')
 
                             <div class="clearfix"></div>
                             <!-- <p style="margin: 10px 0 10px 0;color: #aaa;"></p> -->
-                            <div class="dia-chi hide area_other" style="margin: 0px 0">  
+                            <div class="dia-chi hide area_other" style="margin: 10px 0 0 0">  
 
                                 <div class="area_market ">
                                     <div class="overlay">
@@ -373,7 +373,7 @@ function role_show($a = '')
                                 
                             </div>
 
-                            <div class="dia-chi hide left <?= empty($model->xa)?'':'on-top'?>" style="margin: 40px 0 0 0;">
+                            <div class="dia-chi hide left <?= empty($model->xa)?'':'on-top'?>" style="margin: 50px 0 0 0;">
                                 <?php 
                                     echo $form->field($model, 'xa',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                                 ?>
