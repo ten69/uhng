@@ -93,6 +93,7 @@ $session = Aabc::$app->session;
                         border-radius: 4px;
                     }
 
+                    
 
 
                 </style>
@@ -206,37 +207,47 @@ $session = Aabc::$app->session;
     								<?php } } ?>	                            
     	                            </div>
 
+                                    <style type="text/css">
+                                        .cart-pb-i span {
+                                            font-size: 12px;
+                                        }
 
-    	                            <div>	
+                                        .cart-pb-i select {
+                                            font-size: 12px;
+                                            height: 28px !important;
+                                        }
+                                    </style>
+
+    	                            <div class="cart-pb">	
     	                            	<style type="text/css">
     	                            		option{font-size: 12px}
     	                            	</style>		                        
-    			                    <?php 
-    			                    	$select_pb = $item['thongso'];
-    			                        foreach ($sp['sp_phienban'] as $k_pb => $pb) {
-    			                        	$giamgia = 0;
-    			                            echo '<div style="padding:0 0 10px 0;">';
-    			                            echo '<span>'.$pb['title'].'</span>';
-    			                            echo '<select class="cart_e" name="cart['.$k.'][thongso]['.$k_pb.']" style="margin: 0 0 0 10px;">';
-    			                            if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
-    			                            	if(isset($select_pb[$k_pb]) && $k_op == $select_pb[$k_pb]){
-    			                            		if(is_numeric($total_price)) $total_price += (int)$op['change'];
+        			                    <?php 
+        			                    	$select_pb = $item['thongso'];
+        			                        foreach ($sp['sp_phienban'] as $k_pb => $pb) {
+        			                        	$giamgia = 0;
+        			                            echo '<div class="cart-pb-i" style="padding:0 0 10px 0;">';
+        			                            echo '<span>'.$pb['title'].'</span>';
+        			                            echo '<select class="cart_e" name="cart['.$k.'][thongso]['.$k_pb.']" style="margin: 0 0 0 10px;">';
+        			                            if(is_array($pb['option'])) foreach ($pb['option'] as $k_op => $op) {
+        			                            	if(isset($select_pb[$k_pb]) && $k_op == $select_pb[$k_pb]){
+        			                            		if(is_numeric($total_price)) $total_price += (int)$op['change'];
 
-    			                            		$giamgia = $op['change'];
-    			                                	echo '<option selected value="'.$k_op.'">'.$op['name'].'</option>';
-    			                                }else{
-    			                                	echo '<option value="'.$k_op.'">'.$op['name'].'</option>';
-    			                                }
-    			                            }
-    			                            echo '</select>';
-    			                            echo '<span class="discout">'.Tuyen::_show_gia_discount($giamgia).'</span>';
-    			                            echo '</div>';
-    			                        }
-    			                    ?>     
+        			                            		$giamgia = $op['change'];
+        			                                	echo '<option selected value="'.$k_op.'">'.$op['name'].'</option>';
+        			                                }else{
+        			                                	echo '<option value="'.$k_op.'">'.$op['name'].'</option>';
+        			                                }
+        			                            }
+        			                            echo '</select>';
+        			                            echo '<span class="discout">'.Tuyen::_show_gia_discount($giamgia).'</span>';
+        			                            echo '</div>';
+        			                        }
+        			                    ?>                                             
     			                    </div>
-
-    								<span style="float: left;padding: 15px 15px 0 0;">Số lượng</span>
-
+                                    
+                                    <span style="float: left;padding: 15px 15px 0 0; font-size: 12px">Số lượng</span>
+    								    
     	                            <div class="choosenumber">	                                    
     	                                <input type="hidden" class="hdQuantity cart_e" name="cart[<?= $k?>][soluong]" value="<?= $item['soluong']?>">
     	                                <div class="abate <?= ($item['soluong'] > 1)?'active':'' ?>"></div>
@@ -279,7 +290,7 @@ $session = Aabc::$app->session;
                             </div> -->
                             <div class="shipping_home">
                                 <div class="total">
-                                    <b>Tổng tiền cần thanh toán:</b>
+                                    <b>Tổng tiền hàng:</b>
 
                                     <?php 
                                         //Update lại tổng giá theo sp đã tính vào vào cart success
@@ -532,7 +543,7 @@ $session = Aabc::$app->session;
         <!-- </form> -->
 
     </div>
-    <p class="provision">Bằng cách đặt hàng, bạn đồng ý với <a href="/tos" target="_blank">Điều khoản sử dụng</a> của Thegioididong</p>
+    <p style="display: none" class="provision">Bằng cách đặt hàng, bạn đồng ý với <a href="/tos" target="_blank">Điều khoản sử dụng</a> của Thegioididong</p>
 </section>
 
 <script>

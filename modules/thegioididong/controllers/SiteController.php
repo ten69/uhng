@@ -155,6 +155,55 @@ class SiteController extends Controller
         }
     }
 
+    public function actionYeuCauKhoiPhucMatKhau()
+    {
+        //GET
+        //Hiển thị form cho nhập email
+
+        //POST
+        //Check spam,ddos...
+        //Check email có trong hệ thống
+            //+Không: return không đúng..
+            //+Có: 
+                //Tạo token
+                //Send mail
+                //return: Thông báo
+    }
+
+
+    public function actionXacNhanKhoiPhucMatKhau()
+    {
+        //GET
+        //Hiển thị email và token từ link được gửi trong email
+
+        //POST
+        //Check spam,ddos...
+        //Check token tồn tại
+            //+Không: return null
+            //+Có:
+                //+Hết hạn: return null
+                //+Còn hạn: 
+                    //check email exit
+                        //+Không: return null
+                        //+Có: 
+                            //Gửi lại mật khẩu mới vào email
+                            //Return: thông báo
+
+    }
+
+
+    public function actionDoiMatKhau()
+    {
+        //GET
+        //Hiển thị form đổi mật khẩu: Mật khẩu cũ, mật khẩu mới, nhập lại mật khẩu mới
+            
+        //POST 
+        //get data user where id_user từ session
+        //Check mật khẩu cũ
+            //+Sai: return sai
+            //+Đúng: 
+                //Đổi mật khẩu mới
+    }
 
    
     public function actionDangXuat()

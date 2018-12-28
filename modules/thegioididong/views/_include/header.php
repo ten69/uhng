@@ -1,4 +1,4 @@
-<header>
+<header style="display: block;">
     <div class="wrap-main">
         <a class="logo" title="Về trang chủ Thegioididong.com" href="/">
             <i class="icontgdd-logo"></i>

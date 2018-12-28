@@ -23,12 +23,21 @@ function role_show($a = '')
     $b = Tuyen::_dulieu('cauhinh',$a);
     return ($b == 2 || $b == 3);
 }
+function role_require($a = '')
+{
+    $b = Tuyen::_dulieu('cauhinh',$a);
+    return ($b == 3);
+}
 
 ?>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<section id="wrap_cart" style="margin-top: 80px ;">    
+<section id="wrap_cart" style="min-width: 600px; max-width: 600px;">    
+    <div class="bar-top">
+        <a href="/gio-hang.html" class="buymore">Giỏ hàng</a>        
+    </div>
+
     <div class="wrap_cart">
         <div class="loading-cart" style="display: none;">
             <span class="cswrap">
@@ -42,21 +51,38 @@ function role_show($a = '')
                 #showonehour[value=true] ~ .area_other .area_address .onehour {
                     display: block !important;
                 }
+                .areainfo {
+                    display: block;
+                    padding-bottom: 20px;
+                    width: calc(100% - 60px);
+                    margin: 0 auto;
+                }
+                .areainfo h1{
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    margin: 0px 12px 0px 0;
+                    border-bottom: 1px solid #14ace7;
+                    color: #0b9ed6;
+                }
+
+
+
                 .areainfo div.left.on-top span {
                     font-size: 12px;
                     top: 5px;
                 }
-                .areainfo>div.left  {
-                    position: relative;                    
-                    width: calc(100% / 1 - 10px) !important;
-                    margin-bottom: 10px !important;
+                .areainfo div.left  {
+                    position: relative;
+                    width: 100%;
+                    margin-bottom: 0;
                 }
 
-                .areainfo>div.left:nth-child(odd) {
+                .areainfo div.left:nth-child(odd) {
                     /*margin: 0 10px 0 0;*/
                 }
 
-                .areainfo>div.left:nth-child(even) {
+                .areainfo div.left:nth-child(even) {
                     /*margin: 0 0 0 10px;*/
                 }
 
@@ -95,10 +121,9 @@ function role_show($a = '')
                  .has-error .ferror {
                     color: #D00;
                     font-size: 12px;
-                    left: 5px;
-                    position: absolute;
-                    left: 0;
-                    bottom: -12px;
+                    /*position: absolute;*/
+                    right: 3px;
+                    bottom: 5px;
                 }
 
                 .areainfo .has-error input {
@@ -113,12 +138,8 @@ function role_show($a = '')
                     max-width: 1200px;
                 }
                 
-                .httt{
-                    width: 40%;
-                    float: left;
-                    padding: 0 15px 0 0;
-                    position: relative;
-                    height: 420px;
+                .httt{     
+                    position: relative;               
                 }
                 .httt-content {
                     border: 1px solid #ddd;
@@ -129,21 +150,22 @@ function role_show($a = '')
                 }
 
                 .infouser {
-                    width: 25%;
+                    padding-top: 20px;
+                    width: calc(100% - 60px);
                     float: left;
                 }
                 .area_other{
-                    position: absolute;
-                    width: calc(25% - 10px);
+                    /*position: absolute;*/
+                    width: calc(100%);
                 }
                 #httt{
-                    height: 368px;
+                    height: 200px;
                     overflow: hidden;
                 }
                 .read-more{
                     position: absolute;
                     bottom: 0;
-                    width: calc(100% - 17px);
+                    width: calc(100%);
                     padding: 0;
                     text-align: center;
                     background: #FFF;
@@ -156,7 +178,7 @@ function role_show($a = '')
                     margin-top: -60px;
                     content: -webkit-gradient(linear,0% 100%,0% 0%,from(#fff),color-stop(.2,#fff),to(rgba(255,255,255,0)));
                     display: block;
-                    width: 100%;
+                    width: calc(100%);
                     color: black;
                 }
                 .read-more:after{
@@ -171,6 +193,32 @@ function role_show($a = '')
                     margin: -2px 0 0 5px;
                 }
 
+                .httt-collapse {
+                    display: none;
+                    width: 90px;
+                    padding: 0;
+                    text-align: center;
+                    background: #FFF;
+                    z-index: 999;
+                    cursor: pointer;
+                    color: #1a7ecb;
+                    margin: 0 auto;
+                }               
+                .httt-collapse:after{
+                    content: '';
+                    width: 0;
+                    right: 0;
+                    border-bottom:6px solid #288ad6;
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin: -2px 0 0 5px;
+                }
+
+                .left>label{
+                    cursor: pointer;
+                }
 
                 .httt.r-more {
                     height: auto;
@@ -178,6 +226,9 @@ function role_show($a = '')
 
                 .r-more .read-more {
                     display: none;
+                }
+                .r-more .httt-collapse {
+                    display: block;
                 }
 
                 .r-more #httt {
@@ -188,53 +239,57 @@ function role_show($a = '')
 
 
                 <?php $form = ActiveForm::begin( ['id' => 'dang-ky-form']); ?>
-           
-                <div class="infouser">
 
-                    <h1 style="font-size: 16px;text-transform: uppercase;font-weight: bold;margin: 0px 12px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
-                        Thông tin người mua
-                    </h1>
-
-                    <?php 
-
-                     $template_input = '
+                <?php 
+                    $template_input = '
                             <span>{label}</span>
                             {input}
                             {error}';
+                    ?>
 
-                     ?>
+                <div class="areainfo" style="padding-top: 20px">
+                    <h1>
+                        Thông tin liên hệ                        
+                    </h1>                                     
 
+                    <?php if(role_show(Cauhinh::cart_xungho)){ ?>
+                    <div class="left" style="margin: 15px 0 0 0">
+                        <label class="gt-check <?= $model->xungho == 1?'choose':''?>">
+                            <i class="iconmobile-opt"></i>&nbsp;Anh
+                            <input type="hidden" <?= $model->xungho == 1?'':'disabled'?> class="form-control" value="1" name="CartForm[xungho]">
+                        </label>
 
-                    <div class="areainfo">
-                        <?php if(role_show(Cauhinh::cart_gioitinh)){ ?>
-                        <div class="left" style="margin: 5px 0 0 0">
-                            <label class="gt-check choose">
-                                <i class="iconmobile-opt"></i>&nbsp;Anh
-                                <input type="hidden" <?= $model->gioitinh == 1?'':'disabled'?> class="form-control" value="1" name="CartForm[gioitinh]">
-                            </label>
+                        <label class="gt-check <?= $model->xungho == 2?'choose':''?>" style="margin: 0 0 0 20px;">
+                            <i class="iconmobile-opt"></i>&nbsp;Chị
+                            <input type="hidden" <?= $model->xungho == 2?'':'disabled'?> class="form-control" value="2" name="CartForm[xungho]">
+                        </label>
 
-                            <label class="gt-check" style="margin: 0 0 0 20px;">
-                                <i class="iconmobile-opt"></i>&nbsp;Chị
-                                <input type="hidden" <?= $model->gioitinh == 2?'':'disabled'?> class="form-control" value="2" name="CartForm[gioitinh]">
-                            </label>
-
-                            <script type="text/javascript">
-                                $('.gt-check').click(function(){
-                                    var _this = $(this), _not_this = $('.gt-check').not(_this);
-                                    _not_this.removeClass('choose')
-                                    _this.addClass('choose');
-                                    _not_this.find('>input').prop('disabled',true)
-                                    _this.find('>input').prop('disabled',false)
-                                })
-                            </script>
-
-                            <?php 
-                                //echo $form->field($model, 'gioitinh',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
-                            ?>                            
-                        </div>
+                        <?php if(role_require(Cauhinh::cart_xungho)){?>
+                            <span class="required "><span></span></span>
                         <?php } ?>
 
+                        <script type="text/javascript">
+                            $('.gt-check').click(function(){
+                                // $('.ttcn').removeClass('hide')
+                                // $('.ttcn').slideToggle()                                
+                                $('#ttcn-gt .ferror').remove();
+                                $('#ttcn-gt').remove();
+                                var _this = $(this), _not_this = $('.gt-check').not(_this);
+                                _not_this.removeClass('choose')
+                                _this.addClass('choose');
+                                _not_this.find('>input').prop('disabled',true)
+                                _this.find('>input').prop('disabled',false)
+                            })
+                        </script>
+                    </div>
+                    <div id="ttcn-gt" class="left <?= empty($model->xungho)?'':'on-top'?>">
+                        <?php                                     
+                            echo $form->field($model, 'xungho')->hiddenInput()->label(false);
+                        ?>
+                    </div>  
+                    <?php } ?>
 
+                    <div class="ttcn <?php // empty($model->xungho)?'hide':''?>">
                         <?php if(role_show(Cauhinh::cart_hoten)){ ?>
                          <div class="left <?= empty($model->hoten)?'':'on-top'?>">
                             <?php 
@@ -253,149 +308,204 @@ function role_show($a = '')
                         </div>  
                         <?php } ?>
 
-
                         <?php if(role_show(Cauhinh::cart_email)){ ?>
                         <div class="left <?= empty($model->email)?'':'on-top'?>">
                             <?php 
                                 echo $form->field($model, 'email',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                             ?>
-                        </div>  
+                        </div>                        
                         <?php } ?>
 
-
-
-
                         <?php if(role_show(Cauhinh::cart_ghichu)){ ?>
-                        <div class="hide left <?= empty($model->ghichu)?'':'on-top'?>">
+                        <div class="left <?= empty($model->ghichu)?'':'on-top'?>">
                             <?php 
                                 echo $form->field($model, 'ghichu',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                             ?>
                         </div> 
                         <?php } ?>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                </div>
 
-                        
+
+                <?php //Thông tin giao hàng ?>
+                <div class="areainfo">
+                    <?php if(role_show(Cauhinh::cart_giaohang)){ ?>
+                        <h1>
+                            Thông tin giao hàng
+                            <?php if(role_require(Cauhinh::cart_giaohang)){?>
+                                <span class="required "><span></span></span>
+                            <?php } ?>
+                        </h1>                        
+                        <div id="hinhthucgiaohang" style="margin: 0" class="left <?= empty($model->email)?'':'on-top'?>">
+                            <?php                                     
+                                echo $form->field($model, 'giaohang')->hiddenInput()->label(false);
+                            ?>
+                        </div>
+
+                        <div class="left" style="margin: 15px 0 0 0; display: block;">
+                            <label class="gh-home <?= $model->giaohang == 1?'choose':''?>">
+                                <i class="iconmobile-opt"></i>&nbsp;Giao hàng tận nhà
+                                <input type="hidden" <?= $model->giaohang == 1?'':'disabled'?> class="form-control" value="1" name="CartForm[giaohang]">
+                            </label>
+
+                            <label class="gh-home <?= $model->giaohang == 2?'choose':''?>" style="margin: 0 0 0 20px;">
+                                <i class="iconmobile-opt"></i>&nbsp;Nhận tại cửa hàng
+                                <input type="hidden" <?= $model->giaohang == 2?'':'disabled'?> class="form-control" value="2" name="CartForm[giaohang]">
+                            </label>
+
+                            <script type="text/javascript">
+                                $('.gh-home').click(function(){
+                                    var _this = $(this), _not_this = $('.gh-home').not(_this);
+                                    $('#hinhthucgiaohang .ferror').remove();
+                                    $('#hinhthucgiaohang').remove();
+                                    _not_this.removeClass('choose')
+                                    _this.addClass('choose');
+                                    _not_this.find('>input').prop('disabled',true)
+                                    _this.find('>input').prop('disabled',false)
+                                    var val = _this.find('>input').val();
+                                    if(val == 1){
+                                        $('.dia-chi').removeClass('hide')
+                                    }else{
+                                        $('.dia-chi').addClass('hide')
+                                    }
+                                })
+                            </script>                 
+                        </div>
 
 
-                        <?php if(role_show(Cauhinh::cart_diachi)){ ?>
+                        <div class="clearfix"></div>
+                        <!-- <p style="margin: 10px 0 10px 0;color: #aaa;"></p> -->
+                        <div class="dia-chi <?= ($model->giaohang == 1)?'':'hide'?> area_other" style="margin: 10px 0 0 0">
+                            <div class="area_market ">
+                                <div class="overlay">
+                                    <span class="cswrap">
+                                        <span class="csdot"></span>
+                                        <span class="csdot"></span>
+                                        <span class="csdot"></span>
+                                    </span>
+                                </div>
+                                <div class="citydis">
+                                    <div class="city">
+                                        <?php $ship = Tuyen::_dulieu('cauhinh',Cauhinh::ship); ?>
 
-                            <h1 style="font-size: 16px;text-transform: uppercase;font-weight: bold;margin: 0px 0px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
-                                Thông tin giao hàng
-                            </h1>
+                                        <?php 
+                                        echo '<pre>';
+                                        // print_r($ship);
+                                        echo '</pre>';
+                                        //die;
+                                        ?>
 
-                            <div class="left" style="margin: 10px 0 0 0; display: contents;">
-                                <label class="gh-home">
-                                    <i class="iconmobile-opt"></i>&nbsp;Giao hàng tận nhà
-                                    <input type="hidden" disabled class="form-control" value="1" name="CartForm[giaohang]">
-                                </label>
-
-                                <label class="gh-home" style="margin: 0 0 0 20px;">
-                                    <i class="iconmobile-opt"></i>&nbsp;Nhận tại cửa hàng
-                                    <input type="hidden" disabled class="form-control" value="2" name="CartForm[giaohang]">
-                                </label>
+                                        <?php if(empty($model->tinh)){ ?>
+                                            <span data-id="3">Chọn tỉnh, thành</span>
+                                        <?php }else{ ?>
+                                            <span data-id="<?= $model->tinh?>">
+                                                <?= $ship[$model->tinh]['tinh']?>
+                                            </span>
+                                        <?php } ?>
+                                    </div>                                        
+                                    <div class="listcity layer">
+                                        <div class="searchlocal">
+                                            <div>
+                                                <input type="text" placeholder="Nhập tỉnh, thành để tìm nhanh">
+                                                <button type="submit" class="submit"><i class="iconmobile-search"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="scroll">                                                
+                                            <?php                                                     
+                                                foreach ($ship as $k_ship => $v_ship) {
+                                                    echo '<a data-value="'.$k_ship.'">'.$v_ship['tinh'].'</a>';
+                                                }
+                                            ?>                                                    
+                                        </div>
+                                    </div>
+                                    <div class="dist">
+                                        <?php if(empty($model->huyen)){ ?>
+                                            <span data-id="0">Chọn quận, huyện</span>
+                                        <?php }else{ ?>
+                                            <span data-id="<?= $model->huyen?>">               
+                                                <?php 
+                                                    $huyen = explode('-',$model->huyen);
+                                                    echo $ship[$model->tinh]['item'][$huyen[0]]['huyen'][$huyen[1]];
+                                                ?>
+                                            </span>
+                                        <?php } ?>
+                                    </div> 
+                                    <div class="listdist layer">
+                                        <div class="searchlocal">
+                                            <div>
+                                                <input type="text" placeholder="Nhập quận, huyện để tìm nhanh">
+                                                <button type="submit" class="submit"><i class="iconmobile-search"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="scroll">
+                                            <?php      
+                                                foreach ($ship as $k_ship => $v_ship) {
+                                                    $hide_huyen = ($k_ship == $model->tinh)?'':'hide';
+                                                    if(is_array($v_ship['item'])) foreach ($v_ship['item'] as $k_item => $v_item) {
+                                                        if(is_array($v_item['huyen'])) foreach ($v_item['huyen'] as $k_huyen => $v_huyen) {
+                                                            echo '<a data-id="'.$k_item.'-'.$k_huyen.'" data-aig="'.$v_item['gia'].'" class="'.$hide_huyen.' t-'.$k_ship.'" >'.$v_huyen.'</a>';
+                                                        }
+                                                    }                                                        
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <div id="dc-tinh"  style="float: left;width: 45%;">
+                                        <?php if(role_show(Cauhinh::cart_diachi)){
+                                            echo $form->field($model, 'tinh')->hiddenInput()->label(false); 
+                                        }
+                                        ?>
+                                    </div>
+                                    <div id="dc-huyen" style="float: right;width: 50%;">
+                                        <?php if(role_show(Cauhinh::cart_diachi)){
+                                            echo $form->field($model, 'huyen')->hiddenInput()->label(false); 
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
 
                                 <script type="text/javascript">
-                                    $('.gh-home').click(function(){
-                                        var _this = $(this), _not_this = $('.gh-home').not(_this);
-                                        _not_this.removeClass('choose')
-                                        _this.addClass('choose');
-                                        _not_this.find('>input').prop('disabled',true)
-                                        _this.find('>input').prop('disabled',false)
-                                        var val = _this.find('>input').val();
-                                        if(val == 1){
-                                            $('.dia-chi').removeClass('hide')
-                                        }else{
-                                            $('.dia-chi').addClass('hide')
-                                        }
+                                    $('.listcity .scroll a').click(function(){
+                                        $('#dc-tinh .ferror').empty();
                                     })
-                                </script>                 
-                            </div>
+                                    $('.listdist .scroll a').click(function(){
+                                        $('#dc-huyen .ferror').empty();
+                                    })
+                                </script>
 
-
+                            </div>                                
+                            <div class="clearfix"></div>    
+                        </div>
+                        
+                        <div class="dia-chi <?= ($model->giaohang == 1)?'':'hide'?> left <?= empty($model->xa)?'':'on-top'?>" style="margin: 0;">
                             <?php 
-                                echo $form->field($model, 'tinh')->hiddenInput()->label(false);
-                                echo $form->field($model, 'huyen')->hiddenInput()->label(false);
+                                echo $form->field($model, 'xa',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
                             ?>
-
-                            <div class="clearfix"></div>
-                            <!-- <p style="margin: 10px 0 10px 0;color: #aaa;"></p> -->
-                            <div class="dia-chi hide area_other" style="margin: 10px 0 0 0">  
-
-                                <div class="area_market ">
-                                    <div class="overlay">
-                                        <span class="cswrap">
-                                            <span class="csdot"></span>
-                                            <span class="csdot"></span>
-                                            <span class="csdot"></span>
-                                        </span>
-                                    </div>
-                                    <div class="citydis">
-                                        <div class="city"><span data-id="3">Chọn tỉnh, thành</span></div>
-                                        <div class="listcity layer">
-                                            <div class="searchlocal">
-                                                <div>
-                                                    <input type="text" placeholder="Nhập tỉnh, thành để tìm nhanh">
-                                                    <button type="submit" class="submit"><i class="iconmobile-search"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="scroll">                                                
-                                                <?php 
-                                                    $ship = Tuyen::_dulieu('cauhinh',Cauhinh::ship);      
-                                                    foreach ($ship as $k_ship => $v_ship) {
-                                                        echo '<a data-value="'.$k_ship.'">'.$v_ship['tinh'].'</a>';
-                                                    }
-                                                ?>                                                    
-                                            </div>
-                                        </div>
-                                        <div class="dist"><span data-id="0">Chọn quận, huyện</span></div>
-                                        <div class="listdist layer">
-                                            <div class="searchlocal">
-                                                <div>
-                                                    <input type="text" placeholder="Nhập quận, huyện để tìm nhanh">
-                                                    <button type="submit" class="submit"><i class="iconmobile-search"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="scroll">
-                                                <?php 
-                                                    $ship = Tuyen::_dulieu('cauhinh',Cauhinh::ship);      
-                                                    foreach ($ship as $k_ship => $v_ship) {
-                                                        if(is_array($v_ship['item'])) foreach ($v_ship['item'] as $k_item => $v_item) {
-                                                            if(is_array($v_item['huyen'])) foreach ($v_item['huyen'] as $k_huyen => $v_huyen) {
-                                                                echo '<a data-id="'.$k_huyen.'" class="hide t-'.$k_ship.'" >'.$v_huyen.'</a>';
-                                                            }
-                                                        }                                                        
-                                                    }
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                                                        
-                                </div>                                
-                                
-                            </div>
-
-                            <div class="dia-chi hide left <?= empty($model->xa)?'':'on-top'?>" style="margin: 50px 0 0 0;">
-                                <?php 
-                                    echo $form->field($model, 'xa',['template' => $template_input, 'options' => ['class' => '']])->textInput(['maxlength' => true]);
-                                ?>
-                            </div>  
-
-                        <?php } ?> 
-
-                       
-
-                               
-                        <div class="clearfix"></div>
-                    </div>
-
-                      
+                        </div> 
+                    <?php } ?> 
+                                                  
+                    <div class="clearfix"></div>
                 </div>
     
 
-                <div class="httt">
-
-                    <h1 style="font-size: 16px;text-transform: uppercase;font-weight: bold;margin: 0px 0px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
+                <?php //Phương thức thanh toán ?>
+                <div class="areainfo httt <?= empty($model->thanhtoan)?'httt-hide':''?>">                   
+                    <h1>
                         Hình thức thanh toán
+                        <?php if(role_require(Cauhinh::cart_thanhtoan)){?>
+                            <span class="required "><span></span></span>
+                        <?php } ?>
                     </h1>
+                    <div id="pttt">
+                    <?php                                     
+                        echo $form->field($model, 'thanhtoan')->hiddenInput()->label(false);
+                    ?>
+                    </div>
 
                     <div id="httt">
                         <style type="text/css">
@@ -409,67 +519,109 @@ function role_show($a = '')
                                 -webkit-margin-start: 0px;
                                 -webkit-margin-end: 0px;
                             }
+                            .httt-hide #httt{
+                                height: 110px;
+                            }
+                            .httt-hide .read-more {
+                                display: none;
+                            }
                         </style>
                     <?php
                         $httt = Tuyen::_dulieu('cauhinh', Cauhinh::hinhthucthanhtoan);
-                        $dem = 0;
+                        // $dem = 0;
+                        $dem = 1;
                         foreach ($httt as $k_httt => $v_httt) {
                     ?>
                         <p>
-                            <label data-id="httt-<?= $k_httt?>" class="httt-check <?= empty($dem)?'choose':''?>"><i class="iconmobile-opt"></i>&nbsp;<?= $v_httt['label']?>
-                                <input type="hidden" <?= empty($dem)?'':'disabled'?> id="cartform-phuongthuc" class="form-control" value="<?= $k_httt?>" name="CartForm[phuongthuc]" />
+                            <label data-id="httt-<?= $k_httt?>" class="httt-check <?= ($k_httt == $model->thanhtoan)?'choose':''?>"><i class="iconmobile-opt"></i>&nbsp;<?= $v_httt['label']?>
+                                <input type="hidden" <?= ($k_httt == $model->thanhtoan)?'':'disabled'?> id="cartform-thanhtoan" class="form-control" value="<?= $k_httt?>" name="CartForm[thanhtoan]" />
                             </label>
-                    </p>
+                        </p>
                     <?php 
                         $dem += 1;                           
                         }
 
-                        $dem = 0;
+                    ?>
+
+                    <?php
+                        // $dem = 0;
+                        $dem = 1;
                         foreach ($httt as $k_httt => $v_httt) {
                     ?>
-                        <div class="httt-content httt-<?= $k_httt?> <?= empty($dem)?'':'hide'?>">
+                        <div class="httt-content httt-<?= $k_httt?> <?= ($k_httt == $model->thanhtoan)?'':'hide'?>">
                             <?= $v_httt['content']?>
                         </div>
                     <?php 
                         $dem += 1;                           
                         }  
 
-                    ?>
-                    </div>
+                    ?>                       
+                    </div> 
 
                     
+
                     <div class="read-more">Đọc thêm</div>
+                    <div class="httt-collapse">Thu gọn</div>
+
+                    <script type="text/javascript">
+                        $('.read-more').on('click',function(){
+                            $('.httt').addClass('r-more')
+                        })
+                        $('.httt-collapse').on('click',function(){
+                            $('.httt').removeClass('r-more')
+                        })
+                        $('.httt-check').on('click',function(){
+
+                            $('#pttt .ferror').remove();
+                            $('#pttt').remove();
+
+                            $('.httt').removeClass('r-more').removeClass('httt-hide')
+                            // $('.httt-check').removeClass('choose')
+                            // $(this).addClass('choose')
+                            var id = $(this).data('id');
+                            $('.httt-content').addClass('hide')
+                            $('.'+id).removeClass('hide')
+
+                            // $(this).parents('#httt').find('input').prop('disabled',true)
+                            // $(this).find('>input').prop('disabled',false)
+
+                            var _this = $(this), _not_this = $('.httt-check').not(_this);
+                            _not_this.removeClass('choose')
+                            _this.addClass('choose');
+                            _not_this.find('>input').prop('disabled',true)
+                            _this.find('>input').prop('disabled',false)
+                        })
+                    </script>
                 </div>
                 
 
+               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <script type="text/javascript">
-                    $('.read-more').on('click',function(){
-                        $('.httt').addClass('r-more')
-                    })
-
-
-                    $('.httt-check').on('click',function(){
-                        $('.httt').removeClass('r-more')
-                        // $('.httt-check').removeClass('choose')
-                        // $(this).addClass('choose')
-                        var id = $(this).data('id');
-                        $('.httt-content').addClass('hide')
-                        $('.'+id).removeClass('hide')
-
-                        // $(this).parents('#httt').find('input').prop('disabled',true)
-                        // $(this).find('>input').prop('disabled',false)
-
-                        var _this = $(this), _not_this = $('.httt-check').not(_this);
-                        _not_this.removeClass('choose')
-                        _this.addClass('choose');
-                        _not_this.find('>input').prop('disabled',true)
-                        _this.find('>input').prop('disabled',false)
-                    })
-                </script>
-
-                <script type="text/javascript">
-                      $(".areainfo input").focus(function() {        
-                    //$('.saveinfo').on('keyup keypress', function(){        
+                    $(".areainfo input").focus(function() {               
                         _this = $(this)
                         _parent = _this.parent()
                         _span = _parent.find('>span')        
@@ -520,8 +672,10 @@ function role_show($a = '')
                     }
                     ul.tt-sp li .price b{}
                 </style>
-                <div id="tthoadon">
-                    <h1 style="font-size: 16px;text-transform: uppercase;font-weight: bold;margin: 0px 0px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
+
+
+                <div class="hide" id="tthoadon">
+                    <h1 style="font-size: 14px;text-transform: uppercase;font-weight: bold;margin: 0px 0px 10px 0;border-bottom: 1px solid #14ace7;color: #0b9ed6;">
                         Thông tin đơn hàng
                     </h1>
 
@@ -595,19 +749,12 @@ function role_show($a = '')
 
                 <div class="clearfix"></div>
 
-                    
-                <div class="">
-                    <a href="gio-hang.html" class="payoffline">Quay lại</a>
-                   <!--  <div class="payonline">
-                        <div>Thanh toán online<span>Bằng thẻ ATM, Visa, Master</span></div>
-                    </div> -->
-                </div>
-
+               
                 <!-- <div class="choosepayment"> -->
                 <div class="">
-                    <div class="payonline">
+                    <div class="payonline" style="margin: 15px calc((100% - 260px)/2);">
                         <div>
-                            <button>Thanh toán &amp; giao hàng</button>                            
+                            <button>Thông tin thanh toán<span>Nhập thông tin thanh toán, giao hàng</span></button>
                         </div>
                     </div>
                 </div>
@@ -619,7 +766,7 @@ function role_show($a = '')
         <!-- </form> -->
 
     </div>
-    <p class="provision">Bằng cách đặt hàng, bạn đồng ý với <a href="/tos" target="_blank">Điều khoản sử dụng</a> của Thegioididong</p>
+    <p style="display: none" class="provision">Bằng cách đặt hàng, bạn đồng ý với <a href="/tos" target="_blank">Điều khoản sử dụng</a> của Thegioididong</p>
 </section>
 
 <script>

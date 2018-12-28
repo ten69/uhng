@@ -25,12 +25,12 @@ class ThanhtoanController extends Controller
     public function behaviors()
     {
         date_default_timezone_set('asia/ho_chi_minh');   
-       
-        $a = Tuyen::_dulieu('cauhinh',Cauhinh::cart_dangnhap);        
-        if($a == 2){
+        
+        $a = Tuyen::_dulieu('cauhinh',Cauhinh::cart_dangnhap); //Setting Khách có cần đăng nhập không?
+        if($a == 2){//có phải đăng nhập
             $login = ['index'];
             $not = ['login'];
-        }else{
+        }else{//Không cần đăng nhập
             $login = [];
             $not = ['login','index'];
         }
@@ -91,10 +91,57 @@ class ThanhtoanController extends Controller
 
     public function actionIndex()
     {        
-        $user = Aabc::$app->user->identity;
-              
+        $user = Aabc::$app->user->identity;        
+        $session = Aabc::$app->session;
+
         $model = new CartForm();
         if ($model->load(Aabc::$app->request->post()) && $model->validate()) {
+
+            //Hiển thị lại những gì đã post lên
+            $cart = $session['cart'];  
+
+            $session['thongtinthanhtoan'] = $model;
+            $session['thongtinthanhtoan'] = null;
+            
+            // if($cart){
+            //     return $this->render('index', [
+            //         'model' => $model,
+            //         'cart' => $cart,
+            //     ]);
+            // }
+
+            //Nhận thông tin thanh toán post lên và lưu vào db
+
+
+            $a = Tuyen::_dulieu('cauhinh',Cauhinh::cart_dangnhap); //Setting Khách có cần đăng nhập không?
+            if($a == 2){//có phải đăng nhập
+                //Có id userfrontend đang đăng nhập
+                //Tìm trong DS khách hàng where iduserfrontend ->trả về idkhachhang
+                //Lưu đơn hàng với idkhachhang
+            }else{//Không cần đăng nhập
+                //Kiểm tra email, điện thoại có trùng ai không
+                    //+Trùng: status = 1
+                    //+Không trùng: status = 0
+                //Lưu vào bảng khách hàng -> trả về idkhachhang
+                //Lưu đơn hàng với idkhachhang
+            }
+
+            echo '<pre>';
+            print_r($model->attributes);
+            echo '</pre>';
+
+            $session = Aabc::$app->session;
+            $cart = $session['cart'];
+            $cart_success = $session['cart_success'];
+            echo '<pre>';
+            print_r($cart);
+            echo '</pre>';
+
+            echo '<pre>';
+            print_r($cart_success);
+            echo '</pre>';
+            //die;
+            die;
             // return $this->redirect(['/']);
             // return $this->goBack();
 
@@ -112,12 +159,13 @@ class ThanhtoanController extends Controller
                 $model->gioitinh = $user->gioitinh;
             }       
             $session = Aabc::$app->session;
-            $cart = $session['cart'];  
+            $cart = $session['cart']; 
+            if(isset($session['thongtinthanhtoan'])) $model = $session['thongtinthanhtoan']; 
 
             if($cart){
                 return $this->render('index', [
                     'model' => $model,
-                    'cart' => $cart,
+                    // 'cart' => $cart,
                 ]);
             }
             else{

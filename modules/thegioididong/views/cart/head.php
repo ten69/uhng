@@ -1,5 +1,8 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-<title>Thegioididong.com - Siêu thị điện thoại, Tablet, Laptop, Phụ kiện chính hãng</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1"/>
+
+<title>Aabc</title>
 <meta name="keywords" content="Thế giới di động, Thegioididong, điện thoại di động, dtdd, smartphone, tablet, máy tính bảng, Laptop, máy tính xách tay, phụ kiện điện thoại, tin công nghệ"/>
 <meta name="description" content="Hệ thống bán lẻ điện thoại di động, smartphone, máy tính bảng, tablet, laptop, phụ kiện chính hãng mới nhất, giá tốt, dịch vụ khách hàng được yêu thích nhất VN"/>
 <meta property="og:title" content="Thegioididong.com - Siêu thị điện thoại, Tablet, Laptop, Phụ kiện chính hãng"/>
@@ -1506,10 +1509,10 @@
                 border: 1px solid #dfdfdf;
                 background: #fff;
                 border-radius: 3px;
-                line-height: 32px;
+                line-height: 28px;
                 font-size: 14px;
                 color: #333;
-                margin: 5px 0 5px 0
+                margin: 8px 0 5px 0
             }
 
 
@@ -1519,7 +1522,7 @@
                 border-right: 1px solid #dfdfdf;
                 background: #fff;
                 width: 32%;
-                height: 32px;
+                height: 28px;
                 position: relative;
                 cursor: pointer;
                 pointer-events: none
@@ -1531,7 +1534,7 @@
                 height: 2px;
                 background: #ccc;
                 display: block;
-                margin: 15px auto
+                margin: 12px auto 15px auto;
             }
 
             .abate.active {
@@ -1547,7 +1550,7 @@
                 color: #333;
                 float: left;
                 width: 33%;
-                height: 32px;
+                height: 28px;
                 text-align: center
             }
 
@@ -1556,7 +1559,7 @@
                 border-left: 1px solid #dfdfdf;
                 background: #fff;
                 width: 32%;
-                height: 32px;
+                height: 28px;
                 position: relative;
                 cursor: pointer
             }
@@ -1567,7 +1570,7 @@
                 height: 2px;
                 background: #288ad6;
                 display: block;
-                margin: 15px auto
+                margin: 12px auto 15px auto;
             }
 
             .augment:after {
@@ -1578,7 +1581,7 @@
                 display: block;
                 margin: 0 auto;
                 position: absolute;
-                top: 10px;
+                top: 7px;
                 left: 0;
                 right: 0
             }
