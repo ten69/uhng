@@ -12,6 +12,7 @@ use aabc\filters\AccessControl;
 use common\components\Tuyen;
 use backend\models\Cauhinh;
 use backend\models\SanphamDanhmuc;
+use backend\models\Khachhang;
 
 use frontend\models\CartForm;
 
@@ -94,13 +95,12 @@ class ThanhtoanController extends Controller
         $user = Aabc::$app->user->identity;        
         $session = Aabc::$app->session;
 
-        $model = new CartForm();
-        if ($model->load(Aabc::$app->request->post()) && $model->validate()) {
-
+        $cartform = new CartForm();
+        if ($cartform->load(Aabc::$app->request->post()) && $cartform->validate()) {
             //Hiển thị lại những gì đã post lên
             $cart = $session['cart'];  
 
-            $session['thongtinthanhtoan'] = $model;
+            $session['thongtinthanhtoan'] = $cartform;
             $session['thongtinthanhtoan'] = null;
             
             // if($cart){
@@ -119,15 +119,52 @@ class ThanhtoanController extends Controller
                 //Tìm trong DS khách hàng where iduserfrontend ->trả về idkhachhang
                 //Lưu đơn hàng với idkhachhang
             }else{//Không cần đăng nhập
+                //Lưu vào bảng khách hàng -> trả về idkhachhang
+                //Lưu đơn hàng với idkhachhang
                 //Kiểm tra email, điện thoại có trùng ai không
                     //+Trùng: status = 1
                     //+Không trùng: status = 0
-                //Lưu vào bảng khách hàng -> trả về idkhachhang
-                //Lưu đơn hàng với idkhachhang
+
+                $khachhang = new Khachhang();
+                $khachhang->kh_xungho = $cartform->xungho;
+                $khachhang->kh_ten = $cartform->hoten;
+                $khachhang->kh_sodienthoai = $cartform->dienthoai;
+                $khachhang->kh_email = $cartform->email;
+                $khachhang->kh_diachi = json_encode([
+                    'tinh' => $cartform->tinh,
+                    'huyen' => $cartform->huyen,
+                    'xa' => $cartform->xa,
+                ]);
+                
+                // $query = Khachhang::find()                                
+                //                 ->where(['kh_email' => $khachhang->kh_email])
+                //                 ->exists();
+                //                 ;
+
+                // echo '<pre>';
+                // print_r($query);
+                // echo '</pre>';
+                // die;
+
+                if($khachhang->save()){
+                    echo '<pre>';
+                    print_r($khachhang->kh_id);
+                    echo '</pre>';
+                    //die;
+                }else{
+
+                }
+
+                echo 'Khach hang';
+                echo '<pre>';
+                print_r($khachhang->attributes);
+                echo '</pre>';
+                //die;
+
             }
 
             echo '<pre>';
-            print_r($model->attributes);
+            print_r($cartform->attributes);
             echo '</pre>';
 
             $session = Aabc::$app->session;
@@ -152,19 +189,19 @@ class ThanhtoanController extends Controller
             return $this->goHome();
         } else {   
             if($user){
-                $model->hoten = $user->hoten;
-                $model->dienthoai = $user->dienthoai;
-                $model->email = $user->email;
-                $model->diachi = $user->diachi;
-                $model->gioitinh = $user->gioitinh;
+                $cartform->hoten = $user->hoten;
+                $cartform->dienthoai = $user->dienthoai;
+                $cartform->email = $user->email;
+                $cartform->diachi = $user->diachi;
+                $cartform->gioitinh = $user->gioitinh;
             }       
             $session = Aabc::$app->session;
             $cart = $session['cart']; 
-            if(isset($session['thongtinthanhtoan'])) $model = $session['thongtinthanhtoan']; 
+            if(isset($session['thongtinthanhtoan'])) $cartform = $session['thongtinthanhtoan']; 
 
             if($cart){
                 return $this->render('index', [
-                    'model' => $model,
+                    'model' => $cartform,
                     // 'cart' => $cart,
                 ]);
             }
